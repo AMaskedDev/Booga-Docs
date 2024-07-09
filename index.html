@@ -53,7 +53,7 @@ booga's ui says hi ;)
         <p>First, to use the library we must import. Copy the below snippet and paste it into a script.</p>
         <pre><code class="language-lua">local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/bbbPriv/BOOGA-UI/main/booga%20ui.lua"))()</code></pre>
         <br>
-        <p>After we import the library its really straight forward to create an empty window.</p>
+        <p>After we import the  library its really straight forward to create an empty window.</p>
         <p>We call the <code class="language-lua">Library.New()</code> and a string as parameter for the title</p>
         <p>for example -> <code class="language-lua">local hub = Library.New(title)</code></p>
         <p>with that we make a simple window that we can drag around.</p>
@@ -235,7 +235,7 @@ local tutorialPage = hub:AddPage("Example Page", 10016745130)
 local tutorialSection = tutorialPage:AddSection("Example Section!")
 tutorialPage:AddSearchBar()
 
-local exampleKeybind = tutorialSection:AddSlider("Example Keybind",Enum.Keycode.X,function(v) 
+local exampleKeybind = tutorialSection:AddKeybind("Example Keybind",Enum.Keycode.X,function(v) 
     print("Executed") 
 end)</code></pre>
     <p>Here when the key button <code>x</code> is pressed, it will print 'Executed' on the console.</p>
@@ -257,7 +257,52 @@ end</code></pre>
     <div class="Segment 10 - Dialog">
         <h1>Segment 10 - Dialog</h1>
         <p>In this segment we learn about dialog, they are quite useful, for example when prompting players to doing something risky. The usage is really simple <code class="language-lua">Library:Dialog(Title, Text, Callback)</code></p>
+
+        <p>Here is an example now in code</p>
+        <pre><code class="language-lua">local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/bbbPriv/BOOGA-UI/main/booga%20ui.lua"))()
+
+local hub = Library.New("Tutorial")
+
+local tutorialPage = hub:AddPage("Example Page", 10016745130)
+local tutorialSection = tutorialPage:AddSection("Example Section!")
+tutorialPage:AddSearchBar()
+
+local exampleDialog = tutorialSection:Dialog("Example", "Hello, world!", nil)</code></pre>
     </div>
+
+    <br></br>
+    <br></br>
+    <br></br>
+
+    <h1>The script all together if you want to test</h1>
+
+    <pre><code class="language-lua">local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/bbbPriv/BOOGA-UI/main/booga%20ui.lua"))()
+
+local hub = Library.New("Tutorial")
+
+local tutorialPage = hub:AddPage("Example Page", 10016745130)
+local tutorialSection = tutorialPage:AddSection("Example Section!") -- if you like you can use :AddSearchBar() at the end
+tutorialPage:AddSearchBar()
+        
+local exampleDialog = tutorialSection:Dialog("Example", "Hello, world!", nil)
+    
+local foo = 10
+local bar = 5
+        
+if foo >= bar then tutorialSection:Notify("Condition met", "It seems that foo is bigger than bar", UDim2.new(0,0,0,0), UDim2.new(1,0,1,0), function() 
+    print("Woah!")
+end)
+    
+local exampleKeybind = tutorialSection:AddSlider("Example Keybind",Enum.Keycode.X,function(v) 
+    print("Executed") 
+end)
+
+local exampleSlider = tutorialSection:AddSlider("Example Slider", 50, 0, 100, 15, function(v) 
+    print(v.Value) 
+end)
+
+local exampleDropdown = tutorialSection:AddDropdown("Example Dropdown", {"Option 1", "Option 2", "Option 3"}, function(v) end)</code></pre>
+</code></pre>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-core.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/plugins/autoloader/prism-autoloader.min.js"></script>
