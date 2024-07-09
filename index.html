@@ -3,228 +3,300 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Library Documentation</title>
+    <title>BOOGA UI Documentation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1, h2, h3, h4 {
+            color: #333;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        code {
+            color: #d6336c;
+        }
+        .toc {
+            margin-bottom: 20px;
+        }
+        .toc ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .toc ul li {
+            margin: 5px 0;
+        }
+        .toc a {
+            text-decoration: none;
+            color: #007bff;
+        }
+        .toc a:hover {
+            text-decoration: underline;
+        }
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/prismjs@1.28.0/themes/prism.css" rel="stylesheet">
 </head>
 <body>
-    <!-- Header section -->
+
+<div style="max-width: 800px; margin: 0 auto;">
+
     <header>
-        <h1>Library Documentation</h1>
-        <p>Your guide to using the Library effectively</p>
+        <h1>BOOGA UI Documentation</h1>
     </header>
-    
-    <!-- Main content container -->
-    <div class="container">
-        <!-- Library.New function documentation -->
-        <div class="function">
-            <h2>Library.New(title)</h2>
-            <div class="description">
-                <strong>Title:</strong> <code>&lt;string&gt;</code> - Title of the UI
-            </div>
-            <div class="return">
-                <strong>Return:</strong> <code>Library &lt;table&gt;</code>
-            </div>
-            <div class="code-snippet">
-                <pre><code>local myLibrary = Library.New("My Awesome UI")</code></pre>
-            </div>
-        </div>
 
-        <!-- Library:Toggle function documentation -->
-        <div class="function">
-            <h2>Library:Toggle()</h2>
-            <div class="return">
-                <strong>Return:</strong> <code>nil</code> - Toggles UI
-            </div>
-            <div class="code-snippet">
-                <pre><code>myLibrary:Toggle()</code></pre>
-            </div>
-        </div>
+    <nav class="toc">
+        <h2>Table of Contents</h2>
+        <ul>
+            <li><a href="#introduction">Introduction</a></li>
+            <li><a href="#setup">Setup</a></li>
+            <li><a href="#main-components">Main Components</a>
+                <ul>
+                    <li><a href="#library-initialization">Library Initialization</a></li>
+                    <li><a href="#theme-management">Theme Management</a></li>
+                    <li><a href="#main-interface">Main Interface</a></li>
+                </ul>
+            </li>
+            <li><a href="#ui-elements">UI Elements</a>
+                <ul>
+                    <li><a href="#tab">Tab</a></li>
+                    <li><a href="#section">Section</a></li>
+                    <li><a href="#button">Button</a></li>
+                    <li><a href="#toggle">Toggle</a></li>
+                    <li><a href="#slider">Slider</a></li>
+                    <li><a href="#dropdown">Dropdown</a></li>
+                    <li><a href="#textbox">Textbox</a></li>
+                    <li><a href="#label">Label</a></li>
+                    <li><a href="#color-picker">Color Picker</a></li>
+                    <li><a href="#keybind">Keybind</a></li>
+                </ul>
+            </li>
+            <li><a href="#utility-functions">Utility Functions</a></li>
+            <li><a href="#event-handling">Event Handling</a></li>
+            <li><a href="#customization">Customization</a></li>
+            <li><a href="#examples">Examples</a></li>
+        </ul>
+    </nav>
 
-        <!-- Library:Notify function documentation -->
-        <div class="function">
-            <h2>Library:Notify(Title, Text, Position, Direction, Callback)</h2>
-            <div class="description">
-                <strong>Title:</strong> <code>&lt;string&gt;</code> - Title of notification
-                <br>
-                <strong>Text:</strong> <code>&lt;string&gt;</code> - Description of notification
-                <br>
-                <strong>Position:</strong> <code>&lt;UDim2&gt;</code> - Position of start of the notification
-                <br>
-                <strong>Direction:</strong> <code>&lt;UDim2&gt;</code> - Direction of the notification
-            </div>
-            <div class="return">
-                <strong>Callback:</strong> <code>&lt;function&gt;</code> 
-                <br>
-                <strong>Return:</strong> (value)
-                <br>
-                <strong>Value:</strong> <code>&lt;boolean&gt;</code> - Accepted or cancelled
-            </div>
-            <div class="code-snippet">
-                <pre><code>myLibrary:Notify("Notice", "This is a notification", UDim2.new(0,0,0,0), UDim2.new(1,0,1,0), function(value)
-    print("Notification result:", value)
+    <h2 id="introduction">Introduction</h2>
+    <p>BOOGA UI is a Lua-based user interface library designed for Roblox. This documentation provides an overview of its main components and how to utilize them to create custom interfaces for Roblox games.</p>
+
+    <h2 id="setup">Setup</h2>
+    <p>To use BOOGA UI in your project, include the below script to initialize the library.</p>
+    <pre><code class="language-lua">local Lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/bbbPriv/BOOGA-UI/main/booga%20ui.lua"))()</code></pre>
+
+    <h2 id="main-components">Main Components</h2>
+
+    <h3 id="library-initialization">Library Initialization</h3>
+    <p>Initializes the main library object.</p>
+    <pre><code class="language-lua">Library = {}</code></pre>
+    <p>This creates the main table for the library, which will hold all the methods and properties for the UI components.</p>
+
+    <h3 id="theme-management">Theme Management</h3>
+    <p>Manages UI themes including colors and fonts.</p>
+    <pre><code class="language-lua">Library.Theme = {
+    -- Default theme settings
+}</code></pre>
+    <p>You can customize the theme by modifying the <code>Library.Theme</code> table. This table includes properties for various UI elements, such as background colors, text colors, and fonts.</p>
+
+    <h3 id="main-interface">Main Interface</h3>
+    <p>Creates the main UI frame and handles layout settings.</p>
+    <pre><code class="language-lua">Library:CreateMain(title)</code></pre>
+    <p>This method initializes the main UI container. It takes one argument:</p>
+    <ul>
+        <li><code>title</code>: The title of the main UI frame.</li>
+    </ul>
+    <p>Example usage:</p>
+    <pre><code class="language-lua">local main = Library:CreateMain("My Game UI")</code></pre>
+
+    <h2 id="ui-elements">UI Elements</h2>
+
+    <h3 id="tab">Tab</h3>
+    <p>Creates a new tab in the interface.</p>
+    <pre><code class="language-lua">main:CreateTab(name)</code></pre>
+    <p>This method adds a new tab to the main interface. It takes one argument:</p>
+    <ul>
+        <li><code>name</code>: The name of the tab.</li>
+    </ul>
+    <p>Example usage:</p>
+    <pre><code class="language-lua">local tab1 = main:CreateTab("Tab 1")</code></pre>
+
+    <h3 id="section">Section</h3>
+    <p>Adds a section within a tab.</p>
+    <pre><code class="language-lua">tab:CreateSection(name)</code></pre>
+    <p>This method creates a new section within a tab. It takes one argument:</p>
+    <ul>
+        <li><code>name</code>: The name of the section.</li>
+    </ul>
+    <p>Example usage:</p>
+    <pre><code class="language-lua">local section1 = tab1:CreateSection("Section 1")</code></pre>
+
+    <h3 id="button">Button</h3>
+    <p>Adds a button element with customizable text and callback functions.</p>
+    <pre><code class="language-lua">section:CreateButton(name, callback)</code></pre>
+    <p>This method creates a button within a section. It takes two arguments:</p>
+    <ul>
+        <li><code>name</code>: The text displayed on the button.</li>
+        <li><code>callback</code>: The function to be called when the button is clicked.</li>
+    </ul>
+    <p>Example usage:</p>
+    <pre><code class="language-lua">section1:CreateButton("Click Me", function()
+    print("Button clicked!")
 end)</code></pre>
-            </div>
-        </div>
 
-        <!-- Library:AddPage function documentation -->
-        <div class="function">
-            <h2>Library:AddPage(Title, Icon)</h2>
-            <div class="description">
-                <strong>Title:</strong> <code>&lt;string&gt;</code> - Title of page
-                <br>
-                <strong>Icon:</strong> <code>&lt;string&gt;</code> - Asset ID of icon (optional)
-            </div>
-            <div class="return">
-                <strong>Return:</strong> <code>Pages &lt;table&gt;</code>
-            </div>
-            <div class="code-snippet">
-                <pre><code>local myPage = myLibrary:AddPage("Home", "rbxassetid://123456")</code></pre>
-            </div>
-        </div>
-
-        <!-- Pages:AddSection function documentation -->
-        <div class="function">
-            <h2>Pages:AddSection(Title)</h2>
-            <div class="description">
-                <strong>Title:</strong> <code>&lt;string&gt;</code> - Title of section
-            </div>
-            <div class="return">
-                <strong>Return:</strong> <code>Sections &lt;table&gt;</code>
-            </div>
-            <div class="code-snippet">
-                <pre><code>local mySection = myPage:AddSection("Main Section")</code></pre>
-            </div>
-        </div>
-
-        <!-- Pages:AddSearchBar function documentation -->
-        <div class="function">
-            <h2>Pages:AddSearchBar()</h2>
-            <div class="return">
-                <strong>Return:</strong> <code>nil</code> - Adds Search Bar to the page
-            </div>
-            <div class="code-snippet">
-                <pre><code>myPage:AddSearchBar()</code></pre>
-            </div>
-        </div>
-
-        <!-- Sections:AddButton function documentation -->
-        <div class="function">
-            <h2>Sections:AddButton(Title, Callback)</h2>
-            <div class="description">
-                <strong>Title:</strong> <code>&lt;string&gt;</code> - Title of button
-                <br>
-                <strong>Callback:</strong> <code>&lt;function&gt;</code>
-            </div>
-            <div class="return">
-                <strong>Return:</strong> <code>button &lt;Instance&gt;</code>
-            </div>
-            <div class="code-snippet">
-                <pre><code>mySection:AddButton("Click Me", function()
-    print("Button clicked")
+    <h3 id="toggle">Toggle</h3>
+    <p>Adds a toggle switch with customizable states and callback functions.</p>
+    <pre><code class="language-lua">section:CreateToggle(name, default, callback)</code></pre>
+    <p>This method creates a toggle switch within a section. It takes three arguments:</p>
+    <ul>
+        <li><code>name</code>: The text displayed next to the toggle switch.</li>
+        <li><code>default</code>: The default state of the toggle (true or false).</li>
+        <li><code>callback</code>: The function to be called when the toggle state changes.</li>
+    </ul>
+    <p>Example usage:</p>
+    <pre><code class="language-lua">section1:CreateToggle("Toggle Me", true, function(state)
+    print("Toggle state: " .. tostring(state))
 end)</code></pre>
-            </div>
-        </div>
 
-        <!-- Sections:AddToggle function documentation -->
-        <div class="function">
-            <h2>Sections:AddToggle(Title, IsEnabled, Callback)</h2>
-            <div class="description">
-                <strong>Title:</strong> <code>&lt;string&gt;</code> - Title of toggle
-                <br>
-                <strong>IsEnabled:</strong> <code>&lt;boolean&gt;</code> - Default value of toggle
-                <br>
-                <strong>Callback:</strong> <code>&lt;function&gt;</code>
-                <br>
-                <strong>Return:</strong> (value, update)
-                <br>
-                <strong>Value:</strong> <code>&lt;boolean&gt;</code> - New toggle value
-            </div>
-            <div class="return">
-                <strong>Return:</strong> <code>toggle &lt;Instance&gt;</code>
-            </div>
-            <div class="code-snippet">
-                <pre><code>mySection:AddToggle("Enable Feature", true, function(value)
-    print("Toggle value:", value)
+    <h3 id="slider">Slider</h3>
+    <p>Adds a slider element for numerical input with min, max, and default values.</p>
+    <pre><code class="language-lua">section:CreateSlider(name, min, max, default, callback)</code></pre>
+    <p>This method creates a slider within a section. It takes five arguments:</p>
+    <ul>
+        <li><code>name</code>: The text displayed next to the slider.</li>
+        <li><code>min</code>: The minimum value of the slider.</li>
+        <li><code>max</code>: The maximum value of the slider.</li>
+        <li><code>default</code>: The default value of the slider.</li>
+        <li><code>callback</code>: The function to be called when the slider value changes.</li>
+    </ul>
+    <p>Example usage:</p>
+    <pre><code class="language-lua">section1:CreateSlider("Volume", 0, 100, 50, function(value)
+    print("Slider value: " .. value)
 end)</code></pre>
-            </div>
-        </div>
 
-        <!-- Sections:AddTextBox function documentation -->
-        <div class="function">
-            <h2>Sections:AddTextBox(Title, Callback)</h2>
-            <div class="description">
-                <strong>Title:</strong> <code>&lt;string&gt;</code> - Title of textbox
-                <br>
-                <strong>Callback:</strong> <code>&lt;function&gt;</code>
-                <br>
-                <strong>Return:</strong> (text, focus)
-                <br>
-                <strong>Text:</strong> <code>&lt;string&gt;</code> - Textbox content
-                <br>
-                <strong>Focus:</strong> <code>&lt;boolean&gt;</code> - Focus lost signal
-            </div>
-            <div class="return">
-                <strong>Return:</strong> <code>textbox &lt;Instance&gt;</code>
-            </div>
-            <div class="code-snippet">
-                <pre><code>mySection:AddTextBox("Enter Text", function(text)
-    print("Text entered:", text)
+    <h3 id="dropdown">Dropdown</h3>
+    <p>Adds a dropdown menu with selectable options.</p>
+    <pre><code class="language-lua">section:CreateDropdown(name, options, callback)</code></pre>
+    <p>This method creates a dropdown menu within a section. It takes three arguments:</p>
+    <ul>
+        <li><code>name</code>: The text displayed next to the dropdown menu.</li>
+        <li><code>options</code>: A table of options for the dropdown menu.</li>
+        <li><code>callback</code>: The function to be called when an option is selected.</li>
+    </ul>
+    <p>Example usage:</p>
+    <pre><code class="language-lua">section1:CreateDropdown("Select Option", {"Option 1", "Option 2", "Option 3"}, function(selected)
+    print("Selected option: " .. selected)
 end)</code></pre>
-            </div>
-        </div>
 
-        <!-- Sections:AddKeybind function documentation -->
-        <div class="function">
-            <h2>Sections:AddKeybind(Title, Key, Callback)</h2>
-            <div class="description">
-                <strong>Title:</strong> <code>&lt;string&gt;</code> - Title of keybind
-                <br>
-                <strong>Key:</strong> <code>&lt;keycode&gt;</code> - Default binded key
-                <br>
-                <strong>Callback:</strong> <code>&lt;function&gt;</code>
-                <br>
-                <strong>Return:</strong> (update)
-                <br>
-                <strong>Key:</strong> <code>&lt;KeyCode&gt;</code> - Key pressed
-            </div>
-            <div class="return">
-                <strong>Return:</strong> <code>keybind &lt;Instance&gt;</code>
-            </div>
-            <div class="code-snippet">
-                <pre><code>mySection:AddKeybind("Bind Key", Enum.KeyCode.F, function()
-    print("Key pressed")
+    <h3 id="textbox">Textbox</h3>
+    <p>Adds a textbox for user input.</p>
+    <pre><code class="language-lua">section:CreateTextbox(name, default, callback)</code></pre>
+    <p>This method creates a textbox within a section. It takes three arguments:</p>
+    <ul>
+        <li><code>name</code>: The text displayed next to the textbox.</li>
+        <li><code>default</code>: The default text in the textbox.</li>
+        <li><code>callback</code>: The function to be called when the text is changed.</li>
+    </ul>
+    <p>Example usage:</p>
+    <pre><code class="language-lua">section1:CreateTextbox("Enter Text", "Default Text", function(text)
+    print("Textbox input: " .. text)
 end)</code></pre>
-            </div>
-        </div>
 
-        <!-- Sections:AddSlider function documentation -->
-        <div class="function">
-            <h2>Sections:AddSlider(Title, Value, Min, Max, FixValues, Callback)</h2>
-            <div class="description">
-                <strong>Title:</strong> <code>&lt;string&gt;</code> - Title of slider
-                <br>
-                <strong>Value:</strong> <code>&lt;number&gt;</code> - Default value of slider
-                <br>
-                <strong>Min:</strong> <code>&lt;number&gt;</code> - Minimum value of slider
-                <br>
-                <strong>Max:</strong> <code>&lt;number&gt;</code> - Maximum value of slider
-                <br>
-                <strong>FixValues:</strong> <code>&lt;number&gt;</code> - Fix values
-                <br>
-                <strong>Callback:</strong> <code>&lt;function&gt;</code>
-                <br>
-                <strong>Return:</strong> (value)
-                <br>
-                <strong>Value:</strong> <code>&lt;number&gt;</code> - New slider value
-            </div>
-            <div class="return">
-                <strong>Return:</strong> <code>slider &lt;Instance&gt;</code>
-            </div>
-            <div class="code-snippet">
-                <pre><code>mySection:AddSlider("Adjust Value", 50, 0, 100, 1, function(value)
-    print("Slider value:", value)
+    <h3 id="label">Label</h3>
+    <p>Adds a label for displaying static text.</p>
+    <pre><code class="language-lua">section:CreateLabel(text)</code></pre>
+    <p>This method creates a label within a section. It takes one argument:</p>
+    <ul>
+        <li><code>text</code>: The text to be displayed.</li>
+    </ul>
+    <p>Example usage:</p>
+    <pre><code class="language-lua">section1:CreateLabel("This is a label")</code></pre>
+
+    <h3 id="color-picker">Color Picker</h3>
+    <p>Adds a color picker for selecting colors.</p>
+    <pre><code class="language-lua">section:CreateColorPicker(name, default, callback)</code></pre>
+    <p>This method creates a color picker within a section. It takes three arguments:</p>
+    <ul>
+        <li><code>name</code>: The text displayed next to the color picker.</li>
+        <li><code>default</code>: The default color.</li>
+        <li><code>callback</code>: The function to be called when the color is changed.</li>
+    </ul>
+    <p>Example usage:</p>
+    <pre><code class="language-lua">section1:CreateColorPicker("Pick a Color", Color3.fromRGB(255, 0, 0), function(color)
+    print("Selected color: " .. tostring(color))
 end)</code></pre>
-            </div>
-        </div>
-    </div>
+
+    <h3 id="keybind">Keybind</h3>
+    <p>Adds a keybind setting for custom key inputs.</p>
+    <pre><code class="language-lua">section:CreateKeybind(name, default, callback)</code></pre>
+    <p>This method creates a keybind setting within a section. It takes three arguments:</p>
+    <ul>
+        <li><code>name</code>: The text displayed next to the keybind.</li>
+        <li><code>default</code>: The default keybind.</li>
+        <li><code>callback</code>: The function to be called when the keybind is changed.</li>
+    </ul>
+    <p>Example usage:</p>
+    <pre><code class="language-lua">section1:CreateKeybind("Set Keybind", Enum.KeyCode.F, function(key)
+    print("Selected keybind: " .. tostring(key))
+end)</code></pre>
+
+    <h2 id="utility-functions">Utility Functions</h2>
+    <p>Helper functions for internal use such as color conversions, event connections, and layout management.</p>
+    <pre><code class="language-lua">-- Example utility function
+function Library:ConvertColorToHex(color)
+    local r, g, b = color.r * 255, color.g * 255, color.b * 255
+    return string.format("#%02x%02x%02x", r, g, b)
+end</code></pre>
+
+    <h2 id="event-handling">Event Handling</h2>
+    <p>Methods for handling user interactions with UI elements including clicks, toggles, and input changes.</p>
+    <pre><code class="language-lua">-- Example event handling
+function Library:OnButtonClick(button, callback)
+    button.MouseButton1Click:Connect(callback)
+end</code></pre>
+
+    <h2 id="customization">Customization</h2>
+    <p>Options to customize the appearance and behavior of UI elements including themes, animations, and layout settings.</p>
+    <pre><code class="language-lua">-- Example customization
+Library.Theme.ButtonColor = Color3.fromRGB(255, 0, 0)</code></pre>
+    <p>You can customize the appearance of the UI by modifying the properties in the <code>Library.Theme</code> table.</p>
+
+    <h2 id="examples">Examples</h2>
+    <pre><code class="language-lua">local Library = require("booga ui.lua")
+
+local main = Library:CreateMain("My Game UI")
+
+local tab1 = main:CreateTab("Tab 1")
+local section1 = tab1:CreateSection("Section 1")
+
+section1:CreateButton("Click Me", function()
+    print("Button clicked!")
+end)
+
+section1:CreateToggle("Toggle Me", true, function(state)
+    print("Toggle state: " .. tostring(state))
+end)
+
+section1:CreateSlider("Volume", 0, 100, 50, function(value)
+    print("Slider value: " .. value)
+end)
+
+section1:CreateDropdown("Select Option", {"Option 1", "Option 2", "Option 3"}, function(selected)
+    print("Selected option: " .. selected)
+end)</code></pre>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-lua.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        Prism.highlightAll();
+    });
+</script>
+
 </body>
 </html>
