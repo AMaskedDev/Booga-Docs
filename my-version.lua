@@ -1368,7 +1368,7 @@ function BoogaUI.New(Name : string)
 		AnchorPoint = Vector2.new(0, 0.5),
 		BackgroundTransparency = 1,
 		Position = UDim2.new(0, 12, 0, 19),
-		Size = UDim2.new(1.05, -46, 0, 16),
+		Size = UDim2.new(1.05, -46, 0, 32),
 		Font = Enum.Font.Gotham,
 		RichText = true,
 		TextColor3 = Color3.fromRGB(255, 255, 255),
