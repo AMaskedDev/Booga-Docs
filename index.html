@@ -3,20 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-lua.min.js"></script>
+
     <title>Library Documentation</title>
     <style>
         /* Basic page styling */
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Inter', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f8f8f8;
-            color: #333;
+            background-color: #444444;
+            color: #ffffffb1;
+            background-size: 40px 40px;
+  background-image: radial-gradient(circle, #ffffff05 2px, rgba(0, 0, 0, 0) 1px);
         }
 
         /* Header styling */
         header {
-            background-color: #4CAF50;
+            background-color: #4caf4f69;
             color: #fff;
             padding: 20px 0;
             text-align: center;
@@ -25,10 +32,12 @@
 
         /* Container styling */
         .container {
-            width: 85%;
+            width: 90%;
             margin: 20px auto;
             padding: 20px;
-            background-color: #fff;
+            padding-left: 50px;
+            padding-right: 50px;
+            background-color: #545454;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
@@ -40,12 +49,12 @@
 
         /* Heading styles */
         h1, h2, h3 {
-            color: #4CAF50;
+            color: #ffffff;
         }
 
         /* Code block styling */
         pre {
-            background: #e0f7fa;
+            background: #545454;
             padding: 15px;
             border-radius: 5px;
             overflow-x: auto;
@@ -55,12 +64,13 @@
         /* Inline code styling */
         code {
             font-family: 'Courier New', Courier, monospace;
-            color: #d32f2f;
+            color: #ffffff;
+            font-weight: 520;
         }
 
         /* Description block styling */
         .description {
-            background: #fff8e1;
+            background: #494841;
             padding: 15px;
             border-left: 5px solid #4CAF50;
             border-radius: 5px;
@@ -69,7 +79,7 @@
 
         /* Return block styling */
         .return {
-            background: #f1f8e9;
+            background: #41433f;
             padding: 15px;
             border-left: 5px solid #4CAF50;
             border-radius: 5px;
@@ -95,7 +105,7 @@
 
         /* Footer styling */
         footer {
-            background-color: #4CAF50;
+            background-color: #2327233f;
             color: #fff;
             padding: 10px 0;
             text-align: center;
@@ -107,11 +117,10 @@
 
         /* Add more specific styles as needed */
         .code-snippet {
-            background: #f0f0f0;
+            background: #4a4a4a;
             padding: 10px;
             border-radius: 5px;
             margin-bottom: 20px;
-            border: 1px solid #ddd;
         }
 
         .tip {
@@ -123,7 +132,7 @@
         }
 
         .warning {
-            background: #fff3e0;
+            background: #393734;
             padding: 10px;
             border-left: 5px solid #FB8C00;
             border-radius: 5px;
@@ -135,31 +144,16 @@
 <body>
     <!-- Header section -->
     <header>
-        <h1>Library Documentation</h1>
-        <p>Your guide to using the Library effectively</p>
+        <h1>Booga UI Library Documentation</h1>
+        <p>An overview with examples ov the UI library by Booga</p>
     </header>
     
     <!-- Main content container -->
     <div class="container">
         
         <!-- Note for users -->
-        <div class="note">
-            <strong>Note:</strong> This documentation provides detailed descriptions and return values for each function in the Library.
-        </div>
-
-        <!-- Important message -->
-        <div class="important">
-            <strong>Important:</strong> Ensure that all required parameters are passed correctly to avoid unexpected errors.
-        </div>
-
-        <!-- Tip for users -->
-        <div class="tip">
-            <strong>Tip:</strong> Use meaningful names for your titles and variables to keep your code understandable and maintainable.
-        </div>
-
-        <!-- Warning for users -->
         <div class="warning">
-            <strong>Warning:</strong> Improper handling of callback functions can lead to unexpected behavior. Always validate input parameters.
+            Remember its a brief overview with examples, them examples can be used to make a functioning user interface, but is not recommended.
         </div>
 
         <!-- Library.New function documentation -->
@@ -172,7 +166,7 @@
                 <strong>Return:</strong> <code>Library &lt;table&gt;</code>
             </div>
             <div class="code-snippet">
-                <pre><code>local myLibrary = Library.New("My Awesome UI")</code></pre>
+                <pre><code class="language-lua">local myLibrary = Library.New("My Awesome UI")</code></pre>
             </div>
         </div>
 
@@ -183,7 +177,7 @@
                 <strong>Return:</strong> <code>nil</code> - Toggles UI
             </div>
             <div class="code-snippet">
-                <pre><code>myLibrary:Toggle()</code></pre>
+                <pre><code class="language-lua">myLibrary:Toggle()</code></pre>
             </div>
         </div>
 
@@ -207,7 +201,7 @@
                 <strong>Value:</strong> <code>&lt;boolean&gt;</code> - Accepted or cancelled
             </div>
             <div class="code-snippet">
-                <pre><code>myLibrary:Notify("Notice", "This is a notification", UDim2.new(0,0,0,0), UDim2.new(1,0,1,0), function(value)
+                <pre><code class="language-lua">myLibrary:Notify("Notice", "This is a notification", UDim2.new(0,0,0,0), UDim2.new(1,0,1,0), function(value)
     print("Notification result:", value)
 end)</code></pre>
             </div>
@@ -225,7 +219,7 @@ end)</code></pre>
                 <strong>Return:</strong> <code>Pages &lt;table&gt;</code>
             </div>
             <div class="code-snippet">
-                <pre><code>local myPage = myLibrary:AddPage("Home", "rbxassetid://123456")</code></pre>
+                <pre><code class="language-lua">local myPage = myLibrary:AddPage("Home", "rbxassetid://123456")</code></pre>
             </div>
         </div>
 
@@ -239,7 +233,7 @@ end)</code></pre>
                 <strong>Return:</strong> <code>Sections &lt;table&gt;</code>
             </div>
             <div class="code-snippet">
-                <pre><code>local mySection = myPage:AddSection("Main Section")</code></pre>
+                <pre><code class="language-lua">local mySection = myPage:AddSection("Main Section")</code></pre>
             </div>
         </div>
 
@@ -250,7 +244,7 @@ end)</code></pre>
                 <strong>Return:</strong> <code>nil</code> - Adds Search Bar to the page
             </div>
             <div class="code-snippet">
-                <pre><code>myPage:AddSearchBar()</code></pre>
+                <pre><code class="language-lua">myPage:AddSearchBar()</code></pre>
             </div>
         </div>
 
@@ -266,7 +260,7 @@ end)</code></pre>
                 <strong>Return:</strong> <code>button &lt;Instance&gt;</code>
             </div>
             <div class="code-snippet">
-                <pre><code>mySection:AddButton("Click Me", function()
+                <pre><code class="language-lua">mySection:AddButton("Click Me", function()
     print("Button clicked")
 end)</code></pre>
             </div>
@@ -290,7 +284,7 @@ end)</code></pre>
                 <strong>Return:</strong> <code>toggle &lt;Instance&gt;</code>
             </div>
             <div class="code-snippet">
-                <pre><code>mySection:AddToggle("Enable Feature", true, function(value)
+                <pre><code class="language-lua">mySection:AddToggle("Enable Feature", true, function(value)
     print("Toggle value:", value)
 end)</code></pre>
             </div>
@@ -314,7 +308,7 @@ end)</code></pre>
                 <strong>Return:</strong> <code>textbox &lt;Instance&gt;</code>
             </div>
             <div class="code-snippet">
-                <pre><code>mySection:AddTextBox("Enter Text", function(text)
+                <pre><code class="language-lua">mySection:AddTextBox("Enter Text", function(text)
     print("Text entered:", text)
 end)</code></pre>
             </div>
@@ -338,7 +332,7 @@ end)</code></pre>
                 <strong>Return:</strong> <code>keybind &lt;Instance&gt;</code>
             </div>
             <div class="code-snippet">
-                <pre><code>mySection:AddKeybind("Bind Key", Enum.KeyCode.F, function()
+                <pre><code class="language-lua">mySection:AddKeybind("Bind Key", Enum.KeyCode.F, function()
     print("Key pressed")
 end)</code></pre>
             </div>
@@ -368,7 +362,7 @@ end)</code></pre>
                 <strong>Return:</strong> <code>slider &lt;Instance&gt;</code>
             </div>
             <div class="code-snippet">
-                <pre><code>mySection:AddSlider("Volume", 50, 0, 100, true, function(value)
+                <pre><code class="language-lua">mySection:AddSlider("Volume", 50, 0, 100, true, function(value)
     print("Slider value:", value)
 end)</code></pre>
             </div>
@@ -392,27 +386,13 @@ end)</code></pre>
                 <strong>Return:</strong> <code>dropdown &lt;Instance&gt;</code>
             </div>
             <div class="code-snippet">
-                <pre><code>local dropdownEntries = {"Option 1", "Option 2", "Option 3"}
+                <pre><code class="language-lua">local dropdownEntries = {"Option 1", "Option 2", "Option 3"}
 mySection:AddDropdown("Select Option", dropdownEntries, function(value)
     print("Selected value:", value)
 end)</code></pre>
             </div>
         </div>
 
-        <!-- Additional decorative and informative content -->
-        <div class="note">
-            <h3>Additional Notes:</h3>
-            <ul>
-                <li>Ensure that your callbacks are well-defined to handle all possible return values.</li>
-                <li>Use descriptive titles for your UI elements to maintain clarity and ease of use.</li>
-                <li>Refer to the official documentation for more detailed examples and use cases.</li>
-            </ul>
-        </div>
-
-        <div class="important">
-            <h3>Important Considerations:</h3>
-            <p>When using <code>Library:Notify</code>, be mindful of the position and direction to avoid overlapping notifications. Properly managing the UI state with <code>Library:Toggle</code> can enhance user experience significantly.</p>
-        </div>
     </div>
 
     <!-- Footer section -->
