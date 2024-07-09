@@ -652,17 +652,14 @@ function Sections:AddSlider(Name, Value, Min, Max, FixValues, Callback)
 
 	self:ResizePage()
 
-	local Holder = Utility.Create("ImageLabel", {
+	local Holder = Utility.Create("Frame", {
 		Parent = self.Section.Frame,
-		BackgroundTransparency = 1,
+		BackgroundTransparency = 0.1,
+		BackgroundColor3 = Color3.fromRGB(15, 15, 15),
 		BorderSizePixel = 0,
 		Position = UDim2.new(1, -50, 0.5, -8),
 		Size = UDim2.new(0.950, 0, 0, 50),
 		ZIndex = 2,
-		ImageColor3 = Color3.fromRGB(17, 17, 17),
-		Image = "rbxassetid://5028857472",
-		ScaleType = Enum.ScaleType.Slice,
-		SliceCenter = Rect.new(2, 2, 298, 298)
 	})
 
 	table.insert(self.Instances, {instance = Holder, Size = Holder.Size})
@@ -672,7 +669,7 @@ function Sections:AddSlider(Name, Value, Min, Max, FixValues, Callback)
 		Parent = Holder,
 		AnchorPoint = Vector2.new(0, 0.5),
 		BackgroundTransparency = 1,
-		Position = UDim2.new(0.02, 0, 0.320, 0),
+		Position = UDim2.new(0.02, 0, 0.280, 0),
 		Size = UDim2.new(0.5, 0, 1, 0),
 		ZIndex = 3,
 		Font = Enum.Font.Arial,
@@ -701,7 +698,7 @@ function Sections:AddSlider(Name, Value, Min, Max, FixValues, Callback)
 		Parent = Holder,
 		Name = "Bar",
 		ZIndex = 2,
-		BackgroundColor3 = Color3.fromRGB(0, 0, 0),
+		BackgroundColor3 = Color3.fromRGB(45, 45, 45),
 		Size = UDim2.fromScale(0.633, 0.22),
 		Position = UDim2.fromScale(0.205, 0.550)
 	})
@@ -730,7 +727,7 @@ function Sections:AddSlider(Name, Value, Min, Max, FixValues, Callback)
 		Parent = Fill,
 		Name = "Circle",
 		ImageTransparency = 1,
-		Size = UDim2.fromOffset(19, 15),
+		Size = UDim2.fromOffset(19, 19),
 		Position = UDim2.fromScale(-0.5, 0),
 		ZIndex = 2,
 		BackgroundTransparency = 1,
@@ -761,9 +758,9 @@ function Sections:AddSlider(Name, Value, Min, Max, FixValues, Callback)
 		if input.UserInputType == Enum.UserInputType.MouseButton1 then
 			dragging = true
 
-			TS:Create(Circle, TweenInfo.new(0.1), {Position = UDim2.new(0, math.clamp(input.Position.X - Bar.AbsolutePosition.X, 0, Bar.AbsoluteSize.X) - 15, 0, -2)}):Play()
+			TS:Create(Circle, TweenInfo.new(0.1), {Position = UDim2.new(0, math.clamp(input.Position.X - Bar.AbsolutePosition.X, 0, Bar.AbsoluteSize.X) - 15, 0, -4)}):Play()
 
-			TS:Create(Circle, TweenInfo.new(0.2), {ImageTransparency = 0}):Play()
+			TS:Create(Circle, TweenInfo.new(0.01), {ImageTransparency = 0}):Play()
 
 			Callback(UpdateSlider(Bar, nil, Min, Max))		
 
@@ -775,7 +772,7 @@ function Sections:AddSlider(Name, Value, Min, Max, FixValues, Callback)
 				return
 			end
 
-			TS:Create(Circle, TweenInfo.new(0.2), {ImageTransparency = 1}):Play()
+			TS:Create(Circle, TweenInfo.new(0.01), {ImageTransparency = 1}):Play()
 		end
 	end)
 
@@ -788,7 +785,7 @@ function Sections:AddSlider(Name, Value, Min, Max, FixValues, Callback)
 	UIS.InputChanged:Connect(function(input)
 		if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
 
-			TS:Create(Circle, TweenInfo.new(0.1), {Position = UDim2.new(0, math.clamp(input.Position.X - Bar.AbsolutePosition.X, 0, Bar.AbsoluteSize.X) - 15, 0, -2)}):Play()
+			TS:Create(Circle, TweenInfo.new(0.1), {Position = UDim2.new(0, math.clamp(input.Position.X - Bar.AbsolutePosition.X, 0, Bar.AbsoluteSize.X) - 15, 0, -4)}):Play()
 
 			TS:Create(Circle, TweenInfo.new(0.2), {ImageTransparency = 0}):Play()
 
@@ -808,7 +805,7 @@ function Sections:AddSlider(Name, Value, Min, Max, FixValues, Callback)
 				return
 			end
 
-			TS:Create(Circle, TweenInfo.new(0.2), {ImageTransparency = 1}):Play()
+			TS:Create(Circle, TweenInfo.new(0.01), {ImageTransparency = 1}):Play()
 		end
 	end)
 
@@ -1135,7 +1132,7 @@ function Pages:AddSection(Name : string)
 		["Parent"] = self.Page,
 		["SortOrder"] = Enum.SortOrder.LayoutOrder,
 		["Padding"] = UDim.new(0, 10),
-		["HorizontalAlignment"] = Enum.HorizontalAlignment.Left
+		["HorizontalAlignment"] = Enum.HorizontalAlignment.Center
 	})
 
 	local Section = Utility.Create("ImageLabel", {
@@ -1175,7 +1172,8 @@ function Pages:AddSection(Name : string)
 	Utility.Create("UIListLayout", {
 		["Parent"] = self.Page[Name],
 		["SortOrder"] = Enum.SortOrder.LayoutOrder,
-		["Padding"] = UDim.new(0, 8)
+		["Padding"] = UDim.new(0, 8),
+		["HorizontalAlignment"] = Enum.HorizontalAlignment.Center
 	})
 
 	Utility.Create("TextLabel", {
@@ -1327,7 +1325,7 @@ function BoogaUI.New(Name : string)
 		["Size"] = UDim2.fromScale(0.996, 1),
 		["CanvasSize"] = UDim2.fromScale(0, 8),
 		["ScrollBarThickness"] = 6,
-		["ScrollBarImageColor3"] = Color3.fromRGB(0, 0, 0),
+		["ScrollBarImageColor3"] = Color3.fromRGB(255, 255, 255),
 		["BorderSizePixel"] = 0
 	})
 
@@ -1336,7 +1334,8 @@ function BoogaUI.New(Name : string)
 	Utility.Create("UIListLayout", {
 		["Parent"] = PagesScrolling,
 		["SortOrder"] = Enum.SortOrder.LayoutOrder,
-		["Padding"] = UDim.new(0, 10)
+		["Padding"] = UDim.new(0, 10),
+		["HorizontalAlignment"] = Enum.HorizontalAlignment.Center
 	})
 
 	local Top = Utility.Create("ImageLabel", {
@@ -1367,8 +1366,8 @@ function BoogaUI.New(Name : string)
 		Name = "Title",
 		AnchorPoint = Vector2.new(0, 0.5),
 		BackgroundTransparency = 1,
-		Position = UDim2.new(0, 12, 0, 26),
-		Size = UDim2.new(1.05, -46, 0, 16),
+		Position = UDim2.new(0, 12, 0, 28),
+		Size = UDim2.new(1.018, -46, 0.722, 16),
 		Font = Enum.Font.Gotham,
 		RichText = true,
 		TextColor3 = Color3.fromRGB(255, 255, 255),
@@ -1466,7 +1465,9 @@ function BoogaUI:AddPage(Title, Icon)
 		["TextSize"] = 18,
 		["Font"] = Enum.Font.Arial,
 		["TextColor3"] = Color3.fromRGB(180,180,180),
-		["Size"] = UDim2.fromScale(1, 1)
+		["Size"] = UDim2.new(1, -10, 1, 0),
+		["Position"] = UDim2.new(0,10,0,0),
+		["TextXAlignment"] = 0
 	})
 
 	local Icon = Utility.Create("ImageLabel", {
