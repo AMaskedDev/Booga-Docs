@@ -154,4 +154,77 @@ end)</code></pre>
             <div class="description">
                 <strong>Title:</strong> <code>&lt;string&gt;</code> - Title of textbox
                 <br>
-                <strong>Callback:</strong> <code>&lt;functi
+                <strong>Callback:</strong> <code>&lt;function&gt;</code>
+                <br>
+                <strong>Return:</strong> (text, focus)
+                <br>
+                <strong>Text:</strong> <code>&lt;string&gt;</code> - Textbox content
+                <br>
+                <strong>Focus:</strong> <code>&lt;boolean&gt;</code> - Focus lost signal
+            </div>
+            <div class="return">
+                <strong>Return:</strong> <code>textbox &lt;Instance&gt;</code>
+            </div>
+            <div class="code-snippet">
+                <pre><code>mySection:AddTextBox("Enter Text", function(text)
+    print("Text entered:", text)
+end)</code></pre>
+            </div>
+        </div>
+
+        <!-- Sections:AddKeybind function documentation -->
+        <div class="function">
+            <h2>Sections:AddKeybind(Title, Key, Callback)</h2>
+            <div class="description">
+                <strong>Title:</strong> <code>&lt;string&gt;</code> - Title of keybind
+                <br>
+                <strong>Key:</strong> <code>&lt;keycode&gt;</code> - Default binded key
+                <br>
+                <strong>Callback:</strong> <code>&lt;function&gt;</code>
+                <br>
+                <strong>Return:</strong> (update)
+                <br>
+                <strong>Key:</strong> <code>&lt;KeyCode&gt;</code> - Key pressed
+            </div>
+            <div class="return">
+                <strong>Return:</strong> <code>keybind &lt;Instance&gt;</code>
+            </div>
+            <div class="code-snippet">
+                <pre><code>mySection:AddKeybind("Bind Key", Enum.KeyCode.F, function()
+    print("Key pressed")
+end)</code></pre>
+            </div>
+        </div>
+
+        <!-- Sections:AddSlider function documentation -->
+        <div class="function">
+            <h2>Sections:AddSlider(Title, Value, Min, Max, FixValues, Callback)</h2>
+            <div class="description">
+                <strong>Title:</strong> <code>&lt;string&gt;</code> - Title of slider
+                <br>
+                <strong>Value:</strong> <code>&lt;number&gt;</code> - Default value of slider
+                <br>
+                <strong>Min:</strong> <code>&lt;number&gt;</code> - Minimum value of slider
+                <br>
+                <strong>Max:</strong> <code>&lt;number&gt;</code> - Maximum value of slider
+                <br>
+                <strong>FixValues:</strong> <code>&lt;number&gt;</code> - Fix values
+                <br>
+                <strong>Callback:</strong> <code>&lt;function&gt;</code>
+                <br>
+                <strong>Return:</strong> (value)
+                <br>
+                <strong>Value:</strong> <code>&lt;number&gt;</code> - New slider value
+            </div>
+            <div class="return">
+                <strong>Return:</strong> <code>slider &lt;Instance&gt;</code>
+            </div>
+            <div class="code-snippet">
+                <pre><code>mySection:AddSlider("Adjust Value", 50, 0, 100, 1, function(value)
+    print("Slider value:", value)
+end)</code></pre>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
