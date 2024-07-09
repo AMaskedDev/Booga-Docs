@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism-tomorrow.min.css" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-lua.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-lua.min.js"></script>
 
     <title>Library Documentation</title>
     <style>
@@ -18,7 +18,7 @@
             background-color: #444444;
             color: #ffffffb1;
             background-size: 40px 40px;
-  background-image: radial-gradient(circle, #ffffff05 2px, rgba(0, 0, 0, 0) 1px);
+            background-image: radial-gradient(circle, #ffffff05 2px, rgba(0, 0, 0, 0) 1px);
         }
 
         /* Header styling */
@@ -59,13 +59,28 @@
             border-radius: 5px;
             overflow-x: auto;
             margin-bottom: 20px;
+            position: relative;
+        }
+
+        /* Copy button styling */
+        .copy-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ffffff17;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 12px;
         }
 
         /* Inline code styling */
         code {
             font-family: 'Courier New', Courier, monospace;
             color: #ffffff;
-            font-weight: 520;
+            font-weight: 20;
         }
 
         /* Description block styling */
@@ -115,14 +130,6 @@
             width: 100%;
         }
 
-        /* Add more specific styles as needed */
-        .code-snippet {
-            background: #4a4a4a;
-            padding: 10px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-        }
-
         .tip {
             background: #e8f5e9;
             padding: 10px;
@@ -140,12 +147,22 @@
         }
 
     </style>
+    <script>
+        function copyToClipboard(element) {
+            const text = element.querySelector('code').textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Copied to clipboard');
+            }).catch(err => {
+                console.error('Could not copy text: ', err);
+            });
+        }
+    </script>
 </head>
 <body>
     <!-- Header section -->
     <header>
         <h1>Booga UI Library Documentation</h1>
-        <p>An overview with examples ov the UI library by Booga</p>
+        <p>An overview with examples of the UI library by Booga</p>
     </header>
     
     <!-- Main content container -->
@@ -166,7 +183,7 @@
                 <strong>Return:</strong> <code>Library &lt;table&gt;</code>
             </div>
             <div class="code-snippet">
-                <pre><code class="language-lua">local myLibrary = Library.New("My Awesome UI")</code></pre>
+                <pre><button class="copy-button" onclick="copyToClipboard(this.parentElement)">Copy</button><code class="language-lua">local myLibrary = Library.New("My Awesome UI")</code></pre>
             </div>
         </div>
 
@@ -177,7 +194,7 @@
                 <strong>Return:</strong> <code>nil</code> - Toggles UI
             </div>
             <div class="code-snippet">
-                <pre><code class="language-lua">myLibrary:Toggle()</code></pre>
+                <pre><button class="copy-button" onclick="copyToClipboard(this.parentElement)">Copy</button><code class="language-lua">myLibrary:Toggle()</code></pre>
             </div>
         </div>
 
@@ -201,7 +218,7 @@
                 <strong>Value:</strong> <code>&lt;boolean&gt;</code> - Accepted or cancelled
             </div>
             <div class="code-snippet">
-                <pre><code class="language-lua">myLibrary:Notify("Notice", "This is a notification", UDim2.new(0,0,0,0), UDim2.new(1,0,1,0), function(value)
+                <pre><button class="copy-button" onclick="copyToClipboard(this.parentElement)">Copy</button><code class="language-lua">myLibrary:Notify("Notice", "This is a notification", UDim2.new(0,0,0,0), UDim2.new(1,0,1,0), function(value)
     print("Notification result:", value)
 end)</code></pre>
             </div>
@@ -219,185 +236,46 @@ end)</code></pre>
                 <strong>Return:</strong> <code>Pages &lt;table&gt;</code>
             </div>
             <div class="code-snippet">
-                <pre><code class="language-lua">local myPage = myLibrary:AddPage("Home", "rbxassetid://123456")</code></pre>
+                <pre><button class="copy-button" onclick="copyToClipboard(this.parentElement)">Copy</button><code class="language-lua">local page = myLibrary:AddPage("Main Page", 1234567890)</code></pre>
             </div>
         </div>
 
-        <!-- Pages:AddSection function documentation -->
+        <!-- Page:AddSection function documentation -->
         <div class="function">
-            <h2>Pages:AddSection(Title)</h2>
+            <h2>Page:AddSection(Title)</h2>
             <div class="description">
                 <strong>Title:</strong> <code>&lt;string&gt;</code> - Title of section
             </div>
             <div class="return">
-                <strong>Return:</strong> <code>Sections &lt;table&gt;</code>
+                <strong>Return:</strong> <code>Section &lt;table&gt;</code>
             </div>
             <div class="code-snippet">
-                <pre><code class="language-lua">local mySection = myPage:AddSection("Main Section")</code></pre>
+                <pre><button class="copy-button" onclick="copyToClipboard(this.parentElement)">Copy</button><code class="language-lua">local section = page:AddSection("Main Section")</code></pre>
             </div>
         </div>
 
-        <!-- Pages:AddSearchBar function documentation -->
+        <!-- Section:AddButton function documentation -->
         <div class="function">
-            <h2>Pages:AddSearchBar()</h2>
-            <div class="return">
-                <strong>Return:</strong> <code>nil</code> - Adds Search Bar to the page
-            </div>
-            <div class="code-snippet">
-                <pre><code class="language-lua">myPage:AddSearchBar()</code></pre>
-            </div>
-        </div>
-
-        <!-- Sections:AddButton function documentation -->
-        <div class="function">
-            <h2>Sections:AddButton(Title, Callback)</h2>
+            <h2>Section:AddButton(Title, Callback)</h2>
             <div class="description">
                 <strong>Title:</strong> <code>&lt;string&gt;</code> - Title of button
-                <br>
-                <strong>Callback:</strong> <code>&lt;function&gt;</code>
             </div>
             <div class="return">
-                <strong>Return:</strong> <code>button &lt;Instance&gt;</code>
+                <strong>Callback:</strong> <code>&lt;function&gt;</code>
+                <br>
+                <strong>Return:</strong> <code>nil</code>
             </div>
             <div class="code-snippet">
-                <pre><code class="language-lua">mySection:AddButton("Click Me", function()
+                <pre><button class="copy-button" onclick="copyToClipboard(this.parentElement)">Copy</button><code class="language-lua">section:AddButton("Click Me", function()
     print("Button clicked")
 end)</code></pre>
             </div>
         </div>
-
-        <!-- Sections:AddToggle function documentation -->
-        <div class="function">
-            <h2>Sections:AddToggle(Title, IsEnabled, Callback)</h2>
-            <div class="description">
-                <strong>Title:</strong> <code>&lt;string&gt;</code> - Title of toggle
-                <br>
-                <strong>IsEnabled:</strong> <code>&lt;boolean&gt;</code> - Default value of toggle
-                <br>
-                <strong>Callback:</strong> <code>&lt;function&gt;</code>
-                <br>
-                <strong>Return:</strong> (value, update)
-                <br>
-                <strong>Value:</strong> <code>&lt;boolean&gt;</code> - New toggle value
-            </div>
-            <div class="return">
-                <strong>Return:</strong> <code>toggle &lt;Instance&gt;</code>
-            </div>
-            <div class="code-snippet">
-                <pre><code class="language-lua">mySection:AddToggle("Enable Feature", true, function(value)
-    print("Toggle value:", value)
-end)</code></pre>
-            </div>
-        </div>
-
-        <!-- Sections:AddTextBox function documentation -->
-        <div class="function">
-            <h2>Sections:AddTextBox(Title, Callback)</h2>
-            <div class="description">
-                <strong>Title:</strong> <code>&lt;string&gt;</code> - Title of textbox
-                <br>
-                <strong>Callback:</strong> <code>&lt;function&gt;</code>
-                <br>
-                <strong>Return:</strong> (text, focus)
-                <br>
-                <strong>Text:</strong> <code>&lt;string&gt;</code> - Textbox content
-                <br>
-                <strong>Focus:</strong> <code>&lt;boolean&gt;</code> - Focus lost signal
-            </div>
-            <div class="return">
-                <strong>Return:</strong> <code>textbox &lt;Instance&gt;</code>
-            </div>
-            <div class="code-snippet">
-                <pre><code class="language-lua">mySection:AddTextBox("Enter Text", function(text)
-    print("Text entered:", text)
-end)</code></pre>
-            </div>
-        </div>
-
-        <!-- Sections:AddKeybind function documentation -->
-        <div class="function">
-            <h2>Sections:AddKeybind(Title, Key, Callback)</h2>
-            <div class="description">
-                <strong>Title:</strong> <code>&lt;string&gt;</code> - Title of keybind
-                <br>
-                <strong>Key:</strong> <code>&lt;keycode&gt;</code> - Default binded key
-                <br>
-                <strong>Callback:</strong> <code>&lt;function&gt;</code>
-                <br>
-                <strong>Return:</strong> (update)
-                <br>
-                <strong>Key:</strong> <code>&lt;KeyCode&gt;</code> - Key pressed
-            </div>
-            <div class="return">
-                <strong>Return:</strong> <code>keybind &lt;Instance&gt;</code>
-            </div>
-            <div class="code-snippet">
-                <pre><code class="language-lua">mySection:AddKeybind("Bind Key", Enum.KeyCode.F, function()
-    print("Key pressed")
-end)</code></pre>
-            </div>
-        </div>
-
-        <!-- Sections:AddSlider function documentation -->
-        <div class="function">
-            <h2>Sections:AddSlider(Title, Value, Min, Max, FixValues, Callback)</h2>
-            <div class="description">
-                <strong>Title:</strong> <code>&lt;string&gt;</code> - Title of slider
-                <br>
-                <strong>Value:</strong> <code>&lt;number&gt;</code> - Default value of slider
-                <br>
-                <strong>Min:</strong> <code>&lt;number&gt;</code> - Minimum value of dragger
-                <br>
-                <strong>Max:</strong> <code>&lt;number&gt;</code> - Maximum value of dragger
-                <br>
-                <strong>FixValues:</strong> <code>&lt;boolean&gt;</code> - If textbox values are bigger than max or smaller than min, it will set to default max or min value
-                <br>
-                <strong>Callback:</strong> <code>&lt;function&gt;</code>
-                <br>
-                <strong>Return:</strong> (value, update)
-                <br>
-                <strong>Value:</strong> <code>&lt;number&gt;</code> - Value of slider
-            </div>
-            <div class="return">
-                <strong>Return:</strong> <code>slider &lt;Instance&gt;</code>
-            </div>
-            <div class="code-snippet">
-                <pre><code class="language-lua">mySection:AddSlider("Volume", 50, 0, 100, true, function(value)
-    print("Slider value:", value)
-end)</code></pre>
-            </div>
-        </div>
-
-        <!-- Sections:AddDropdown function documentation -->
-        <div class="function">
-            <h2>Sections:AddDropdown(Title, Entries, Callback)</h2>
-            <div class="description">
-                <strong>Title:</strong> <code>&lt;string&gt;</code> - Title of dropdown
-                <br>
-                <strong>Entries:</strong> <code>&lt;table&gt;</code> - Content of dropdown
-                <br>
-                <strong>Callback:</strong> <code>&lt;function&gt;</code>
-                <br>
-                <strong>Return:</strong> (value)
-                <br>
-                <strong>Value:</strong> <code>&lt;string&gt;</code> - Text of button clicked
-            </div>
-            <div class="return">
-                <strong>Return:</strong> <code>dropdown &lt;Instance&gt;</code>
-            </div>
-            <div class="code-snippet">
-                <pre><code class="language-lua">local dropdownEntries = {"Option 1", "Option 2", "Option 3"}
-mySection:AddDropdown("Select Option", dropdownEntries, function(value)
-    print("Selected value:", value)
-end)</code></pre>
-            </div>
-        </div>
-
     </div>
 
     <!-- Footer section -->
     <footer>
-        <p>&copy; 2024 Library Documentation. All rights reserved.</p>
+        <p>Booga UI Library Documentation &copy; 2023</p>
     </footer>
 </body>
 </html>
