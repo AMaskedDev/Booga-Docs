@@ -63,7 +63,7 @@ booga's ui says hi ;)
 local hub = Library.New("Tutorial")</code></pre>
 
     <br>
-    <p>Last thing in this segment is the <code class="language-lua">:Toggle()</code></p>
+    <p>Last thing in this segment is the <code class="language-lua">Library:Toggle()</code></p>
     <p>It basically turns on / off the UI without destroying it <i>(has a sick animation)</i></p>
     <p>Here is a example usage</p>
     
@@ -152,8 +152,8 @@ local exampleButton = tutorialSection:AddButton("Testing Button", function()
 end)</code></pre> <p>Can you guess what happens when the button is clicked? That's correct <s>nothing :)</s> it prints something <s><i>idk im bored to copy paste</i></s></p>
     </div>
 
-    <div class="Segment 3 - toggles">
-        <h1>Segment 3 - Toggles</h1>
+    <div class="Segment 4 - toggles">
+        <h1>Segment 4 - Toggles</h1>
         <p>Let's get this over with 😭</p>
 
         <br>
@@ -175,8 +175,8 @@ local exampleToggle = tutorialSection:AddButton("Testing Toggle", function(v)
 end)</code></pre>
     </div>
     
-    <div class="Segment 3 - dropdowns">
-        <h1>Segment 3 - Dropdowns</h1>
+    <div class="Segment 5 - dropdowns">
+        <h1>Segment 5 - Dropdowns</h1>
         <p>Welcome to dropdowns, they are downs that drop. No okay so this segment we are learning how to add dropdowns. It's again really simple if you understand it. So to create an empty dropdown we simply need to use <code class="language-lua">:AddDropdown()</code>, and in our code its <code class="language-lua">local exampleDropdown = tutorialSection:AddDropdown(Title, Entries, Callback)</code>, now you probably are wandering what are <code>Entries</code> just like I did at first. It's basically a table <code>{"Option 1", "Option 2", "Option 3"}</code></p>
         
         <p>So, if we'd like to impliment it into our little example script its basically the code below</p>
@@ -191,6 +191,72 @@ tutorialPage:AddSearchBar()
 
 local exampleDropdown = tutorialSection:AddDropdown("Example Dropdown", {"Option 1", "Option 2", "Option 3"}, function(v) end)</code></pre>
 
+    </div>
+
+    <div class="Segment 6 - sliders">
+        <h1>Segment 6 - Sliders</h1>
+        <p>Sliders, you can drag and uh. So to use sliders we can use the <code class="language-lua">:AddSlider(Title, Value, Min, Max, FixValues, Callback)</code>, now ur probably wondering whats <code>Title</code>, i meant <code>FixValues</code>, well FixValues are basically <code> If textbox values are bigger than max or smaller than min it will set to default max or min value</code></p>
+
+        <p>Let's write a simple dropdown example</p>
+
+        <pre><code class="language-lua">local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/bbbPriv/BOOGA-UI/main/booga%20ui.lua"))()
+
+local hub = Library.New("Tutorial")
+
+local tutorialPage = hub:AddPage("Example Page", 10016745130)
+local tutorialSection = tutorialPage:AddSection("Example Section!")
+tutorialPage:AddSearchBar()
+
+local exampleSlider = tutorialSection:AddSlider("Example Slider", 50, 0, 100, 15, function(v) 
+    print(v.Value) 
+end)</code></pre>
+    </div>
+
+    <div class="Segment 7 - textbox">
+        <h1>Segment 7 - Textboxes</h1>
+        <p>Hello gadies and lentlemen, today we are learn how to make a textbox, todays usage isssss <code class="language-lua">:AddTextBox(Title, Callback)</code> <i>im not being paid for this</i>, where callback is every time you type in the text box, your can for example print it like this</p>
+
+        <pre><code class="language-lua">tutorialSection:AddTextBox("Example Textbox", function(v) 
+    print(v) 
+end)</code></pre>
+    </div>
+
+    <div class="Segment 8 - keybinds">
+        <h1>Segment 8 - Keybinds</h1>
+        <p>This is an intresting one, atleast for me so thats why I will go into more details.</p>
+        <p>This segment explains keybinds, you are able to bind ANY keyboard key and it will execute code or a function every time the key is pressed of course except if you are typing in chat, or your in the escape menu. It also registers when the UI is closed. The way to use it <code class="language-lua">AddKeybind(Title, Key, Callback)</code>, where <code>Key</code> is the input needed to be pressed for callback to be executed</p>
+        <p>Let's create an example, shall we?</p>
+
+        <pre><code class="language-lua">local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/bbbPriv/BOOGA-UI/main/booga%20ui.lua"))()
+
+local hub = Library.New("Tutorial")
+
+local tutorialPage = hub:AddPage("Example Page", 10016745130)
+local tutorialSection = tutorialPage:AddSection("Example Section!")
+tutorialPage:AddSearchBar()
+
+local exampleKeybind = tutorialSection:AddSlider("Example Keybind",Enum.Keycode.X,function(v) 
+    print("Executed") 
+end)</code></pre>
+    <p>Here when the key button <code>x</code> is pressed, it will print 'Executed' on the console.</p>
+    </div>
+
+    <div class="Segment 9 - Notify">
+        <h1>Segment 9 - Notifications</h1>
+        <p>Notifications is quite intresting, you can for example warn the user that the script wont work because a condition is met.</p>
+        <p>For example, knowing the usage is <code class="language-lua">Library:Notify(Title, Text, Position (UDim2), Direction(UDim2), Callback)</code>where <code>Position</code> is the starting position and <code>Direction</code> is the end position after tweening we can do the below script.</p>
+        <pre><code class="language-lua">local foo = 10
+local bar = 5
+
+if foo >= bar then tutorialSection:Notify("Condition met", "It seems that foo is bigger than bar", UDim2.new(0,0,0,0), UDim2.new(1,0,1,0), function() 
+        print("Woah!")
+    end)
+end</code></pre>
+    </div>
+
+    <div class="Segment 10 - Dialog">
+        <h1>Segment 10 - Dialog</h1>
+        <p>In this segment we learn about dialog, they are quite useful, for example when prompting players to doing something risky. The usage is really simple <code class="language-lua">Library:Dialog(Title, Text, Callback)</code></p>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-core.min.js"></script>
