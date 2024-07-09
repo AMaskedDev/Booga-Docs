@@ -54,13 +54,13 @@ booga's ui says hi ;)
         <pre><code class="language-lua">local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/bbbPriv/BOOGA-UI/main/booga%20ui.lua"))()</code></pre>
         <br>
         <p>After we import the library its really straight forward to create an empty window.</p>
-        <p>We call the <code class="language-lua">Library:New()</code> and a string as parameter for the title</p>
-        <p>for example -> <code class="language-lua">local hub = Library:New(title)</code></p>
+        <p>We call the <code class="language-lua">Library.New()</code> and a string as parameter for the title</p>
+        <p>for example -> <code class="language-lua">local hub = Library.New(title)</code></p>
         <p>with that we make a simple window that we can drag around.</p>
         <p></p>
         <pre><code class="language-lua">local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/bbbPriv/BOOGA-UI/main/booga%20ui.lua"))()
 
-local hub = Library:New("Tutorial")</code></pre>
+local hub = Library.New("Tutorial")</code></pre>
 
     <br>
     <p>Last thing in this segment is the <code class="language-lua">:Toggle()</code></p>
@@ -69,7 +69,7 @@ local hub = Library:New("Tutorial")</code></pre>
     
     <pre><code class="language-lua">local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/bbbPriv/BOOGA-UI/main/booga%20ui.lua"))()
 
-local hub = Library:New("Tutorial")
+local hub = Library.New("Tutorial")
 hub:Toggle()</code></pre> <p>In this case it closes the UI because it was already enabled.</p>
     </div>
 
@@ -83,14 +83,14 @@ hub:Toggle()</code></pre> <p>In this case it closes the UI because it was alread
         <p>Remembering out last example code</p>
         <pre><code class="language-lua">local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/bbbPriv/BOOGA-UI/main/booga%20ui.lua"))()
 
-local hub = Library:New("Tutorial")</code></pre>
+local hub = Library.New("Tutorial")</code></pre>
 
     <p>We can continue from there.</p>
     <p>So to make a page we use the <code class="language-lua">local hub</code>, for example <code class="language-lua">local mainPage = hub:AddPage(title, id)</code>, lets skip the title for a second. You are probably wondering whats that <code>id</code> parameter, it's just the roblox asset ID for the image next to the text <i><a href="https://create.roblox.com/store/asset/10016745130/Hecker?keyword=hecker&pageNumber=1&pagePosition=3">10016745130</a> for example. and the title is the pages name if i put for example</i></p>
 
     <pre><code class="language-lua">local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/bbbPriv/BOOGA-UI/main/booga%20ui.lua"))()
 
-local hub = Library:New("Tutorial")
+local hub = Library.New("Tutorial")
 local tutorialPage = hub:AddPage("Example Page", 10016745130)</code></pre>
         
     <p>We get this abomination <a href="https://imgur.com/a/jfIQZAG">https://imgur.com/a/jfIQZAG</a>. Unfortunatly there isn't any workaround the time i'm writing it.</p>
@@ -107,7 +107,7 @@ local tutorialPage = hub:AddPage("Example Page", 10016745130)</code></pre>
     <p>The finished example code for this 1.5 segments in below</p>
     <pre><code class="language-lua">local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/bbbPriv/BOOGA-UI/main/booga%20ui.lua"))()
 
-local hub = Library:New("Tutorial")
+local hub = Library.New("Tutorial")
 
 local tutorialPage = hub:AddPage("Example Page", 10016745130)
 local tutorialSection = tutorialPage:AddSection("Example Section!")</pre></code>
@@ -121,7 +121,7 @@ local tutorialSection = tutorialPage:AddSection("Example Section!")</pre></code>
 
     <pre><code class="language-lua">local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/bbbPriv/BOOGA-UI/main/booga%20ui.lua"))()
 
-local hub = Library:New("Tutorial")
+local hub = Library.New("Tutorial")
 
 local tutorialPage = hub:AddPage("Example Page", 10016745130)
 local tutorialSection = tutorialPage:AddSection("Example Section!")
@@ -141,7 +141,7 @@ tutorialPage:AddSearchBar()</pre></code>
 
         <pre><code class="language-lua">local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/bbbPriv/BOOGA-UI/main/booga%20ui.lua"))()
 
-local hub = Library:New("Tutorial")
+local hub = Library.New("Tutorial")
 
 local tutorialPage = hub:AddPage("Example Page", 10016745130)
 local tutorialSection = tutorialPage:AddSection("Example Section!")
@@ -164,7 +164,7 @@ end)</code></pre> <p>Can you guess what happens when the button is clicked? That
 
         <pre><code class="language-lua">local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/bbbPriv/BOOGA-UI/main/booga%20ui.lua"))()
 
-local hub = Library:New("Tutorial")
+local hub = Library.New("Tutorial")
 
 local tutorialPage = hub:AddPage("Example Page", 10016745130)
 local tutorialSection = tutorialPage:AddSection("Example Section!")
@@ -183,7 +183,7 @@ end)</code></pre>
 
         <pre><code class="language-lua">local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/bbbPriv/BOOGA-UI/main/booga%20ui.lua"))()
 
-local hub = Library:New("Tutorial")
+local hub = Library.New("Tutorial")
 
 local tutorialPage = hub:AddPage("Example Page", 10016745130)
 local tutorialSection = tutorialPage:AddSection("Example Section!")
