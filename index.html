@@ -3,289 +3,197 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism-tomorrow.min.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-lua.min.js"></script>
-
-    <title>Library Documentation</title>
+    <title>Booga's UI Library Documentation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-okaidia.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-        /* Basic page styling */
         body {
-            font-family: 'Inter', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #444444;
-            color: #ffffffb1;
-            background-size: 40px 40px;
-            background-image: radial-gradient(circle, #ffffff05 2px, rgba(0, 0, 0, 0) 1px);
-        }
-
-        /* Header styling */
-        header {
-            background-color: #4caf4f69;
-            color: #fff;
-            padding: 20px 0;
-            text-align: center;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Container styling */
-        .container {
-            width: 90%;
-            margin: 20px auto;
+            font-family: 'Inter', Arial, sans-serif;
+            background-color: #1e1e1e;
+            color: #d4d4d4;
             padding: 20px;
-            padding-left: 50px;
-            padding-right: 50px;
-            background-color: #545454;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            line-height: 1.6;
         }
-
-        /* Function section styling */
-        .function {
-            margin-bottom: 30px;
-        }
-
-        /* Heading styles */
-        h1, h2, h3 {
-            color: #ffffff;
-        }
-
-        /* Code block styling */
         pre {
-            background: #545454;
-            padding: 15px;
+            padding: 10px;
+            background-color: #2d2d2d;
+            color: #d4d4d4;
             border-radius: 5px;
             overflow-x: auto;
-            margin-bottom: 20px;
-            position: relative;
         }
-
-        /* Copy button styling */
-        .copy-button {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: #ffffff17;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            cursor: pointer;
-            border-radius: 5px;
-            font-size: 12px;
-        }
-
-        /* Inline code styling */
-        code {
-            font-family: 'Courier New', Courier, monospace;
+        h1 {
             color: #ffffff;
-            font-weight: 20;
+        }
+        h25 {
+            padding-top:150px;
+            font-weight: bold;
+            font-size: 24px;
         }
 
-        /* Description block styling */
-        .description {
-            background: #494841;
-            padding: 15px;
-            border-left: 5px solid #4CAF50;
-            border-radius: 5px;
-            margin-bottom: 10px;
+        a {
+            color:rgb(163, 39, 205);
         }
-
-        /* Return block styling */
-        .return {
-            background: #41433f;
-            padding: 15px;
-            border-left: 5px solid #4CAF50;
-            border-radius: 5px;
-            margin-bottom: 20px;
-        }
-
-        /* Additional decorative elements */
-        .note {
-            background: #393734;
-            padding: 10px;
-            border-left: 5px solid #2196F3;
-            border-radius: 5px;
-            margin-bottom: 20px;
-        }
-
-        .important {
-            background: #393734;
-            padding: 10px;
-            border-left: 5px solid #f44336;
-            border-radius: 5px;
-            margin-bottom: 20px;
-        }
-
-        /* Footer styling */
-        footer {
-            background-color: #2327233f;
-            color: #fff;
-            padding: 10px 0;
-            text-align: center;
-            margin-top: 20px;
-            position: relative;
-            bottom: 0;
-            width: 100%;
-        }
-
-        .tip {
-            background: #393734;
-            padding: 10px;
-            border-left: 5px solid #388E3C;
-            border-radius: 5px;
-            margin-bottom: 20px;
-        }
-
-        .warning {
-            background: #393734;
-            padding: 10px;
-            border-left: 5px solid #FB8C00;
-            border-radius: 5px;
-            margin-bottom: 20px;
-        }
-
     </style>
-    <script>
-        function copyToClipboard(element) {
-            const text = element.querySelector('code').textContent;
-            navigator.clipboard.writeText(text).then(() => {
-                alert('Copied to clipboard');
-            }).catch(err => {
-                console.error('Could not copy text: ', err);
-            });
-        }
-    </script>
 </head>
-<body>
-    <!-- Header section -->
-    <header>
-        <h1>Booga UI Library Documentation</h1>
-        <p>An overview with examples of the UI library by Booga</p>
-    </header>
+<br>
+    <h1>Booga's UI Library Documentation</h1>
+    <p>Welcome to the simple documentary on how to use the ui lib, with examples</p>
+    <pre><code class="language-lua">local title = "booga's ui"
+local welcome = "says hi ;)"
+print(title..welcome)
+
+------------------------
+booga's ui says hi ;)
+    </code></pre>
+    <br></br>
+
+    <div class="Segment 1">
+        <h1>Segment 1</h1>
+        <h3>Importing and creating a window</h3>
+        <p>First, to use the library we must import. Copy the below snippet and paste it into a script.</p>
+        <pre><code class="language-lua">local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/bbbPriv/BOOGA-UI/main/booga%20ui.lua"))()</code></pre>
+        <br>
+        <p>After we import the library its really straight forward to create an empty window.</p>
+        <p>We call the <code class="language-lua">Library:New()</code> and a string as parameter for the title</p>
+        <p>for example -> <code class="language-lua">local hub = Library:New(title)</code></p>
+        <p>with that we make a simple window that we can drag around.</p>
+        <p></p>
+        <pre><code class="language-lua">local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/bbbPriv/BOOGA-UI/main/booga%20ui.lua"))()
+
+local hub = Library:New("Tutorial")</code></pre>
+
+    <br>
+    <p>Last thing in this segment is the <code class="language-lua">:Toggle()</code></p>
+    <p>It basically turns on / off the UI without destroying it <i>(has a sick animation)</i></p>
+    <p>Here is a example usage</p>
     
-    <!-- Main content container -->
-    <div class="container">
-        
-        <!-- Note for users -->
-        <div class="warning">
-            Remember its a brief overview with examples, them examples can be used to make a functioning user interface, but is not recommended.
-        </div>
+    <pre><code class="language-lua">local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/bbbPriv/BOOGA-UI/main/booga%20ui.lua"))()
 
-        <div class="note">
-            Don't forget to include the snippet below and use the library.
-            <div class="code-snippet">
-                <pre><button class="copy-button" onclick="copyToClipboard(this.parentElement)">Copy</button><code class="language-lua">local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/bbbPriv/BOOGA-UI/main/booga%20ui.lua"))()</code></pre>
-            </div>
-        </div>
-
-        <br>
-        <br>
-
-        <!-- Library.New function documentation -->
-        <div class="function">
-            <h2>Library.New(title)</h2>
-            <div class="description">
-                <strong>Title:</strong> <code>&lt;string&gt;</code> - Title of the UI
-            </div>
-            <div class="return">
-                <strong>Return:</strong> <code>Library &lt;table&gt;</code>
-            </div>
-            <div class="code-snippet">
-                <pre><button class="copy-button" onclick="copyToClipboard(this.parentElement)">Copy</button><code class="language-lua">local myLibrary = Library.New("My Awesome UI")</code></pre>
-            </div>
-        </div>
-
-        <!-- Library:Toggle function documentation -->
-        <div class="function">
-            <h2>Library:Toggle()</h2>
-            <div class="return">
-                <strong>Return:</strong> <code>nil</code> - Toggles UI
-            </div>
-            <div class="code-snippet">
-                <pre><button class="copy-button" onclick="copyToClipboard(this.parentElement)">Copy</button><code class="language-lua">myLibrary:Toggle()</code></pre>
-            </div>
-        </div>
-
-        <!-- Library:Notify function documentation -->
-        <div class="function">
-            <h2>Library:Notify(Title, Text, Position, Direction, Callback)</h2>
-            <div class="description">
-                <strong>Title:</strong> <code>&lt;string&gt;</code> - Title of notification
-                <br>
-                <strong>Text:</strong> <code>&lt;string&gt;</code> - Description of notification
-                <br>
-                <strong>Position:</strong> <code>&lt;UDim2&gt;</code> - Position of start of the notification
-                <br>
-                <strong>Direction:</strong> <code>&lt;UDim2&gt;</code> - Direction of the notification
-            </div>
-            <div class="return">
-                <strong>Callback:</strong> <code>&lt;function&gt;</code> 
-                <br>
-                <strong>Return:</strong> (value)
-                <br>
-                <strong>Value:</strong> <code>&lt;boolean&gt;</code> - Accepted or cancelled
-            </div>
-            <div class="code-snippet">
-                <pre><button class="copy-button" onclick="copyToClipboard(this.parentElement)">Copy</button><code class="language-lua">myLibrary:Notify("Notice", "This is a notification", UDim2.new(0,0,0,0), UDim2.new(1,0,1,0), function(value)
-    print("Notification result:", value)
-end)</code></pre>
-            </div>
-        </div>
-
-        <!-- Library:AddPage function documentation -->
-        <div class="function">
-            <h2>Library:AddPage(Title, Icon)</h2>
-            <div class="description">
-                <strong>Title:</strong> <code>&lt;string&gt;</code> - Title of page
-                <br>
-                <strong>Icon:</strong> <code>&lt;string&gt;</code> - Asset ID of icon (optional)
-            </div>
-            <div class="return">
-                <strong>Return:</strong> <code>Pages &lt;table&gt;</code>
-            </div>
-            <div class="code-snippet">
-                <pre><button class="copy-button" onclick="copyToClipboard(this.parentElement)">Copy</button><code class="language-lua">local page = myLibrary:AddPage("Main Page", 1234567890)</code></pre>
-            </div>
-        </div>
-
-        <!-- Page:AddSection function documentation -->
-        <div class="function">
-            <h2>Page:AddSection(Title)</h2>
-            <div class="description">
-                <strong>Title:</strong> <code>&lt;string&gt;</code> - Title of section
-            </div>
-            <div class="return">
-                <strong>Return:</strong> <code>Section &lt;table&gt;</code>
-            </div>
-            <div class="code-snippet">
-                <pre><button class="copy-button" onclick="copyToClipboard(this.parentElement)">Copy</button><code class="language-lua">local section = page:AddSection("Main Section")</code></pre>
-            </div>
-        </div>
-
-        <!-- Section:AddButton function documentation -->
-        <div class="function">
-            <h2>Section:AddButton(Title, Callback)</h2>
-            <div class="description">
-                <strong>Title:</strong> <code>&lt;string&gt;</code> - Title of button
-            </div>
-            <div class="return">
-                <strong>Callback:</strong> <code>&lt;function&gt;</code>
-                <br>
-                <strong>Return:</strong> <code>nil</code>
-            </div>
-            <div class="code-snippet">
-                <pre><button class="copy-button" onclick="copyToClipboard(this.parentElement)">Copy</button><code class="language-lua">section:AddButton("Click Me", function()
-    print("Button clicked")
-end)</code></pre>
-            </div>
-        </div>
+local hub = Library:New("Tutorial")
+hub:Toggle()</code></pre> <p>In this case it closes the UI because it was already enabled.</p>
     </div>
 
-    <!-- Footer section -->
-    <footer>
-        <p>Booga UI Library Documentation &copy; 2023</p>
-    </footer>
+    <br></br>
+
+    <div class="Segment 2">
+        <h1>Segment 2</h1>
+        <p>In this sigment we will be learning how to create pages and sections.</p>
+        <p>Let's begin.</p>
+        <br>
+        <p>Remembering out last example code</p>
+        <pre><code class="language-lua">local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/bbbPriv/BOOGA-UI/main/booga%20ui.lua"))()
+
+local hub = Library:New("Tutorial")</code></pre>
+
+    <p>We can continue from there.</p>
+    <p>So to make a page we use the <code class="language-lua">local hub</code>, for example <code class="language-lua">local mainPage = hub:AddPage(title, id)</code>, lets skip the title for a second. You are probably wondering whats that <code>id</code> parameter, it's just the roblox asset ID for the image next to the text <i><a href="https://create.roblox.com/store/asset/10016745130/Hecker?keyword=hecker&pageNumber=1&pagePosition=3">10016745130</a> for example. and the title is the pages name if i put for example</i></p>
+
+    <pre><code class="language-lua">local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/bbbPriv/BOOGA-UI/main/booga%20ui.lua"))()
+
+local hub = Library:New("Tutorial")
+local tutorialPage = hub:AddPage("Example Page", 10016745130)</code></pre>
+        
+    <p>We get this abomination <a href="https://imgur.com/a/jfIQZAG">https://imgur.com/a/jfIQZAG</a>. Unfortunatly there isn't any workaround the time i'm writing it.</p>
+    
+    <br>
+
+    <h2>Segment 2.5</h2>
+    <p>In segment 2.5 we will now create sections, they hold the interactables in a organized place.</p>
+    
+    <br>
+
+    <p>Now, to create a section it's realllly simple, we just add a <code class="language-lua">local tutorialSection = tutorialPage:AddSection(title)</code> where title is the sections title and it basically creates an empty section for us that we can put our interactables into.</p>
+
+    <p>The finished example code for this 1.5 segments in below</p>
+    <pre><code class="language-lua">local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/bbbPriv/BOOGA-UI/main/booga%20ui.lua"))()
+
+local hub = Library:New("Tutorial")
+
+local tutorialPage = hub:AddPage("Example Page", 10016745130)
+local tutorialSection = tutorialPage:AddSection("Example Section!")</pre></code>
+    </div>
+
+    <br>
+
+    <h2>Segment 2.9</h2>
+    <p>In segment 2.9 we will learn how to make use of the search bar.</p>
+    <p>To make use of the search bar we need to have a page <i>It only searches on the current page</i> <code class="language-lua">page:AddSearchBar()</code> page is our <code class="language-lua">local tutorialPage = hub:AddPage("Example Page", 10016745130)</code> so to enable the search bar for our example page we will use this.</p>
+
+    <pre><code class="language-lua">local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/bbbPriv/BOOGA-UI/main/booga%20ui.lua"))()
+
+local hub = Library:New("Tutorial")
+
+local tutorialPage = hub:AddPage("Example Page", 10016745130)
+local tutorialSection = tutorialPage:AddSection("Example Section!")
+tutorialPage:AddSearchBar()</pre></code>
+
+
+    <br></br>
+
+    <div class="Segment 3 - btn">
+        <h1>Segment 3 - Buttons</h1>
+        
+        <p>Now here is the interactables part, which is really boring to make a documentation on, but im crazy.</p>
+
+        <br>
+
+        <p>Let's begin with the button. It's really simple just like every other interactable the library has. To create a button <i>using the previous example code</i> we can do the following. <code class="language-lua">local exampleButton = tutorialSection:AddButton(text, callback)</code>, you're probably wondering whats the <i>callback</i> thingus. Well is the function executed when clicking the button. Let's quickly make an example button.</p>
+
+        <pre><code class="language-lua">local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/bbbPriv/BOOGA-UI/main/booga%20ui.lua"))()
+
+local hub = Library:New("Tutorial")
+
+local tutorialPage = hub:AddPage("Example Page", 10016745130)
+local tutorialSection = tutorialPage:AddSection("Example Section!")
+tutorialPage:AddSearchBar()
+
+local exampleButton = tutorialSection:AddButton("Testing Button", function() 
+    print("I, the only button was clicked! truly a dream come true ;)")
+end)</code></pre> <p>Can you guess what happens when the button is clicked? That's correct <s>nothing :)</s> it prints something <s><i>idk im bored to copy paste</i></s></p>
+    </div>
+
+    <div class="Segment 3 - toggles">
+        <h1>Segment 3 - Toggles</h1>
+        <p>Let's get this over with 😭</p>
+
+        <br>
+
+        <p>Okay, to use toggles its the same as buttons, tho it takes different parameters. To create one we can really simply use this <code class="language-lua">local exampleToggle = tutorialSection:AddToggle(Title, IsEnabled, Callback)</code> now you might think what is the <code>IsEnabled</code>, no just kidding let's go straight into Callback. So again it takes a function() end but the functions takes a parameter v which stands for value, now this is <b>VERY IMPORTANT <i>it applies to dropdowns and other interactableshttps://imgur.com/a/jfIQZAG</i></b> when for example trying to print or save in another bool that toggle value you wont do <code class="language-lua">foo = toggle</code> you <b>MUST DO</b> <code class="language-lua">foo = toggle.value</code> insteant</p>
+
+        <p>Let's now add a test toggle to our script :)</p>
+
+        <pre><code class="language-lua">local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/bbbPriv/BOOGA-UI/main/booga%20ui.lua"))()
+
+local hub = Library:New("Tutorial")
+
+local tutorialPage = hub:AddPage("Example Page", 10016745130)
+local tutorialSection = tutorialPage:AddSection("Example Section!")
+tutorialPage:AddSearchBar()
+
+local exampleToggle = tutorialSection:AddButton("Testing Toggle", function(v) 
+    print("The toggle is now"..v.value)
+end)</code></pre>
+    </div>
+    
+    <div class="Segment 3 - dropdowns">
+        <h1>Segment 3 - Dropdowns</h1>
+        <p>Welcome to dropdowns, they are downs that drop. No okay so this segment we are learning how to add dropdowns. It's again really simple if you understand it. So to create an empty dropdown we simply need to use <code class="language-lua">:AddDropdown()</code>, and in our code its <code class="language-lua">local exampleDropdown = tutorialSection:AddDropdown(Title, Entries, Callback)</code>, now you probably are wandering what are <code>Entries</code> just like I did at first. It's basically a table <code>{"Option 1", "Option 2", "Option 3"}</code></p>
+        
+        <p>So, if we'd like to impliment it into our little example script its basically the code below</p>
+
+        <pre><code class="language-lua">local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/bbbPriv/BOOGA-UI/main/booga%20ui.lua"))()
+
+local hub = Library:New("Tutorial")
+
+local tutorialPage = hub:AddPage("Example Page", 10016745130)
+local tutorialSection = tutorialPage:AddSection("Example Section!")
+tutorialPage:AddSearchBar()
+
+local exampleDropdown = tutorialSection:AddDropdown("Example Dropdown", {"Option 1", "Option 2", "Option 3"}, function(v) end)</code></pre>
+
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/plugins/autoloader/prism-autoloader.min.js"></script>
 </body>
 </html>
