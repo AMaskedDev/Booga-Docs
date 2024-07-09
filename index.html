@@ -52,25 +52,30 @@ booga's ui says hi ;)
         <h3>Importing and creating a window</h3>
         <p>First, to use the library we must import. Copy the below snippet and paste it into a script.</p>
         <pre><code class="language-lua">local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/bbbPriv/BOOGA-UI/main/booga%20ui.lua"))()</code></pre>
+        <p>Returns -> Library - Type -> table</p>
         <br>
         <p>After we import the  library its really straight forward to create an empty window.</p>
         <p>We call the <code class="language-lua">Library.New()</code> and a string as parameter for the title</p>
-        <p>for example -> <code class="language-lua">local hub = Library.New(title)</code></p>
+        <p>for example -> <code class="language-lua">local Hub = Library.New(title)</code></p>
         <p>with that we make a simple window that we can drag around.</p>
         <p></p>
         <pre><code class="language-lua">local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/bbbPriv/BOOGA-UI/main/booga%20ui.lua"))()
 
-local hub = Library.New("Tutorial")</code></pre>
+local Hub = Library.New("Tutorial")</code></pre> <p>Returns -> Library - Type -> table</p>
 
     <br>
-    <p>Last thing in this segment is the <code class="language-lua">Library:Toggle()</code></p>
+    <p><code class="language-lua">Library:Toggle()</code></p>
     <p>It basically turns on / off the UI without destroying it <i>(has a sick animation)</i></p>
     <p>Here is a example usage</p>
     
     <pre><code class="language-lua">local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/bbbPriv/BOOGA-UI/main/booga%20ui.lua"))()
 
-local hub = Library.New("Tutorial")
-hub:Toggle()</code></pre> <p>In this case it closes the UI because it was already enabled.</p>
+local Hub = Library.New("Tutorial")
+Hub:Toggle()</code></pre> <p>In this case it closes the UI because it was already open.</p>
+<p>Returns -> nil</p>
+
+<pre><code class="language-lua">local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/bbbPriv/BOOGA-UI/main/booga%20ui.lua"))()</code></pre>
+
     </div>
 
     <br></br>
@@ -83,15 +88,15 @@ hub:Toggle()</code></pre> <p>In this case it closes the UI because it was alread
         <p>Remembering out last example code</p>
         <pre><code class="language-lua">local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/bbbPriv/BOOGA-UI/main/booga%20ui.lua"))()
 
-local hub = Library.New("Tutorial")</code></pre>
+local Hub = Library.New("Tutorial")</code></pre>
 
     <p>We can continue from there.</p>
-    <p>So to make a page we use the <code class="language-lua">local hub</code>, for example <code class="language-lua">local mainPage = hub:AddPage(title, id)</code>, lets skip the title for a second. You are probably wondering whats that <code>id</code> parameter, it's just the roblox asset ID for the image next to the text <i><a href="https://create.roblox.com/store/asset/10016745130/Hecker?keyword=hecker&pageNumber=1&pagePosition=3">10016745130</a> for example. and the title is the pages name if i put for example</i></p>
+    <p>So to make a page we use the <code class="language-lua">local Hub</code>, for example <code class="language-lua">local MainPage = Hub:AddPage(Title, ID)</code>, lets skip the title for a second. You are probably wondering whats that <code>ID</code> parameter, it's just the roblox asset ID for the image next to the text <i><a href="https://create.roblox.com/store/asset/10016745130/Hecker?keyword=hecker&pageNumber=1&pagePosition=3">10016745130</a> for example. and the title is the pages name if i put for example</i></p>
 
     <pre><code class="language-lua">local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/bbbPriv/BOOGA-UI/main/booga%20ui.lua"))()
 
-local hub = Library.New("Tutorial")
-local tutorialPage = hub:AddPage("Example Page", 10016745130)</code></pre>
+local Hub = Library.New("Tutorial")
+local TutorialPage = Hub:AddPage("Example Page", 10016745130)</code></pre> <p>Returns -> Pages - Type -> table</p>
         
     <p>We get this abomination <a href="https://imgur.com/a/jfIQZAG">https://imgur.com/a/jfIQZAG</a>. Unfortunatly there isn't any workaround the time i'm writing it.</p>
     
@@ -102,15 +107,15 @@ local tutorialPage = hub:AddPage("Example Page", 10016745130)</code></pre>
     
     <br>
 
-    <p>Now, to create a section it's realllly simple, we just add a <code class="language-lua">local tutorialSection = tutorialPage:AddSection(title)</code> where title is the sections title and it basically creates an empty section for us that we can put our interactables into.</p>
+    <p>Now, to create a section it's realllly simple, we just add a <code class="language-lua">local TutorialSection = TutorialPage:AddSection(Title)</code> where title is the sections title and it basically creates an empty section for us that we can put our interactables into.</p>
 
     <p>The finished example code for this 1.5 segments in below</p>
     <pre><code class="language-lua">local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/bbbPriv/BOOGA-UI/main/booga%20ui.lua"))()
 
-local hub = Library.New("Tutorial")
+local Hub = Library.New("Tutorial")
 
-local tutorialPage = hub:AddPage("Example Page", 10016745130)
-local tutorialSection = tutorialPage:AddSection("Example Section!")</pre></code>
+local TutorialPage = Hub:AddPage("Example Page", 10016745130)
+local TutorialSection = TutorialPage:AddSection("Example Section!")</pre></code> <p>Returns -> Sections - Type -> table</p>
     </div>
 
     <br>
@@ -121,11 +126,11 @@ local tutorialSection = tutorialPage:AddSection("Example Section!")</pre></code>
 
     <pre><code class="language-lua">local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/bbbPriv/BOOGA-UI/main/booga%20ui.lua"))()
 
-local hub = Library.New("Tutorial")
+local Hub = Library.New("Tutorial")
 
-local tutorialPage = hub:AddPage("Example Page", 10016745130)
-local tutorialSection = tutorialPage:AddSection("Example Section!")
-tutorialPage:AddSearchBar()</pre></code>
+local TutorialPage = Hub:AddPage("Example Page", 10016745130)
+local TutorialSection = TutorialPage:AddSection("Example Section!")
+TutorialPage:AddSearchBar()</pre></code> <p>Returns -> Pages - Type -> table</p>
 
 
     <br></br>
@@ -141,15 +146,15 @@ tutorialPage:AddSearchBar()</pre></code>
 
         <pre><code class="language-lua">local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/bbbPriv/BOOGA-UI/main/booga%20ui.lua"))()
 
-local hub = Library.New("Tutorial")
+local Hub = Library.New("Tutorial")
 
-local tutorialPage = hub:AddPage("Example Page", 10016745130)
-local tutorialSection = tutorialPage:AddSection("Example Section!")
-tutorialPage:AddSearchBar()
+local TutorialPage = Hub:AddPage("Example Page", 10016745130)
+local TutorialSection = TutorialPage:AddSection("Example Section!")
+TutorialPage:AddSearchBar()
 
-local exampleButton = tutorialSection:AddButton("Testing Button", function() 
+local ExampleButton = TutorialSection:AddButton("Testing Button", function() 
     print("I, the only button was clicked! truly a dream come true ;)")
-end)</code></pre> <p>Can you guess what happens when the button is clicked? That's correct <s>nothing :)</s> it prints something <s><i>idk im bored to copy paste</i></s></p>
+end)</code></pre> <p>Can you guess what happens when the button is clicked? That's correct <s>nothing :)</s> it prints something <s><i>idk im bored to copy paste</i></s></p> <p>Returns -> Button - Type -> Instance</p>
     </div>
 
     <div class="Segment 4 - toggles">
@@ -158,21 +163,21 @@ end)</code></pre> <p>Can you guess what happens when the button is clicked? That
 
         <br>
 
-        <p>Okay, to use toggles its the same as buttons, tho it takes different parameters. To create one we can really simply use this <code class="language-lua">local exampleToggle = tutorialSection:AddToggle(Title, IsEnabled, Callback)</code> now you might think what is the <code>IsEnabled</code>, no just kidding let's go straight into Callback. So again it takes a function() end but the functions takes a parameter v which stands for value, now this is <b>VERY IMPORTANT <i>it applies to dropdowns and other interactableshttps://imgur.com/a/jfIQZAG</i></b> when for example trying to print or save in another bool that toggle value you wont do <code class="language-lua">foo = toggle</code> you <b>MUST DO</b> <code class="language-lua">foo = toggle.value</code> insteant</p>
+        <p>Okay, to use toggles its the same as buttons, tho it takes different parameters. To create one we can really simply use this <code class="language-lua">local exampleToggle = tutorialSection:AddToggle(Title, IsEnabled, Callback)</code> now you might think what is the <code>IsEnabled</code>, no just kidding let's go straight into Callback. So again it takes a function() end but the functions takes a parameter v which stands for value, now this is <b>VERY IMPORTANT <i>it applies to dropdowns and other interactables</i></b> when for example trying to print or save in another bool that toggle value you wont do <code class="language-lua">foo = toggle</code> you <b>MUST DO</b> <code class="language-lua">foo = toggle.value</code> insteant</p>
 
         <p>Let's now add a test toggle to our script :)</p>
 
         <pre><code class="language-lua">local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/bbbPriv/BOOGA-UI/main/booga%20ui.lua"))()
 
-local hub = Library.New("Tutorial")
+local Hub = Library.New("Tutorial")
 
-local tutorialPage = hub:AddPage("Example Page", 10016745130)
-local tutorialSection = tutorialPage:AddSection("Example Section!")
-tutorialPage:AddSearchBar()
+local TutorialPage = Hub:AddPage("Example Page", 10016745130)
+local TutorialSection = TutorialPage:AddSection("Example Section!")
+TutorialPage:AddSearchBar()
 
-local exampleToggle = tutorialSection:AddButton("Testing Toggle", function(v) 
+local ExampleToggle = TutorialSection:AddToggle("Testing Toggle", function(v) 
     print("The toggle is now"..v.value)
-end)</code></pre>
+end)</code></pre> <p>Returns -> Toggle - Type -> Instance</p>
     </div>
     
     <div class="Segment 5 - dropdowns">
@@ -183,13 +188,14 @@ end)</code></pre>
 
         <pre><code class="language-lua">local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/bbbPriv/BOOGA-UI/main/booga%20ui.lua"))()
 
-local hub = Library.New("Tutorial")
+local Hub = Library.New("Tutorial")
 
-local tutorialPage = hub:AddPage("Example Page", 10016745130)
-local tutorialSection = tutorialPage:AddSection("Example Section!")
-tutorialPage:AddSearchBar()
+local TutorialPage = Hub:AddPage("Example Page", 10016745130)
+local TutorialSection = TutorialPage:AddSection("Example Section!")
+TutorialPage:AddSearchBar()
 
-local exampleDropdown = tutorialSection:AddDropdown("Example Dropdown", {"Option 1", "Option 2", "Option 3"}, function(v) end)</code></pre>
+local ExampleDropdown = TutorialSection:AddDropdown("Example Dropdown", {"Option 1", "Option 2", "Option 3"}, function(v) end)</code></pre> 
+<p>Returns -> Dropdown - Type -> Instance</p>
 
     </div>
 
@@ -201,24 +207,24 @@ local exampleDropdown = tutorialSection:AddDropdown("Example Dropdown", {"Option
 
         <pre><code class="language-lua">local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/bbbPriv/BOOGA-UI/main/booga%20ui.lua"))()
 
-local hub = Library.New("Tutorial")
+local Hub = Library.New("Tutorial")
 
-local tutorialPage = hub:AddPage("Example Page", 10016745130)
-local tutorialSection = tutorialPage:AddSection("Example Section!")
-tutorialPage:AddSearchBar()
+local TutorialPage = Hub:AddPage("Example Page", 10016745130)
+local TutorialSection = TutorialPage:AddSection("Example Section!")
+TutorialPage:AddSearchBar()
 
-local exampleSlider = tutorialSection:AddSlider("Example Slider", 50, 0, 100, 15, function(v) 
+local ExampleSlider = TutorialSection:AddSlider("Example Slider", 50, 0, 100, 15, function(v) 
     print(v.Value) 
-end)</code></pre>
+end)</code></pre> <p>Returns -> Slider - Type -> Instance</p>
     </div>
 
     <div class="Segment 7 - textbox">
         <h1>Segment 7 - Textboxes</h1>
         <p>Hello gadies and lentlemen, today we are learn how to make a textbox, todays usage isssss <code class="language-lua">:AddTextBox(Title, Callback)</code> <i>im not being paid for this</i>, where callback is every time you type in the text box, your can for example print it like this</p>
 
-        <pre><code class="language-lua">tutorialSection:AddTextBox("Example Textbox", function(v) 
+        <pre><code class="language-lua">TutorialSection:AddTextBox("Example Textbox", function(v) 
     print(v) 
-end)</code></pre>
+end)</code></pre> <p>Returns -> TextBox - Type -> Instance</p>
     </div>
 
     <div class="Segment 8 - keybinds">
@@ -229,16 +235,17 @@ end)</code></pre>
 
         <pre><code class="language-lua">local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/bbbPriv/BOOGA-UI/main/booga%20ui.lua"))()
 
-local hub = Library.New("Tutorial")
+local Hub = Library.New("Tutorial")
 
-local tutorialPage = hub:AddPage("Example Page", 10016745130)
-local tutorialSection = tutorialPage:AddSection("Example Section!")
-tutorialPage:AddSearchBar()
+local TutorialPage = Hub:AddPage("Example Page", 10016745130)
+local TutorialSection = TutorialPage:AddSection("Example Section!")
+TutorialPage:AddSearchBar()
 
-local exampleKeybind = tutorialSection:AddKeybind("Example Keybind",Enum.Keycode.X,function(v) 
+local ExampleKeybind = TutorialSection:AddKeybind("Example Keybind",Enum.Keycode.X,function(v) 
     print("Executed") 
 end)</code></pre>
     <p>Here when the key button <code>x</code> is pressed, it will print 'Executed' on the console.</p>
+    <p>Returns -> Keybind - Type -> Instance</p>
     </div>
 
     <div class="Segment 9 - Notify">
@@ -248,8 +255,12 @@ end)</code></pre>
         <pre><code class="language-lua">local foo = 10
 local bar = 5
 
-if foo >= bar then tutorialSection:Notify("Condition met", "It seems that foo is bigger than bar", UDim2.new(0,0,0,0), UDim2.new(1,0,1,0), function() 
-        print("Woah!")
+if foo >= bar then Library:Notify("Condition met", "It seems that foo is bigger than bar", UDim2.new(0,0,0,0), UDim2.new(1,0,1,0), function(v)
+        if v then
+            print("Notification Accepted")
+        else
+            print("Notification Declined")
+        end
     end)
 end</code></pre>
     </div>
@@ -267,7 +278,13 @@ local tutorialPage = hub:AddPage("Example Page", 10016745130)
 local tutorialSection = tutorialPage:AddSection("Example Section!")
 tutorialPage:AddSearchBar()
 
-local exampleDialog = tutorialSection:Dialog("Example", "Hello, world!", nil)</code></pre>
+local exampleDialog = Library:Dialog("Example", "Hello, world!", function(v)
+    if v then
+        print("Dialog Accepted")
+    else
+        print("Dialog Declined")
+    end
+end)</code></pre>
     </div>
 
     <br></br>
@@ -278,30 +295,34 @@ local exampleDialog = tutorialSection:Dialog("Example", "Hello, world!", nil)</c
 
     <pre><code class="language-lua">local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/bbbPriv/BOOGA-UI/main/booga%20ui.lua"))()
 
-local hub = Library.New("Tutorial")
+local Hub = Library.New("Tutorial")
 
-local tutorialPage = hub:AddPage("Example Page", 10016745130)
-local tutorialSection = tutorialPage:AddSection("Example Section!") -- if you like you can use :AddSearchBar() at the end
-tutorialPage:AddSearchBar()
+local TutorialPage = Hub:AddPage("Example Page", 10016745130)
+local TutorialSection = TutorialPage:AddSection("Example Section!")
+TutorialPage:AddSearchBar()
         
-local exampleDialog = tutorialSection:Dialog("Example", "Hello, world!", nil)
+local ExampleDialog = Library:Dialog("Example", "Hello, world!", nil)
     
 local foo = 10
 local bar = 5
         
-if foo >= bar then tutorialSection:Notify("Condition met", "It seems that foo is bigger than bar", UDim2.new(0,0,0,0), UDim2.new(1,0,1,0), function() 
-    print("Woah!")
+if foo >= bar then Library:Notify("Condition met", "It seems that foo is bigger than bar", UDim2.new(0,0,0,0), UDim2.new(1,0,1,0), function(v) 
+    if v then
+        print("Notification Accepted")
+    else
+        print("Notification Declined")
+    end
 end)
     
-local exampleKeybind = tutorialSection:AddSlider("Example Keybind",Enum.Keycode.X,function(v) 
+local ExampleKeybind = TutorialSection:AddSlider("Example Keybind",Enum.Keycode.X,function(v) 
     print("Executed") 
 end)
 
-local exampleSlider = tutorialSection:AddSlider("Example Slider", 50, 0, 100, 15, function(v) 
+local ExampleSlider = TutorialSection:AddSlider("Example Slider", 50, 0, 100, 15, function(v) 
     print(v.Value) 
 end)
 
-local exampleDropdown = tutorialSection:AddDropdown("Example Dropdown", {"Option 1", "Option 2", "Option 3"}, function(v) end)</code></pre>
+local ExampleDropdown = TutorialSection:AddDropdown("Example Dropdown", {"Option 1", "Option 2", "Option 3"}, function(v) end)</code></pre>
 </code></pre>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-core.min.js"></script>
