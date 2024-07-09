@@ -25,17 +25,39 @@
             color: #ffffff;
         }
         h25 {
-            padding-top:150px;
+            padding-top: 150px;
             font-weight: bold;
             font-size: 24px;
         }
-
         a {
-            color:rgb(163, 39, 205);
+            color: rgb(163, 39, 205);
+        }
+        code {
+            font-size: 18px;
+        }
+        header {
+            background-color: #2d2d2d;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        header a {
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: 500;
         }
     </style>
 </head>
-<br>
+<body>
+    <header>
+        <a href="https://discord.gg/BCBRjGMaPT">Booga's Discord Server</a>
+        <a href="https://booga41.github.io/">Booga's Website</a>
+        <a href="https://github.com/booga41/">Booga's Github</a>
+        <br>
+        <a href="https://github.com/amaskeddev">Sproute Github</a>
+        <a><i>Not a link</i> My discord: sproute_rl</a>
+    </header>
     <h1>Booga's UI Library Documentation</h1>
     <p>Welcome to the simple documentary on how to use the ui lib, with examples</p>
     <pre><code class="language-lua">local title = "booga's ui"
@@ -45,6 +67,7 @@ print(title..welcome)
 ------------------------
 booga's ui says hi ;)
     </code></pre>
+
     <br></br>
 
     <div class="Segment 1">
@@ -324,6 +347,17 @@ end)
 
 local ExampleDropdown = TutorialSection:AddDropdown("Example Dropdown", {"Option 1", "Option 2", "Option 3"}, function(v) end)</code></pre>
 </code></pre>
+
+    <br></br>
+    <br>
+    
+    <code>
+    <p>Here are a few useful links</p>
+    <a href="https://discord.gg/BCBRjGMaPT">Booga's Discord Server</a><br>
+    <a href="https://booga41.github.io/">Booga's Website</a><br>
+    <a href="https://github/booga41/">Booga's Github</a><br>
+    <br>    
+    </code>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-core.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/plugins/autoloader/prism-autoloader.min.js"></script>
