@@ -1273,6 +1273,20 @@ function Pages:ResizePage()
 	self.SectionPage.ScrollBarImageTransparency = Size > self.SectionPage.AbsoluteSize.Y and 0 or 1
 end
 
+
+function Pages:ResizePage()
+	local Size = 0
+
+	for _, section in self.SectionPage:GetChildren() do
+		if section.ClassName == "ImageLabel" then
+			Size += section.AbsoluteSize.Y + 10
+		end
+	end
+
+	self.SectionPage.CanvasSize = UDim2.fromOffset(0, Size)
+	self.SectionPage.ScrollBarImageTransparency = Size > self.SectionPage.AbsoluteSize.Y and 0 or 1
+end
+
 function Pages:AddSearchBar()
 	local Bar = self.Page["Search Bar"]
 	Bar.Visible = true
