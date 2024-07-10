@@ -1356,7 +1356,7 @@ function BoogaUI.New(Name : string)
 	local Pages = Utility.Create("ImageLabel", {
 		["Parent"] = MainLabel,
 		["Name"] = "Pages",
-		["Size"] = UDim2.new(0.238, 0, 0.871, 0),
+		["Size"] = UDim2.fromScale(0.200, 0.871),
 		["Position"] = UDim2.new(0, 0, 0.128, 0),
 		["BorderSizePixel"] = 0,
 		["ImageColor3"] = Color3.fromRGB(27, 27, 27),
@@ -1373,7 +1373,7 @@ function BoogaUI.New(Name : string)
 		["Size"] = UDim2.fromScale(0.996, 1),
 		["CanvasSize"] = UDim2.fromScale(0, 8),
 		["ScrollBarThickness"] = 6,
-		["ScrollBarImageColor3"] = Color3.fromRGB(255, 255, 255),
+		["ScrollBarImageColor3"] = Color3.fromRGB(0, 0, 0),
 		["BorderSizePixel"] = 0
 	})
 
@@ -1382,8 +1382,7 @@ function BoogaUI.New(Name : string)
 	Utility.Create("UIListLayout", {
 		["Parent"] = PagesScrolling,
 		["SortOrder"] = Enum.SortOrder.LayoutOrder,
-		["Padding"] = UDim.new(0, 10),
-		["HorizontalAlignment"] = Enum.HorizontalAlignment.Center
+		["Padding"] = UDim.new(0, 10)
 	})
 
 	local Top = Utility.Create("ImageLabel", {
@@ -1407,21 +1406,6 @@ function BoogaUI.New(Name : string)
 		Text = Name,
 		TextSize = 24,
 		TextXAlignment = Enum.TextXAlignment.Left
-	})
-
-	Utility.Create("TextLabel", {
-		Parent = Top,
-		Name = "Title",
-		AnchorPoint = Vector2.new(0, 0.5),
-		BackgroundTransparency = 1,
-		Position = UDim2.new(0, 12, 0, 28),
-		Size = UDim2.new(1.018, -46, 0.722, 16),
-		Font = Enum.Font.Gotham,
-		RichText = true,
-		TextColor3 = Color3.fromRGB(255, 255, 255),
-		Text = "<b>"..game:GetService("Players").LocalPlayer.Name.."</b>".."\n"..game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name,
-		TextSize = 16,
-		TextXAlignment = Enum.TextXAlignment.Right
 	})
 
 	local dragging = false
@@ -1476,6 +1460,7 @@ function BoogaUI.New(Name : string)
 
 	return BoogaUI
 end
+
 
 function BoogaUI:AddPage(Title, Icon)
 
