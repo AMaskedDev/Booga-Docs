@@ -413,7 +413,7 @@ function Sections:AddToggle(Name, IsEnabled, Callback)
 	return Toggle
 end
 
-function Sections:AddTextBox(Name, CallBack)
+function Sections:AddTextBox(Name, InputText, CallBack)
 
 	local DoubleClick = 0
 
@@ -471,7 +471,7 @@ function Sections:AddTextBox(Name, CallBack)
 		Size = UDim2.new(1, -10, 1, 0),
 		ZIndex = 3,
 		Font = Enum.Font.Arial,
-		Text = Name,
+		Text = InputText,
 		TextColor3 = Color3.fromRGB(255, 255, 255),
 		TextSize = 12
 	})
