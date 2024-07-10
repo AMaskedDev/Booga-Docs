@@ -256,6 +256,30 @@ function Sections:AddSeperator(Height)
 	return Button
 end
 
+function Sections:AddSeperator()
+	self:Resize()
+
+	self:ResizePage()
+
+	local Button = Utility.Create("TextButton", {
+		ZIndex = 2,
+		Text = "",
+		TextSize = 16,
+		Font = Enum.Font.Arial,
+		Size = UDim2.new(0.950, 0, 0, 15),
+		BackgroundColor3 = Color3.fromRGB(15, 15, 15),
+		TextColor3 = Color3.fromRGB(255, 255, 255),
+		TextTransparency = 1,
+		BackgroundTransparency = 1
+	})
+
+	self:AddInstances({Button, Button.Size})
+
+	Button.Parent = self.Section.Frame
+
+	return Button
+end
+
 function Sections:AddToggle(Name, IsEnabled, Callback)
 	local Switching = false
 
@@ -406,7 +430,7 @@ function Sections:AddTextBox(Name, CallBack)
 		Size = UDim2.new(0.950, 0, 0, 30),
 		ZIndex = 2,
 		Image = "rbxassetid://5028857472",
-		ImageColor3 = Color3.fromRGB(0, 0, 0),
+		ImageColor3 = Color3.fromRGB(15, 15, 15)
 		ScaleType = Enum.ScaleType.Slice,
 		SliceCenter = Rect.new(2, 2, 298, 298)
 	})
@@ -447,7 +471,7 @@ function Sections:AddTextBox(Name, CallBack)
 		Size = UDim2.new(1, -10, 1, 0),
 		ZIndex = 3,
 		Font = Enum.Font.Arial,
-		Text = "",
+		Text = Name,
 		TextColor3 = Color3.fromRGB(255, 255, 255),
 		TextSize = 12
 	})
