@@ -245,7 +245,15 @@ end)</code></pre> <p>Returns -> Slider - Type -> Instance</p>
         <h1>Segment 7 - Textboxes</h1>
         <p>Hello gadies and lentlemen, today we are learn how to make a textbox, todays usage isssss <code class="language-lua">:AddTextBox(Title, Callback)</code> <i>im not being paid for this</i>, where callback is every time you type in the text box, your can for example print it like this</p>
 
-        <pre><code class="language-lua">TutorialSection:AddTextBox("Example Textbox", function(v) 
+        <pre><code class="language-lua">local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/bbbPriv/BOOGA-UI/main/booga%20ui.lua"))()
+
+local Hub = Library.New("Tutorial")
+
+local TutorialPage = Hub:AddPage("Example Page", 10016745130)
+local TutorialSection = TutorialPage:AddSection("Example Section!")
+TutorialPage:AddSearchBar()
+
+TutorialSection:AddTextBox("Example Textbox", function(v) 
     print(v) 
 end)</code></pre> <p>Returns -> TextBox - Type -> Instance</p>
     </div>
@@ -310,6 +318,31 @@ local exampleDialog = Library:Dialog("Example", "Hello, world!", function(v)
 end)</code></pre>
     </div>
 
+    <div class="Segment 11 - Section:Seperator">
+        <h1>Segment 11 - Section:Seperator</h1>
+        <p>This is a small segment, basically what a seperator does is puts some space between interactables to appearance reason mostly. To make use of the the section's seperator we use <code class="language-lua">section:AddSeparator (YOffset)</code>, where offset is the height. Let's make use of it in a example script</p>
+
+        <pre><code class="language-lua">local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/bbbPriv/BOOGA-UI/main/booga%20ui.lua"))()
+
+local Hub = Library.New("Tutorial")
+
+local TutorialPage = Hub:AddPage("Example Page", 10016745130)
+local TutorialSection = TutorialPage:AddSection("Example Section!")
+TutorialPage:AddSearchBar()
+
+local ExampleButton1 = TutorialSection:AddButton("Testing Button", function() 
+    print("I, the only button was clicked! truly a dream come true ;)")
+end)
+
+TutorialSection:AddSeparator(20)
+
+local ExampleButton2 = TutorialSection:AddButton("Testing Button", function() 
+    print("I, the only button was clicked! truly a dream come true ;)")
+end)
+
+</code></pre>
+    </div>
+
     <br></br>
     <br></br>
     <br></br>
@@ -345,19 +378,26 @@ local ExampleSlider = TutorialSection:AddSlider("Example Slider", 50, 0, 100, 15
     print(v.Value) 
 end)
 
-local ExampleDropdown = TutorialSection:AddDropdown("Example Dropdown", {"Option 1", "Option 2", "Option 3"}, function(v) end)</code></pre>
+local ExampleDropdown = TutorialSection:AddDropdown("Example Dropdown", {"Option 1", "Option 2", "Option 3"}, function(v) end)
+
+local ExampleButton1 = TutorialSection:AddButton("Testing Button", function() 
+    print("I, the only button was clicked! truly a dream come true ;)")
+end)
+
+TutorialSection:AddSeparator(20)
+
+local ExampleButton2 = TutorialSection:AddButton("Testing Button", function() 
+    print("I, the only button was clicked! truly a dream come true ;)")
+end)
+</code></pre>
 </code></pre>
 
-    <br></br>
-    <br>
-    
-    <code>
-    <p>Here are a few useful links</p>
-    <a href="https://discord.gg/BCBRjGMaPT">Booga's Discord Server</a><br>
-    <a href="https://booga41.github.io/">Booga's Website</a><br>
-    <a href="https://github/booga41/">Booga's Github</a><br>
-    <br>    
-    </code>
+<h1>That's the end of the documentation</h1>
+<br></br>
+<br></br>
+<br></br>
+<br></br>
+<br></br>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-core.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/plugins/autoloader/prism-autoloader.min.js"></script>
