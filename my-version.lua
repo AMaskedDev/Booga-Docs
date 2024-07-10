@@ -44,7 +44,7 @@ local function Pop(instance, Offset)
 	instance.ImageTransparency = 0
 end
 
-local function UpdateSlider(Bar, Value, Min, Max)
+local function UpdateSlider(Bar, Value, Min, Max, Decimal)
 	local percent = (Player:GetMouse().X - Bar.AbsolutePosition.X) / Bar.AbsoluteSize.X
 
 	if Value then
@@ -52,7 +52,8 @@ local function UpdateSlider(Bar, Value, Min, Max)
 	end
 
 	percent = math.clamp(percent, 0, 1)
-	Value = Value or math.floor(Min + (Max - Min) * percent)
+	Value = Value or not Decimal and math.floor(Min + (Max - Min) * percent) or Min + (Max - Min) * percent
+	Value = not Decimal and Value or string.format("%.1f", Value)
 
 	Bar.Parent.TextBox.Text = Value
 	TS:Create(Bar.Fill, TweenInfo.new(0.1), {Size = UDim2.new(percent, 0, 1 ,0)}):Play()
@@ -135,14 +136,24 @@ Sections.__index = Sections
 
 setmetatable(Sections, {__index = Pages})
 
-function Sections:Resize(Num)
-	if not Num then
-		self.Instances[self.Section].Size = UDim2.new(1, -16, 0, self.Section.Size.Y.Offset + 45)
-		self.Section.Size = UDim2.new(1, -16, 0, self.Section.Size.Y.Offset + 45)
-	else
-		self.Instances[self.Section].Size = UDim2.new(1, -16, 0, self.Section.Size.Y.Offset + Num)
-		self.Section.Size = UDim2.new(1, -16, 0, self.Section.Size.Y.Offset + Num)
+function Sections:Resize()
+	local Size = 32
+
+	for _,v in self.Section.Frame:GetChildren() do
+		if v.ClassName ~= "UIListLayout" and v.ClassName ~= "TextLabel" then
+			
+			if v:FindFirstChild("List") and v.List.ScrollingFrame:FindFirstChildOfClass("TextButton") then
+				Size += 128
+			else
+				Size += v.AbsoluteSize.Y + 8
+			end
+		end
 	end
+
+	self.Instances[self.Section].Size = UDim2.new(1, -16, 0, Size)
+	self.Section.Size = UDim2.new(1, -16, 0, Size)
+	
+	return Size
 end
 
 function Sections:AddButton(Name, Callback)
@@ -150,11 +161,8 @@ function Sections:AddButton(Name, Callback)
 
 	local Hovering
 
-	self:Resize()
-
-	self:ResizePage()
-
 	local Button = Utility.Create("TextButton", {
+		Parent = self.Section.Frame,
 		ZIndex = 2,
 		Text = Name,
 		TextSize = 16,
@@ -164,6 +172,10 @@ function Sections:AddButton(Name, Callback)
 		TextColor3 = Color3.fromRGB(255, 255, 255),
 		TextTransparency = 0.1
 	})
+	
+	self:Resize()
+
+	self:ResizePage()
 
 	self:AddInstances({Button, Button.Size})
 
@@ -171,8 +183,6 @@ function Sections:AddButton(Name, Callback)
 		Parent = Button,
 		CornerRadius = UDim.new(0, 4)
 	})
-
-	Button.Parent = self.Section.Frame
 
 	Button.MouseEnter:Connect(function()
 		Hovering = true
@@ -228,54 +238,6 @@ function Sections:AddButton(Name, Callback)
 
 		Pressing = false
 	end)
-
-	return Button
-end
-
-function Sections:AddSeperator(Height)
-	self:Resize()
-
-	self:ResizePage()
-
-	local Button = Utility.Create("TextButton", {
-		ZIndex = 2,
-		Text = "",
-		TextSize = 16,
-		Font = Enum.Font.Arial,
-		Size = UDim2.new(0.950, 0, 0, Height),
-		BackgroundColor3 = Color3.fromRGB(15, 15, 15),
-		TextColor3 = Color3.fromRGB(255, 255, 255),
-		TextTransparency = 1,
-		BackgroundTransparency = 1
-	})
-
-	self:AddInstances({Button, Button.Size})
-
-	Button.Parent = self.Section.Frame
-
-	return Button
-end
-
-function Sections:AddSeperator()
-	self:Resize()
-
-	self:ResizePage()
-
-	local Button = Utility.Create("TextButton", {
-		ZIndex = 2,
-		Text = "",
-		TextSize = 16,
-		Font = Enum.Font.Arial,
-		Size = UDim2.new(0.950, 0, 0, 15),
-		BackgroundColor3 = Color3.fromRGB(15, 15, 15),
-		TextColor3 = Color3.fromRGB(255, 255, 255),
-		TextTransparency = 1,
-		BackgroundTransparency = 1
-	})
-
-	self:AddInstances({Button, Button.Size})
-
-	Button.Parent = self.Section.Frame
 
 	return Button
 end
@@ -413,15 +375,11 @@ function Sections:AddToggle(Name, IsEnabled, Callback)
 	return Toggle
 end
 
-function Sections:AddTextBox(Name, InputText, CallBack)
+function Sections:AddTextBox(Name, CallBack)
 
 	local DoubleClick = 0
 
 	local DoubleClicked = false
-
-	self:Resize()
-
-	self:ResizePage()
 
 	local Holder = Utility.Create("ImageButton", {
 		Parent = self.Section.Frame,
@@ -434,6 +392,10 @@ function Sections:AddTextBox(Name, InputText, CallBack)
 		ScaleType = Enum.ScaleType.Slice,
 		SliceCenter = Rect.new(2, 2, 298, 298)
 	})
+	
+	self:Resize()
+
+	self:ResizePage()
 
 	Utility.Create("TextLabel", {
 		Name = "Title",
@@ -458,7 +420,7 @@ function Sections:AddTextBox(Name, InputText, CallBack)
 		Size = UDim2.new(0, 100, 0, 16),
 		ZIndex = 2,
 		Image = "rbxassetid://5028857472",
-		ImageColor3 = Color3.fromRGB(17, 17, 17),
+		ImageColor3 = Color3.fromRGB(28, 28, 28),
 		ScaleType = Enum.ScaleType.Slice,
 		SliceCenter = Rect.new(2, 2, 298, 298)
 	})
@@ -471,7 +433,7 @@ function Sections:AddTextBox(Name, InputText, CallBack)
 		Size = UDim2.new(1, -10, 1, 0),
 		ZIndex = 3,
 		Font = Enum.Font.Arial,
-		Text = InputText,
+		Text = "",
 		TextColor3 = Color3.fromRGB(255, 255, 255),
 		TextSize = 12
 	})
@@ -549,15 +511,11 @@ function Sections:AddTextBox(Name, InputText, CallBack)
 end
 
 function Sections:AddKeybind(Name, Key, Callback)
-	local Old = Key and Key.Name or "None"
+	local Old = typeof(Key) == "string" and Enum.KeyCode[Key:upper()].Name or (Key and Key.Name or "None")
 
 	local Selecting = false
 
 	local Stop = false
-
-	self:Resize()
-
-	self:ResizePage()
 
 	local Holder = Utility.Create("ImageButton", {
 		Parent = self.Section.Frame,
@@ -566,12 +524,16 @@ function Sections:AddKeybind(Name, Key, Callback)
 		Size = UDim2.new(0.950, 0, 0, 30),
 		ZIndex = 2,
 		Image = "rbxassetid://5028857472",
-		ImageColor3 = Color3.fromRGB(0, 0, 0),
+		ImageColor3 = Color3.fromRGB(15, 15, 15),
 		ScaleType = Enum.ScaleType.Slice,
 		SliceCenter = Rect.new(2, 2, 298, 298)
 	})
+	
+	self:Resize()
 
-	table.insert(self.Instances, {instance = Holder, Size = Holder.Size})
+	self:ResizePage()
+
+	self:AddInstances({Holder, Holder.Size})
 
 	Utility.Create("TextLabel", {
 		Name = "Title",
@@ -596,7 +558,7 @@ function Sections:AddKeybind(Name, Key, Callback)
 		Size = UDim2.new(0, 100, 0, 16),
 		ZIndex = 2,
 		Image = "rbxassetid://5028857472",
-		ImageColor3 = Color3.fromRGB(17, 17, 17),
+		ImageColor3 = Color3.fromRGB(28, 28, 28),
 		ScaleType = Enum.ScaleType.Slice,
 		SliceCenter = Rect.new(2, 2, 298, 298)
 	})
@@ -610,7 +572,7 @@ function Sections:AddKeybind(Name, Key, Callback)
 		Size = UDim2.new(1, -10, 1, 0),
 		ZIndex = 3,
 		Font = Enum.Font.Arial,
-		Text = Key and Key.Name or "None",
+		Text = typeof(Key) == "string" and Enum.KeyCode[Key:upper()].Name or (Key and Key.Name or "None"),
 		TextColor3 = Color3.fromRGB(255, 255, 255),
 		TextSize = 12
 	})
@@ -682,7 +644,7 @@ function Sections:AddKeybind(Name, Key, Callback)
 	end)
 
 	UIS.InputBegan:Connect(function(Input, GME)
-		if Input.UserInputType == Enum.UserInputType.MouseButton1 then			
+		if Input.UserInputType == Enum.UserInputType.MouseButton1 then
 			if not isPointInBounds(Input.Position, Holder) and KeyLabel.Text == "..." then
 				Stop = true
 				Selecting = false
@@ -695,10 +657,7 @@ function Sections:AddKeybind(Name, Key, Callback)
 	return Holder
 end
 
-function Sections:AddSlider(Name, Value, Min, Max, FixValues, Callback)	
-	self:Resize(65)
-
-	self:ResizePage()
+function Sections:AddSlider(Name, Value, Min, Max, FixValues, Decimal, Callback)	
 
 	local Holder = Utility.Create("Frame", {
 		Parent = self.Section.Frame,
@@ -708,6 +667,15 @@ function Sections:AddSlider(Name, Value, Min, Max, FixValues, Callback)
 		Position = UDim2.new(1, -50, 0.5, -8),
 		Size = UDim2.new(0.950, 0, 0, 50),
 		ZIndex = 2,
+	})
+	
+	self:Resize()
+
+	self:ResizePage()
+	
+	Utility.Create("UICorner", {
+		Parent = Holder,
+		CornerRadius = UDim.new(0, 4)
 	})
 
 	table.insert(self.Instances, {instance = Holder, Size = Holder.Size})
@@ -775,18 +743,18 @@ function Sections:AddSlider(Name, Value, Min, Max, FixValues, Callback)
 		Parent = Fill,
 		Name = "Circle",
 		ImageTransparency = 1,
-		Size = UDim2.fromOffset(19, 19),
+		Size = UDim2.fromOffset(19, 15),
 		Position = UDim2.fromScale(-0.5, 0),
 		ZIndex = 2,
 		BackgroundTransparency = 1,
-		Image = "rbxassetid://4608020054"
+		Image = "rbxassetid://4608020054",
 	})
 
 	local Old
 
 	local dragging = false
 
-	UpdateSlider(Bar, Value, Min, Max)
+	UpdateSlider(Bar, Value, Min, Max, Decimal)
 
 	Holder.MouseEnter:Connect(function()
 		TS:Create(Holder, TweenInfo.new(0.15), {Size = UDim2.new(0.930, 0, 0, 49)}):Play()
@@ -806,11 +774,11 @@ function Sections:AddSlider(Name, Value, Min, Max, FixValues, Callback)
 		if input.UserInputType == Enum.UserInputType.MouseButton1 then
 			dragging = true
 
-			TS:Create(Circle, TweenInfo.new(0.1), {Position = UDim2.new(0, math.clamp(input.Position.X - Bar.AbsolutePosition.X, 0, Bar.AbsoluteSize.X) - 15, 0, -4)}):Play()
+			TS:Create(Circle, TweenInfo.new(0.1), {Position = UDim2.new(0, math.clamp(input.Position.X - Bar.AbsolutePosition.X, 0, Bar.AbsoluteSize.X) - 15, 0, -2)}):Play()
 
-			TS:Create(Circle, TweenInfo.new(0.01), {ImageTransparency = 0}):Play()
+			TS:Create(Circle, TweenInfo.new(0.2), {ImageTransparency = 0}):Play()
 
-			Callback(UpdateSlider(Bar, nil, Min, Max))		
+			Callback(UpdateSlider(Bar, nil, Min, Max, Decimal))		
 
 			repeat task.wait() until not dragging
 
@@ -820,7 +788,10 @@ function Sections:AddSlider(Name, Value, Min, Max, FixValues, Callback)
 				return
 			end
 
-			TS:Create(Circle, TweenInfo.new(0.01), {ImageTransparency = 1}):Play()
+			TS:Create(Circle, TweenInfo.new(0.2), {ImageTransparency = 1}):Play()
+			
+			task.wait(0.2)
+			
 		end
 	end)
 
@@ -833,14 +804,15 @@ function Sections:AddSlider(Name, Value, Min, Max, FixValues, Callback)
 	UIS.InputChanged:Connect(function(input)
 		if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
 
-			TS:Create(Circle, TweenInfo.new(0.1), {Position = UDim2.new(0, math.clamp(input.Position.X - Bar.AbsolutePosition.X, 0, Bar.AbsoluteSize.X) - 15, 0, -4)}):Play()
+			
+			TS:Create(Circle, TweenInfo.new(0.1), {Position = UDim2.new(0, math.clamp(input.Position.X - Bar.AbsolutePosition.X, 0, Bar.AbsoluteSize.X) - 15, 0, -2)}):Play()
 
 			TS:Create(Circle, TweenInfo.new(0.2), {ImageTransparency = 0}):Play()
 
-			local Num = UpdateSlider(Bar, nil, Min, Max)
+			local Num = UpdateSlider(Bar, nil, Min, Max, Decimal)
 
 			if Num ~= Old then
-				Callback(UpdateSlider(Bar, nil, Min, Max))
+				Callback(UpdateSlider(Bar, nil, Min, Max, Decimal))
 			end
 
 			Old = Num
@@ -853,7 +825,10 @@ function Sections:AddSlider(Name, Value, Min, Max, FixValues, Callback)
 				return
 			end
 
-			TS:Create(Circle, TweenInfo.new(0.01), {ImageTransparency = 1}):Play()
+			TS:Create(Circle, TweenInfo.new(0.2), {ImageTransparency = 1}):Play()
+			
+			task.wait(0.2)
+			
 		end
 	end)
 
@@ -865,7 +840,7 @@ function Sections:AddSlider(Name, Value, Min, Max, FixValues, Callback)
 				Box.Text = Num > Max and Max or Num < Min and Min or Box.Text
 			end
 
-			Callback(UpdateSlider(Bar, Box.Text, Min, Max))
+			Callback(UpdateSlider(Bar, Box.Text, Min, Max, Decimal))
 		end
 	end)
 
@@ -1056,6 +1031,10 @@ function Sections:AddDropdown(Name, Entries, Callback)
 			Dont = false
 			return
 		end
+		
+		if Holder.List.Size.Y.Offset == 30 then
+			return
+		end
 
 		if TextBox.Text == "None Selected" then
 			return
@@ -1112,14 +1091,6 @@ function Sections:AddDropdown(Name, Entries, Callback)
 		HorizontalAlignment = Enum.HorizontalAlignment.Center
 	})
 
-	local Button = Utility.Create("ImageButton", {
-		Parent = Holder,
-		Size = Holder.Size,
-		ImageTransparency = 1,
-		BackgroundTransparency = 1,
-		ZIndex = 3
-	})
-
 	Holder2.ImageButton.MouseButton1Click:Connect(function()
 		if Dropping then
 			return
@@ -1139,6 +1110,9 @@ function Sections:AddDropdown(Name, Entries, Callback)
 			ScrollingFrame.Visible = true
 
 			MakeEntries()
+			
+			self:Resize()
+			self:ResizePage(true)
 
 		else
 
@@ -1152,6 +1126,13 @@ function Sections:AddDropdown(Name, Entries, Callback)
 					end)					
 				end
 			end
+			
+			local Size = self:Resize()
+
+			self.Instances[self.Section].Size = UDim2.new(1, -16, 0, Size - 120)
+			self.Section.Size = UDim2.new(1, -16, 0, Size - 120)
+			
+			self:ResizePage()
 
 			TS:Create(Holder2.ImageButton, TweenInfo.new(0.3), {Rotation = 0}):Play()
 			TS:Create(Holder, TweenInfo.new(0.3), {BackgroundTransparency = 1}):Play()
@@ -1170,6 +1151,24 @@ function Sections:AddDropdown(Name, Entries, Callback)
 	return Holder
 end
 
+function Sections:AddSeparator(YOffset)
+	local Separator = Utility.Create("Frame", {
+		Parent = self.Section.Frame,
+		ZIndex = 2,
+		Size = UDim2.new(0.950, 0, 0, YOffset),
+		BackgroundTransparency = 1
+	})
+	
+	self:Resize()
+
+	self:ResizePage()
+
+	self:AddInstances({Separator, Separator.Size})
+
+
+	return Separator
+end
+
 function Pages:AddSection(Name : string)
 
 	if not Name then
@@ -1180,7 +1179,7 @@ function Pages:AddSection(Name : string)
 		["Parent"] = self.Page,
 		["SortOrder"] = Enum.SortOrder.LayoutOrder,
 		["Padding"] = UDim.new(0, 10),
-		["HorizontalAlignment"] = Enum.HorizontalAlignment.Center
+		["HorizontalAlignment"] = Enum.HorizontalAlignment.Left
 	})
 
 	local Section = Utility.Create("ImageLabel", {
@@ -1220,8 +1219,7 @@ function Pages:AddSection(Name : string)
 	Utility.Create("UIListLayout", {
 		["Parent"] = self.Page[Name],
 		["SortOrder"] = Enum.SortOrder.LayoutOrder,
-		["Padding"] = UDim.new(0, 8),
-		["HorizontalAlignment"] = Enum.HorizontalAlignment.Center
+		["Padding"] = UDim.new(0, 8)
 	})
 
 	Utility.Create("TextLabel", {
@@ -1242,8 +1240,8 @@ function Pages:AddSection(Name : string)
 	return setmetatable({SectionPage = self.Page, Section = Section}, Sections)
 end
 
-function Pages:ResizePage()
-	local Size = 0
+function Pages:ResizePage(DropdownCall)
+	local Size = self.SectionPage["Search Bar"].Visible and 50 or 0
 
 	for _, section in self.SectionPage:GetChildren() do
 		if section.ClassName == "ImageLabel" then
@@ -1252,7 +1250,14 @@ function Pages:ResizePage()
 	end
 
 	self.SectionPage.CanvasSize = UDim2.fromOffset(0, Size)
+	
+	if DropdownCall and self.SectionPage.ScrollBarImageTransparency == 1 then
+		TS:Create(self.SectionPage, TweenInfo.new(0.3), {CanvasPosition = Vector2.new(0, self.SectionPage.CanvasPosition.Y + 60)}):Play()
+	end
+	
 	self.SectionPage.ScrollBarImageTransparency = Size > self.SectionPage.AbsoluteSize.Y and 0 or 1
+	
+	return Size
 end
 
 function Pages:AddSearchBar()
@@ -1356,7 +1361,7 @@ function BoogaUI.New(Name : string)
 	local Pages = Utility.Create("ImageLabel", {
 		["Parent"] = MainLabel,
 		["Name"] = "Pages",
-		["Size"] = UDim2.new(0.238, 0, 0.871, 0),
+		["Size"] = UDim2.fromScale(0.200, 0.871),
 		["Position"] = UDim2.new(0, 0, 0.128, 0),
 		["BorderSizePixel"] = 0,
 		["ImageColor3"] = Color3.fromRGB(27, 27, 27),
@@ -1373,7 +1378,7 @@ function BoogaUI.New(Name : string)
 		["Size"] = UDim2.fromScale(0.996, 1),
 		["CanvasSize"] = UDim2.fromScale(0, 8),
 		["ScrollBarThickness"] = 6,
-		["ScrollBarImageColor3"] = Color3.fromRGB(255, 255, 255),
+		["ScrollBarImageColor3"] = Color3.fromRGB(0, 0, 0),
 		["BorderSizePixel"] = 0
 	})
 
@@ -1382,8 +1387,7 @@ function BoogaUI.New(Name : string)
 	Utility.Create("UIListLayout", {
 		["Parent"] = PagesScrolling,
 		["SortOrder"] = Enum.SortOrder.LayoutOrder,
-		["Padding"] = UDim.new(0, 10),
-		["HorizontalAlignment"] = Enum.HorizontalAlignment.Center
+		["Padding"] = UDim.new(0, 10)
 	})
 
 	local Top = Utility.Create("ImageLabel", {
@@ -1407,21 +1411,6 @@ function BoogaUI.New(Name : string)
 		Text = Name,
 		TextSize = 24,
 		TextXAlignment = Enum.TextXAlignment.Left
-	})
-
-	Utility.Create("TextLabel", {
-		Parent = Top,
-		Name = "Title",
-		AnchorPoint = Vector2.new(0, 0.5),
-		BackgroundTransparency = 1,
-		Position = UDim2.new(0, 12, 0, 28),
-		Size = UDim2.new(1.018, -46, 0.722, 16),
-		Font = Enum.Font.Gotham,
-		RichText = true,
-		TextColor3 = Color3.fromRGB(255, 255, 255),
-		Text = "<b>"..game:GetService("Players").LocalPlayer.Name.."</b>".."\n"..game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name,
-		TextSize = 16,
-		TextXAlignment = Enum.TextXAlignment.Right
 	})
 
 	local dragging = false
@@ -1510,12 +1499,10 @@ function BoogaUI:AddPage(Title, Icon)
 		["Parent"] = Button,
 		["BackgroundTransparency"] = 1,
 		["Text"] = Title,
-		["TextSize"] = 18,
+		["TextSize"] = 22,
 		["Font"] = Enum.Font.Arial,
-		["TextColor3"] = Color3.fromRGB(180,180,180),
-		["Size"] = UDim2.new(1, -10, 1, 0),
-		["Position"] = UDim2.new(0,10,0,0),
-		["TextXAlignment"] = 0
+		["TextColor3"] = Color3.fromRGB(220, 220, 220),
+		["Size"] = UDim2.fromScale(1, 1)
 	})
 
 	local Icon = Utility.Create("ImageLabel", {
@@ -1536,8 +1523,8 @@ function BoogaUI:AddPage(Title, Icon)
 		["Parent"] = self.MainLabel,
 		["Name"] = Title,
 		["BackgroundTransparency"] = 1,
-		["Position"] = UDim2.new(0.252, 0, 0.14, 0),
-		["Size"] = UDim2.new(0.973, -142, 1, -56),
+		["Position"] = UDim2.new(0.225, 0, 0.14, 0),
+		["Size"] = UDim2.new(1, -142, 1, -56),
 		["ScrollBarThickness"] = 3,
 		["ScrollBarImageColor3"] = Color3.fromRGB(0, 0, 0),
 		["ScrollBarImageTransparency"] = 1,
@@ -1592,10 +1579,8 @@ function BoogaUI:AddPage(Title, Icon)
 		if AnimatingClick then
 			return
 		end
-		PageTitle.RichText = true
-		PageTitle.Text = "<b>" .. PageTitle.Text  .."</b>"
 
-		TS:Create(PageTitle, TweenInfo.new(0.1), {TextColor3 = Color3.fromRGB(210,210,210)}):Play()
+		TS:Create(PageTitle, TweenInfo.new(0.1), {TextColor3 = Color3.fromRGB(170, 170, 170)}):Play()
 
 	end)
 
@@ -1604,10 +1589,7 @@ function BoogaUI:AddPage(Title, Icon)
 			return
 		end
 
-		--PageTitle.TextColor3 = Color3.fromRGB(180,180,180)
-		PageTitle.RichText =true
-		PageTitle.Text = PageTitle.Text:gsub("<b>", ""):gsub("</b>", "")
-		TS:Create(PageTitle, TweenInfo.new(0.1), {TextColor3 = Color3.fromRGB(127, 127, 127)}):Play()
+		TS:Create(PageTitle, TweenInfo.new(0.1), {TextColor3 = Color3.fromRGB(220, 220, 220)}):Play()
 
 	end)
 
@@ -1616,8 +1598,9 @@ function BoogaUI:AddPage(Title, Icon)
 			return
 		end
 
-		--PageTitle.TextColor3 = Color3.fromRGB(255, 255, 255)
-		TS:Create(PageTitle, TweenInfo.new(0.1), {TextColor3 =  Color3.fromRGB(255, 255, 255)}):Play()
+		TS:Create(PageTitle, TweenInfo.new(0.2), {TextSize = 20}):Play()
+
+		TS:Create(Icon, TweenInfo.new(0.1), {Size = UDim2.fromOffset(18, 18)}):Play()
 	end)
 
 	Button.MouseButton1Click:Connect(function()
@@ -1625,17 +1608,17 @@ function BoogaUI:AddPage(Title, Icon)
 		task.spawn(function()
 			AnimatingClick = true
 
-			--PageTitle.TextColor3 = Color3.fromRGB(90, 90, 90)
+			TS:Create(PageTitle, TweenInfo.new(0.2), {TextSize = 27}):Play()
 
-			TS:Create(PageTitle, TweenInfo.new(0.1), {TextColor3 = Color3.fromRGB(90, 90, 90)}):Play()
+			TS:Create(Icon, TweenInfo.new(0.1), {Size = UDim2.fromOffset(21, 22)}):Play()
 
-			task.wait()
+			task.wait(0.2)
 
-			--PageTitle.TextColor3 = Color3.fromRGB(180,180,180)
-			PageTitle.RichText = true
-			PageTitle.Text = "<b>" .. PageTitle.Text  .."</b>"
-			TS:Create(PageTitle, TweenInfo.new(0.1), {TextColor3 = Color3.fromRGB(180,180,180)}):Play()
+			TS:Create(PageTitle, TweenInfo.new(0.2), {TextSize = 22}):Play()
 
+			TS:Create(Icon, TweenInfo.new(0.1), {Size = UDim2.fromOffset(20, 20)}):Play()
+
+			task.wait(0.2)
 
 			AnimatingClick = false
 		end)
