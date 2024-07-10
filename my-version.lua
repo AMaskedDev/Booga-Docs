@@ -232,6 +232,30 @@ function Sections:AddButton(Name, Callback)
 	return Button
 end
 
+function Sections:AddSeperator()
+	self:Resize()
+
+	self:ResizePage()
+
+	local Button = Utility.Create("TextButton", {
+		ZIndex = 2,
+		Text = "",
+		TextSize = 16,
+		Font = Enum.Font.Arial,
+		Size = UDim2.new(0.950, 0, 0, 30),
+		BackgroundColor3 = Color3.fromRGB(15, 15, 15),
+		TextColor3 = Color3.fromRGB(255, 255, 255),
+		TextTransparency = 1,
+		BackgroundTransparency = 1
+	})
+
+	self:AddInstances({Button, Button.Size})
+
+	Button.Parent = self.Section.Frame
+
+	return Button
+end
+
 function Sections:AddToggle(Name, IsEnabled, Callback)
 	local Switching = false
 
@@ -1360,7 +1384,7 @@ function BoogaUI.New(Name : string)
 		TextSize = 24,
 		TextXAlignment = Enum.TextXAlignment.Left
 	})
-	
+
 	Utility.Create("TextLabel", {
 		Parent = Top,
 		Name = "Title",
@@ -1546,7 +1570,7 @@ function BoogaUI:AddPage(Title, Icon)
 		end
 		PageTitle.RichText = true
 		PageTitle.Text = "<b>" .. PageTitle.Text  .."</b>"
-	
+
 		TS:Create(PageTitle, TweenInfo.new(0.1), {TextColor3 = Color3.fromRGB(210,210,210)}):Play()
 
 	end)
@@ -1555,7 +1579,7 @@ function BoogaUI:AddPage(Title, Icon)
 		if AnimatingClick then
 			return
 		end
-		
+
 		--PageTitle.TextColor3 = Color3.fromRGB(180,180,180)
 		PageTitle.RichText =true
 		PageTitle.Text = PageTitle.Text:gsub("<b>", ""):gsub("</b>", "")
@@ -1567,7 +1591,7 @@ function BoogaUI:AddPage(Title, Icon)
 		if AnimatingClick then
 			return
 		end
-		
+
 		--PageTitle.TextColor3 = Color3.fromRGB(255, 255, 255)
 		TS:Create(PageTitle, TweenInfo.new(0.1), {TextColor3 =  Color3.fromRGB(255, 255, 255)}):Play()
 	end)
@@ -1576,13 +1600,13 @@ function BoogaUI:AddPage(Title, Icon)
 
 		task.spawn(function()
 			AnimatingClick = true
-		
+
 			--PageTitle.TextColor3 = Color3.fromRGB(90, 90, 90)
-		
+
 			TS:Create(PageTitle, TweenInfo.new(0.1), {TextColor3 = Color3.fromRGB(90, 90, 90)}):Play()
 
 			task.wait()
-				
+
 			--PageTitle.TextColor3 = Color3.fromRGB(180,180,180)
 			PageTitle.RichText = true
 			PageTitle.Text = "<b>" .. PageTitle.Text  .."</b>"
