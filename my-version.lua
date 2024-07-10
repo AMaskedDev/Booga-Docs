@@ -406,7 +406,7 @@ function Sections:AddTextBox(Name, CallBack)
 		Size = UDim2.new(0.950, 0, 0, 30),
 		ZIndex = 2,
 		Image = "rbxassetid://5028857472",
-		ImageColor3 = Color3.fromRGB(15, 15, 15)
+		ImageColor3 = Color3.fromRGB(0, 0, 0),
 		ScaleType = Enum.ScaleType.Slice,
 		SliceCenter = Rect.new(2, 2, 298, 298)
 	})
@@ -447,7 +447,7 @@ function Sections:AddTextBox(Name, CallBack)
 		Size = UDim2.new(1, -10, 1, 0),
 		ZIndex = 3,
 		Font = Enum.Font.Arial,
-		Text = Name,
+		Text = "",
 		TextColor3 = Color3.fromRGB(255, 255, 255),
 		TextSize = 12
 	})
