@@ -280,24 +280,6 @@ function Sections:AddSeperator()
 	return Button
 end
 
-function Sections:AddSeparator(YOffset)
-	local Separator = Utility.Create("Frame", {
-		Parent = self.Section.Frame,
-		ZIndex = 2,
-		Size = UDim2.new(0.950, 0, 0, YOffset),
-		BackgroundTransparency = 1
-	})
-	
-	self:Resize()
-
-	self:ResizePage()
-
-	self:AddInstances({Separator, Separator.Size})
-
-
-	return Separator
-end
-
 function Sections:AddToggle(Name, IsEnabled, Callback)
 	local Switching = false
 
@@ -346,7 +328,7 @@ function Sections:AddToggle(Name, IsEnabled, Callback)
 		TextColor3 = Color3.fromRGB(255, 255, 255),
 		TextSize = 14,
 		TextTransparency = 0.10000000149012,
-		TextXAlignment = Enum.TextXAlignment.Center,
+		TextXAlignment = Enum.TextXAlignment.Left,
 	})
 
 	Utility.Create("UICorner", {
@@ -1251,28 +1233,14 @@ function Pages:AddSection(Name : string)
 		["Font"] = Enum.Font.GothamSemibold,
 		["Text"] = Name,
 		["TextColor3"] = Color3.fromRGB(255, 255, 255),
-		["TextSize"] = 18,
-		["TextXAlignment"] = Enum.TextXAlignment.Center,
+		["TextSize"] = 16,
+		["TextXAlignment"] = Enum.TextXAlignment.Left,
 		["TextYAlignment"] = Enum.TextYAlignment.Bottom
 	})
 
 
 	return setmetatable({SectionPage = self.Page, Section = Section}, Sections)
 end
-
-function Pages:ResizePage()
-	local Size = 0
-
-	for _, section in self.SectionPage:GetChildren() do
-		if section.ClassName == "ImageLabel" then
-			Size += section.AbsoluteSize.Y + 10
-		end
-	end
-
-	self.SectionPage.CanvasSize = UDim2.fromOffset(0, Size)
-	self.SectionPage.ScrollBarImageTransparency = Size > self.SectionPage.AbsoluteSize.Y and 0 or 1
-end
-
 
 function Pages:ResizePage()
 	local Size = 0
