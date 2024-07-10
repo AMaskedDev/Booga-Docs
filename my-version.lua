@@ -328,7 +328,7 @@ function Sections:AddToggle(Name, IsEnabled, Callback)
 		TextColor3 = Color3.fromRGB(255, 255, 255),
 		TextSize = 14,
 		TextTransparency = 0.10000000149012,
-		TextXAlignment = Enum.TextXAlignment.Left,
+		TextXAlignment = Enum.TextXAlignment.Center,
 	})
 
 	Utility.Create("UICorner", {
