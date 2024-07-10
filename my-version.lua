@@ -280,6 +280,24 @@ function Sections:AddSeperator()
 	return Button
 end
 
+function Sections:AddSeparator(YOffset)
+	local Separator = Utility.Create("Frame", {
+		Parent = self.Section.Frame,
+		ZIndex = 2,
+		Size = UDim2.new(0.950, 0, 0, YOffset),
+		BackgroundTransparency = 1
+	})
+	
+	self:Resize()
+
+	self:ResizePage()
+
+	self:AddInstances({Separator, Separator.Size})
+
+
+	return Separator
+end
+
 function Sections:AddToggle(Name, IsEnabled, Callback)
 	local Switching = false
 
