@@ -232,7 +232,7 @@ function Sections:AddButton(Name, Callback)
 	return Button
 end
 
-function Sections:AddSeperator()
+function Sections:AddSeperator(Height)
 	self:Resize()
 
 	self:ResizePage()
@@ -242,7 +242,7 @@ function Sections:AddSeperator()
 		Text = "",
 		TextSize = 16,
 		Font = Enum.Font.Arial,
-		Size = UDim2.new(0.950, 0, 0, 15),
+		Size = UDim2.new(0.950, 0, 0, Height),
 		BackgroundColor3 = Color3.fromRGB(15, 15, 15),
 		TextColor3 = Color3.fromRGB(255, 255, 255),
 		TextTransparency = 1,
