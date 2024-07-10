@@ -202,85 +202,9 @@ local ExampleToggle = TutorialSection:AddToggle("Testing Toggle", function(v)
     print("The toggle is now"..v.value)
 end)</code></pre> <p>Returns -> Toggle - Type -> Instance</p>
     </div>
-    
-    <div class="Segment 5 - dropdowns">
-        <h1>Segment 5 - Dropdowns</h1>
-        <p>Welcome to dropdowns, they are downs that drop. No okay so this segment we are learning how to add dropdowns. It's again really simple if you understand it. So to create an empty dropdown we simply need to use <code class="language-lua">:AddDropdown()</code>, and in our code its <code class="language-lua">local exampleDropdown = tutorialSection:AddDropdown(Title, Entries, Callback)</code>, now you probably are wandering what are <code>Entries</code> just like I did at first. It's basically a table <code>{"Option 1", "Option 2", "Option 3"}</code></p>
-        
-        <p>So, if we'd like to impliment it into our little example script its basically the code below</p>
 
-        <pre><code class="language-lua">local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/bbbPriv/BOOGA-UI/main/booga%20ui.lua"))()
-
-local Hub = Library.New("Tutorial")
-
-local TutorialPage = Hub:AddPage("Example Page", 10016745130)
-local TutorialSection = TutorialPage:AddSection("Example Section!")
-TutorialPage:AddSearchBar()
-
-local ExampleDropdown = TutorialSection:AddDropdown("Example Dropdown", {"Option 1", "Option 2", "Option 3"}, function(v) end)</code></pre> 
-<p>Returns -> Dropdown - Type -> Instance</p>
-
-    </div>
-
-    <div class="Segment 6 - sliders">
-        <h1>Segment 6 - Sliders</h1>
-        <p>Sliders, you can drag and uh. So to use sliders we can use the <code class="language-lua">:AddSlider(Title, Value, Min, Max, FixValues, Callback)</code>, now ur probably wondering whats <code>Title</code>, i meant <code>FixValues</code>, well FixValues are basically <code> If textbox values are bigger than max or smaller than min it will set to default max or min value</code></p>
-
-        <p>Let's write a simple dropdown example</p>
-
-        <pre><code class="language-lua">local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/bbbPriv/BOOGA-UI/main/booga%20ui.lua"))()
-
-local Hub = Library.New("Tutorial")
-
-local TutorialPage = Hub:AddPage("Example Page", 10016745130)
-local TutorialSection = TutorialPage:AddSection("Example Section!")
-TutorialPage:AddSearchBar()
-
-local ExampleSlider = TutorialSection:AddSlider("Example Slider", 50, 0, 100, 15, function(v) 
-    print(v.Value) 
-end)</code></pre> <p>Returns -> Slider - Type -> Instance</p>
-    </div>
-
-    <div class="Segment 7 - textbox">
-        <h1>Segment 7 - Textboxes</h1>
-        <p>Hello gadies and lentlemen, today we are learn how to make a textbox, todays usage isssss <code class="language-lua">:AddTextBox(Title, Callback)</code> <i>im not being paid for this</i>, where callback is every time you type in the text box, your can for example print it like this</p>
-
-        <pre><code class="language-lua">local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/bbbPriv/BOOGA-UI/main/booga%20ui.lua"))()
-
-local Hub = Library.New("Tutorial")
-
-local TutorialPage = Hub:AddPage("Example Page", 10016745130)
-local TutorialSection = TutorialPage:AddSection("Example Section!")
-TutorialPage:AddSearchBar()
-
-TutorialSection:AddTextBox("Example Textbox", function(v) 
-    print(v) 
-end)</code></pre> <p>Returns -> TextBox - Type -> Instance</p>
-    </div>
-
-    <div class="Segment 8 - keybinds">
-        <h1>Segment 8 - Keybinds</h1>
-        <p>This is an intresting one, atleast for me so thats why I will go into more details.</p>
-        <p>This segment explains keybinds, you are able to bind ANY keyboard key and it will execute code or a function every time the key is pressed of course except if you are typing in chat, or your in the escape menu. It also registers when the UI is closed. The way to use it <code class="language-lua">AddKeybind(Title, Key, Callback)</code>, where <code>Key</code> is the input needed to be pressed for callback to be executed</p>
-        <p>Let's create an example, shall we?</p>
-
-        <pre><code class="language-lua">local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/bbbPriv/BOOGA-UI/main/booga%20ui.lua"))()
-
-local Hub = Library.New("Tutorial")
-
-local TutorialPage = Hub:AddPage("Example Page", 10016745130)
-local TutorialSection = TutorialPage:AddSection("Example Section!")
-TutorialPage:AddSearchBar()
-
-local ExampleKeybind = TutorialSection:AddKeybind("Example Keybind",Enum.Keycode.X,function(v) 
-    print("Executed") 
-end)</code></pre>
-    <p>Here when the key button <code>x</code> is pressed, it will print 'Executed' on the console.</p>
-    <p>Returns -> Keybind - Type -> Instance</p>
-    </div>
-
-    <div class="Segment 9 - Notify">
-        <h1>Segment 9 - Notifications</h1>
+    <div class="Segment 5 - Notify">
+        <h1>Segment 5 - Notifications</h1>
         <p>Notifications is quite intresting, you can for example warn the user that the script wont work because a condition is met.</p>
         <p>For example, knowing the usage is <code class="language-lua">Library:Notify(Title, Text, Position (UDim2), Direction(UDim2), Callback)</code>where <code>Position</code> is the starting position and <code>Direction</code> is the end position after tweening we can do the below script.</p>
         <pre><code class="language-lua">local foo = 10
@@ -296,8 +220,8 @@ if foo >= bar then Library:Notify("Condition met", "It seems that foo is bigger 
 end</code></pre>
     </div>
 
-    <div class="Segment 10 - Dialog">
-        <h1>Segment 10 - Dialog</h1>
+    <div class="Segment 6 - Dialog">
+        <h1>Segment 6 - Dialog</h1>
         <p>In this segment we learn about dialog, they are quite useful, for example when prompting players to doing something risky. The usage is really simple <code class="language-lua">Library:Dialog(Title, Text, Callback)</code></p>
 
         <p>Here is an example now in code</p>
@@ -316,10 +240,85 @@ local exampleDialog = Library:Dialog("Example", "Hello, world!", function(v)
         print("Dialog Declined")
     end
 end)</code></pre>
+    
+    <div class="Segment 7 - dropdowns">
+        <h1>Segment 7 - Dropdowns</h1>
+        <p>Welcome to dropdowns, they are downs that drop. No okay so this segment we are learning how to add dropdowns. It's again really simple if you understand it. So to create an empty dropdown we simply need to use <code class="language-lua">:AddDropdown()</code>, and in our code its <code class="language-lua">local exampleDropdown = tutorialSection:AddDropdown(Title, Entries, Callback)</code>, now you probably are wandering what are <code>Entries</code> just like I did at first. It's basically a table <code>{"Option 1", "Option 2", "Option 3"}</code></p>
+        
+        <p>So, if we'd like to impliment it into our little example script its basically the code below</p>
+
+        <pre><code class="language-lua">local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/bbbPriv/BOOGA-UI/main/booga%20ui.lua"))()
+
+local Hub = Library.New("Tutorial")
+
+local TutorialPage = Hub:AddPage("Example Page", 10016745130)
+local TutorialSection = TutorialPage:AddSection("Example Section!")
+TutorialPage:AddSearchBar()
+
+local ExampleDropdown = TutorialSection:AddDropdown("Example Dropdown", {"Option 1", "Option 2", "Option 3"}, function(v) end)</code></pre> 
+<p>Returns -> Dropdown - Type -> Instance</p>
+
     </div>
 
-    <div class="Segment 11 - Section:Seperator">
-        <h1>Segment 11 - Section:Seperator</h1>
+    <div class="Segment 8 - sliders">
+        <h1>Segment 8 - Sliders</h1>
+        <p>Sliders, you can drag and uh. So to use sliders we can use the <code class="language-lua">:AddSlider(Title, Value, Min, Max, FixValues, Callback)</code>, now ur probably wondering whats <code>Title</code>, i meant <code>FixValues</code>, well FixValues are basically <code> If textbox values are bigger than max or smaller than min it will set to default max or min value</code></p>
+
+        <p>Let's write a simple dropdown example</p>
+
+        <pre><code class="language-lua">local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/bbbPriv/BOOGA-UI/main/booga%20ui.lua"))()
+
+local Hub = Library.New("Tutorial")
+
+local TutorialPage = Hub:AddPage("Example Page", 10016745130)
+local TutorialSection = TutorialPage:AddSection("Example Section!")
+TutorialPage:AddSearchBar()
+
+local ExampleSlider = TutorialSection:AddSlider("Example Slider", 50, 0, 100, 15, function(v) 
+    print(v.Value) 
+end)</code></pre> <p>Returns -> Slider - Type -> Instance</p>
+    </div>
+
+    <div class="Segment 9 - textbox">
+        <h1>Segment 9 - Textboxes</h1>
+        <p>Hello gadies and lentlemen, today we are learn how to make a textbox, todays usage isssss <code class="language-lua">:AddTextBox(Title, Callback)</code> <i>im not being paid for this</i>, where callback is every time you type in the text box, your can for example print it like this</p>
+
+        <pre><code class="language-lua">local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/bbbPriv/BOOGA-UI/main/booga%20ui.lua"))()
+
+local Hub = Library.New("Tutorial")
+
+local TutorialPage = Hub:AddPage("Example Page", 10016745130)
+local TutorialSection = TutorialPage:AddSection("Example Section!")
+TutorialPage:AddSearchBar()
+
+TutorialSection:AddTextBox("Example Textbox", function(v) 
+    print(v) 
+end)</code></pre> <p>Returns -> TextBox - Type -> Instance</p>
+    </div>
+
+    <div class="Segment 10 - Keybindings">
+        <h1>Segment 10 - Keybindings</h1>
+        <p>This is an intresting one, atleast for me so thats why I will go into more details.</p>
+        <p>This segment explains Keybindings, you are able to bind ANY keyboard key and it will execute code or a function every time the key is pressed of course except if you are typing in chat, or your in the escape menu. It also registers when the UI is closed. The way to use it <code class="language-lua">AddKeybind(Title, Key, Callback)</code>, where <code>Key</code> is the input needed to be pressed for callback to be executed</p>
+        <p>Let's create an example, shall we?</p>
+
+        <pre><code class="language-lua">local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/bbbPriv/BOOGA-UI/main/booga%20ui.lua"))()
+
+local Hub = Library.New("Tutorial")
+
+local TutorialPage = Hub:AddPage("Example Page", 10016745130)
+local TutorialSection = TutorialPage:AddSection("Example Section!")
+TutorialPage:AddSearchBar()
+
+local ExampleKeybind = TutorialSection:AddKeybind("Example Keybind",Enum.Keycode.X,function(v) 
+    print("Executed") 
+end)</code></pre>
+    <p>Here when the key button <code>x</code> is pressed, it will print 'Executed' on the console.</p>
+    <p>Returns -> Keybind - Type -> Instance</p>
+    </div>
+
+    <div class="Segment 11 - Seperator">
+        <h1>Segment 11 - Seperators</h1>
         <p>This is a small segment, basically what a seperator does is puts some space between interactables to appearance reason mostly. To make use of the the section's seperator we use <code class="language-lua">section:AddSeparator (YOffset)</code>, where offset is the height. Let's make use of it in a example script</p>
 
         <pre><code class="language-lua">local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/bbbPriv/BOOGA-UI/main/booga%20ui.lua"))()
