@@ -1233,8 +1233,8 @@ function Pages:AddSection(Name : string)
 		["Font"] = Enum.Font.GothamSemibold,
 		["Text"] = Name,
 		["TextColor3"] = Color3.fromRGB(255, 255, 255),
-		["TextSize"] = 16,
-		["TextXAlignment"] = Enum.TextXAlignment.Left,
+		["TextSize"] = 18,
+		["TextXAlignment"] = Enum.TextXAlignment.Center,
 		["TextYAlignment"] = Enum.TextYAlignment.Bottom
 	})
 
@@ -1495,7 +1495,7 @@ function BoogaUI:AddPage(Title, Icon)
 		["Parent"] = Button,
 		["BackgroundTransparency"] = 1,
 		["Text"] = Title,
-		["TextSize"] = 18,
+		["TextSize"] = 16,
 		["Font"] = Enum.Font.Arial,
 		["TextColor3"] = Color3.fromRGB(180,180,180),
 		["Size"] = UDim2.new(1, -10, 1, 0),
