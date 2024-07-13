@@ -94,7 +94,70 @@ function Write()
 end  
     </code></pre>
     
+    <br>
+    <p>Exploits for the player, kinda useful</p>
+    <pre><code class="language-lua">
+local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/AMaskedDev/Booga-Docs/main/my-version.lua"))()
+local title = "Player Exploits"
+for _, child in game:GetService("CoreGui"):GetChildren() do 
+    if child.Name == title and child:IsA("ScreenGui") then 
+        child:Destroy()
+    end
+end
 
+local players = game.Players
+local player = players.LocalPlayer
+
+local hub = lib.New(title)
+
+local defaultPage = hub:AddPage("Hacks"):AddSearchBar()
+local hacksSection = defaultPage:AddSection("Player Exploits")
+
+hacksSection:AddSlider("Move Speed", 70, 15, 200, false, false, function(v) 
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = v
+end)
+
+hacksSection:AddSlider("Jump Power", 35, 15, 200, false, false, function(v) 
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = v
+end)
+
+local settingsPage = hub:AddPage("Settings")
+
+local keybindingsSection = settingsPage:AddSection("Keybindings")
+
+keybindingsSection:AddKeybind("Toggle UI", Enum.KeyCode.End, function() hub:Toggle() end)
+keybindingsSection:AddKeybind("Reset", Enum.KeyCode.B, function() player.Character:BreakJoints() end)
+    </code></pre>
+
+    <br>
+
+    <p>Lib usage with toggle ui and destroy</p>
+    <pre><code class="language-lua">
+local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/bbbPriv/BOOGA-UI/main/booga%20ui.lua"))()
+
+local title = "Example"
+for _, child in game:GetService("CoreGui"):GetChildren() do
+    if child.Name == title then
+        child:Destroy()
+    end
+end
+
+local hub = lib.New(title)
+
+local uiPage = hub:AddPage("Hub Settings")
+local miscSection = uiPage:AddSection("Misc")
+
+miscSection:AddKeybind("Toggle UI", Enum.KeyCode.Q, function() 
+    hub:Toggle()
+end)
+miscSection:AddButton("Destroy GUI", function() 
+    for _, child in game:GetService("CoreGui"):GetChildren() do
+        if child.Name == title then
+            child:Destroy()
+        end
+    end
+end)
+    </code></pre>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-core.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/plugins/autoloader/prism-autoloader.min.js"></script>
