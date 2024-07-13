@@ -1676,7 +1676,7 @@ function BoogaUI:AddPage(Title, Icon)
 		Parent = self.PagesScrolling,
 		BackgroundTransparency = 1,
 		BorderSizePixel = 0,
-		Size = UDim2.new(1, 0, 0, 15),
+		Size = UDim2.new(1, 0, 0, 23),
 		ZIndex = 3,
 		AutoButtonColor = false,
 		Font = Enum.Font.Gotham,
