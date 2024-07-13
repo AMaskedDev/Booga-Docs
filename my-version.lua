@@ -1661,7 +1661,7 @@ function BoogaUI:AddTitleInfo()
 				["TextColor3"] = Color3.fromRGB(185, 185, 185),
 				["Size"] = UDim2.new(0.323, -46,0.679, 16),
 				["TextXAlignment"] = Enum.TextXAlignment.Center,
-				["Position"] = UDim2.new(0, 450,0, 0)
+				["Position"] = UDim2.new(0, 430,0, 0)
 			})
 		end
 	end
