@@ -9,7 +9,7 @@ local TS = game:GetService("TweenService")
 function Utility.Create(ClassName, Properties)
 	local instance = Instance.new(ClassName)
 
-	for k,v in Properties do
+	for k,v in pairs(Properties) do
 		if not pcall(function() instance[k] = v end) then
 			warn("Property " .. k .. " does not exist in " .. instance.Name)
 		end
@@ -56,6 +56,7 @@ local function UpdateSlider(Bar, Value, Min, Max, Decimal)
 	Value = not Decimal and Value or string.format("%.1f", Value)
 
 	Bar.Parent.TextBox.Text = Value
+	BoogaUI.Instances[Bar.Fill].Size = UDim2.new(percent, 0, 1 ,0)
 	TS:Create(Bar.Fill, TweenInfo.new(0.1), {Size = UDim2.new(percent, 0, 1 ,0)}):Play()
 
 	return Value
@@ -136,12 +137,32 @@ Sections.__index = Sections
 
 setmetatable(Sections, {__index = Pages})
 
-function Sections:Resize()
+local AllSections = {}
+
+function Pages:GetSectionEnv(Section)
+	for _,v in pairs(AllSections) do
+		for k, v2 in pairs(v) do
+			if typeof(v2) == "Instance" and not self[k] then
+				self[k] = v2
+			end
+		end
+	end
+
+	for k,v in pairs(Sections) do
+		if k == "Resize" then
+			self[k] = v
+		end
+	end
+
+	return self
+end
+
+function Sections:Resize(Section)
 	local Size = 32
 
-	for _,v in self.Section.Frame:GetChildren() do
-		if v.ClassName ~= "UIListLayout" and v.ClassName ~= "TextLabel" then
-			
+	for _,v in pairs(Section and Section:GetChildren() or self.Section.Frame:GetChildren()) do
+		if v.ClassName ~= "UIListLayout" and v.ClassName ~= "TextLabel" and v.Visible then
+
 			if v:FindFirstChild("List") and v.List.ScrollingFrame:FindFirstChildOfClass("TextButton") then
 				Size += 128
 			else
@@ -150,9 +171,14 @@ function Sections:Resize()
 		end
 	end
 
-	self.Instances[self.Section].Size = UDim2.new(1, -16, 0, Size)
-	self.Section.Size = UDim2.new(1, -16, 0, Size)
-	
+	if not Section then
+		self.Instances[self.Section].Size = UDim2.new(1, -16, 0, Size)
+		self.Section.Size = UDim2.new(1, -16, 0, Size)
+	else
+		self.Instances[Section.Parent].Size = UDim2.new(1, -16, 0, Size)
+		Section.Parent.Size = UDim2.new(1, -16, 0, Size)
+	end
+
 	return Size
 end
 
@@ -172,7 +198,7 @@ function Sections:AddButton(Name, Callback)
 		TextColor3 = Color3.fromRGB(255, 255, 255),
 		TextTransparency = 0.1
 	})
-	
+
 	self:Resize()
 
 	self:ResizePage()
@@ -392,7 +418,7 @@ function Sections:AddTextBox(Name, CallBack)
 		ScaleType = Enum.ScaleType.Slice,
 		SliceCenter = Rect.new(2, 2, 298, 298)
 	})
-	
+
 	self:Resize()
 
 	self:ResizePage()
@@ -423,6 +449,11 @@ function Sections:AddTextBox(Name, CallBack)
 		ImageColor3 = Color3.fromRGB(28, 28, 28),
 		ScaleType = Enum.ScaleType.Slice,
 		SliceCenter = Rect.new(2, 2, 298, 298)
+	})
+
+	Utility.Create("StringValue", {
+		Parent = Label,
+		Name = "AddIndex"
 	})
 
 	local TextBox = Utility.Create("TextBox", {
@@ -451,8 +482,10 @@ function Sections:AddTextBox(Name, CallBack)
 	Holder.MouseButton1Click:Connect(function()
 
 		if Label.Size ~= UDim2.new(0, 220, 0, 16) then
+			self.Instances[Label].Size = UDim2.new(0, 220, 0, 16)
 			TS:Create(Label, TweenInfo.new(0.2), {Size = UDim2.new(0, 220, 0, 16), Position = UDim2.new(1, -230, 0.5, -8)}):Play()
 		else
+			self.Instances[Label].Size = UDim2.new(0, 100, 0, 16)
 			TS:Create(Label, TweenInfo.new(0.2), {Size = UDim2.new(0, 100, 0, 16), Position = UDim2.new(1, -110, 0.5, -8)}):Play()
 		end
 
@@ -462,7 +495,6 @@ function Sections:AddTextBox(Name, CallBack)
 	UIS.InputBegan:Connect(function(Input)
 
 		if Input.UserInputType == Enum.UserInputType.MouseButton1 then
-
 			if isPointInBounds(Input.Position, Label) then
 				DoubleClick += 1
 
@@ -470,10 +502,12 @@ function Sections:AddTextBox(Name, CallBack)
 					if Label.Size == UDim2.new(0, 100, 0, 16) then
 						DoubleClicked = true
 
+						self.Instances[Label].Size = UDim2.new(0, 220, 0, 16)
 						TS:Create(Label, TweenInfo.new(0.2), {Size = UDim2.new(0, 220, 0, 16), Position = UDim2.new(1, -230, 0.5, -8)}):Play()
 					else
 						DoubleClicked = false
 
+						self.Instances[Label].Size = UDim2.new(0, 100, 0, 16)
 						TS:Create(Label, TweenInfo.new(0.2), {Size = UDim2.new(0, 100, 0, 16), Position = UDim2.new(1, -110, 0.5, -8)}):Play()
 					end
 				end
@@ -481,6 +515,9 @@ function Sections:AddTextBox(Name, CallBack)
 				task.wait(0.3)
 
 				DoubleClick = 0
+			elseif Label.Size.X.Offset > 100 and isPointInBounds(Input.Position, Label) then
+				self.Instances[Label].Size = UDim2.new(0, 100, 0, 16)
+				TS:Create(Label, TweenInfo.new(0.2), {Size = UDim2.new(0, 100, 0, 16), Position = UDim2.new(1, -110, 0.5, -8)}):Play()
 			end
 		end
 	end)
@@ -495,23 +532,28 @@ function Sections:AddTextBox(Name, CallBack)
 	end)
 
 	TextBox.FocusLost:Connect(function()
+
+		task.spawn(function()
+			CallBack(TextBox.Text, true)
+		end)
+
 		if DoubleClicked then
 			DoubleClicked = false
 			task.wait(0.1)
 
+			self.Instances[Label].Size = UDim2.new(1, -110, 0.5, -8)
 			TS:Create(Label, TweenInfo.new(0.2), {Size = UDim2.new(0, 100, 0, 16), Position = UDim2.new(1, -110, 0.5, -8)}):Play()
 		end
 
 		TextBox.TextXAlignment = Enum.TextXAlignment.Center
-
-		CallBack(TextBox.Text, true)
 	end)
 
 	return Holder
 end
 
 function Sections:AddKeybind(Name, Key, Callback)
-	local Old = typeof(Key) == "string" and Enum.KeyCode[Key:upper()].Name or (Key and Key.Name or "None")
+	local Old = typeof(Key) == "string" and Enum.KeyCode[Key:sub(2) ~= "" and Key:sub(1,1):upper() .. Key:sub(2):lower() or Key:upper()].Name or (Key and Key.Name or "None")
+	Key = typeof(Key) == "string" and Enum.KeyCode[Key:sub(2) ~= "" and Key:sub(1,1):upper() .. Key:sub(2):lower() or Key:upper()] or (Key and Key.Name or "None")
 
 	local Selecting = false
 
@@ -528,7 +570,7 @@ function Sections:AddKeybind(Name, Key, Callback)
 		ScaleType = Enum.ScaleType.Slice,
 		SliceCenter = Rect.new(2, 2, 298, 298)
 	})
-	
+
 	self:Resize()
 
 	self:ResizePage()
@@ -554,8 +596,8 @@ function Sections:AddKeybind(Name, Key, Callback)
 	local Label = Utility.Create("ImageLabel", {
 		Parent = Holder,
 		BackgroundTransparency = 1,
-		Position = UDim2.new(1, -110, 0.5, -8),
-		Size = UDim2.new(0, 100, 0, 16),
+		Position = UDim2.new(1, -45, 0.5, -8),
+		Size = UDim2.new(0, 35, 0, 16),
 		ZIndex = 2,
 		Image = "rbxassetid://5028857472",
 		ImageColor3 = Color3.fromRGB(28, 28, 28),
@@ -572,7 +614,7 @@ function Sections:AddKeybind(Name, Key, Callback)
 		Size = UDim2.new(1, -10, 1, 0),
 		ZIndex = 3,
 		Font = Enum.Font.Arial,
-		Text = typeof(Key) == "string" and Enum.KeyCode[Key:upper()].Name or (Key and Key.Name or "None"),
+		Text = Old,
 		TextColor3 = Color3.fromRGB(255, 255, 255),
 		TextSize = 12
 	})
@@ -587,8 +629,8 @@ function Sections:AddKeybind(Name, Key, Callback)
 		TS:Create(Holder, TweenInfo.new(0.15), {Size = UDim2.new(0.950, 0, 0, 30)}):Play()
 	end)
 
-	UIS.InputBegan:Connect(function(Input)
-		if Input.UserInputType == Enum.UserInputType.Keyboard and Input.KeyCode == Key and not Selecting then
+	UIS.InputBegan:Connect(function(Input, GME)
+		if not GME and Input.UserInputType == Enum.UserInputType.Keyboard and Input.KeyCode == Key and not Selecting then
 			task.spawn(function()
 				Callback(Enum.KeyCode[Key.Name])
 			end)
@@ -596,6 +638,8 @@ function Sections:AddKeybind(Name, Key, Callback)
 	end)
 
 	Holder.MouseButton1Click:Connect(function()
+		TS:Create(Label, TweenInfo.new(0.3), {Size = UDim2.new(0, 100, 0, 16), Position = UDim2.new(1, -110, 0.5, -8)}):Play()
+
 		if KeyLabel.Text ~= "..." then
 			Old = KeyLabel.Text
 		end
@@ -615,9 +659,13 @@ function Sections:AddKeybind(Name, Key, Callback)
 				Key = Enum.KeyCode[Old]
 				KeyLabel.Text = Key.Name
 
+				TS:Create(Label, TweenInfo.new(0.3), {Size = UDim2.new(0, 35, 0, 16), Position = UDim2.new(1, -45, 0.5, -8)}):Play()
+
 				break
 			end
 		end
+
+		TS:Create(Label, TweenInfo.new(0.3), {Size = UDim2.new(0, 35, 0, 16), Position = UDim2.new(1, -45, 0.5, -8)}):Play()
 
 		if not Selecting then
 
@@ -650,6 +698,8 @@ function Sections:AddKeybind(Name, Key, Callback)
 				Selecting = false
 
 				KeyLabel.Text = Old
+
+				TS:Create(Label, TweenInfo.new(0.3), {Size = UDim2.new(0, 35, 0, 16), Position = UDim2.new(1, -45, 0.5, -8)}):Play()
 			end
 		end
 	end)
@@ -668,17 +718,15 @@ function Sections:AddSlider(Name, Value, Min, Max, FixValues, Decimal, Callback)
 		Size = UDim2.new(0.950, 0, 0, 50),
 		ZIndex = 2,
 	})
-	
+
 	self:Resize()
 
 	self:ResizePage()
-	
+
 	Utility.Create("UICorner", {
 		Parent = Holder,
 		CornerRadius = UDim.new(0, 4)
 	})
-
-	table.insert(self.Instances, {instance = Holder, Size = Holder.Size})
 
 	Utility.Create("TextLabel", {
 		Name = "Title",
@@ -725,6 +773,11 @@ function Sections:AddSlider(Name, Value, Min, Max, FixValues, Decimal, Callback)
 		ZIndex = 2,
 		BackgroundColor3 = Color3.fromRGB(255, 255, 255),
 		Size = UDim2.fromScale(0.142, 1)
+	})
+
+	Utility.Create("StringValue", {
+		Parent = Fill,
+		Name = "AddIndex"
 	})
 
 	self:AddInstances({Holder, Holder.Size, Holder.Title, Holder.Title.Size, Box, Box.Size, Bar, Bar.Size, Fill, Fill.Size})
@@ -789,9 +842,9 @@ function Sections:AddSlider(Name, Value, Min, Max, FixValues, Decimal, Callback)
 			end
 
 			TS:Create(Circle, TweenInfo.new(0.2), {ImageTransparency = 1}):Play()
-			
+
 			task.wait(0.2)
-			
+
 		end
 	end)
 
@@ -804,7 +857,7 @@ function Sections:AddSlider(Name, Value, Min, Max, FixValues, Decimal, Callback)
 	UIS.InputChanged:Connect(function(input)
 		if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
 
-			
+
 			TS:Create(Circle, TweenInfo.new(0.1), {Position = UDim2.new(0, math.clamp(input.Position.X - Bar.AbsolutePosition.X, 0, Bar.AbsoluteSize.X) - 15, 0, -2)}):Play()
 
 			TS:Create(Circle, TweenInfo.new(0.2), {ImageTransparency = 0}):Play()
@@ -826,9 +879,9 @@ function Sections:AddSlider(Name, Value, Min, Max, FixValues, Decimal, Callback)
 			end
 
 			TS:Create(Circle, TweenInfo.new(0.2), {ImageTransparency = 1}):Play()
-			
+
 			task.wait(0.2)
-			
+
 		end
 	end)
 
@@ -882,14 +935,14 @@ function Sections:AddDropdown(Name, Entries, Callback)
 
 	local function MakeEntries(Optional)
 
-		for _,v in ScrollingFrame:GetChildren() do
+		for _,v in pairs(ScrollingFrame:GetChildren()) do
 			if v.ClassName == "TextButton" then
 				v:Destroy()
 			end
 		end
 
 		if Entries then
-			for _,v in Entries do
+			for _,v in pairs(Entries) do
 
 				if Holder2.TextBox.Text ~= "None Selected" and not v:find(Holder2.TextBox.Text) then
 					continue
@@ -1031,7 +1084,7 @@ function Sections:AddDropdown(Name, Entries, Callback)
 			Dont = false
 			return
 		end
-		
+
 		if Holder.List.Size.Y.Offset == 30 then
 			return
 		end
@@ -1110,13 +1163,13 @@ function Sections:AddDropdown(Name, Entries, Callback)
 			ScrollingFrame.Visible = true
 
 			MakeEntries()
-			
+
 			self:Resize()
 			self:ResizePage(true)
 
 		else
 
-			for _,v in ScrollingFrame:GetChildren() do
+			for _,v in pairs(ScrollingFrame:GetChildren()) do
 				if v.ClassName == "TextButton" then
 					local Tween = TS:Create(v, TweenInfo.new(0.2), {Size = UDim2.fromScale(0, 0.130), TextTransparency = 1, BackgroundTransparency = 1})
 					Tween:Play()
@@ -1126,12 +1179,12 @@ function Sections:AddDropdown(Name, Entries, Callback)
 					end)					
 				end
 			end
-			
+
 			local Size = self:Resize()
 
 			self.Instances[self.Section].Size = UDim2.new(1, -16, 0, Size - 120)
 			self.Section.Size = UDim2.new(1, -16, 0, Size - 120)
-			
+
 			self:ResizePage()
 
 			TS:Create(Holder2.ImageButton, TweenInfo.new(0.3), {Rotation = 0}):Play()
@@ -1158,18 +1211,15 @@ function Sections:AddSeparator(YOffset)
 		Size = UDim2.new(0.950, 0, 0, YOffset),
 		BackgroundTransparency = 1
 	})
-	
+
 	self:Resize()
 
 	self:ResizePage()
 
-	self:AddInstances({Separator, Separator.Size})
-
-
 	return Separator
 end
 
-function Pages:AddSection(Name : string)
+function Pages:AddSection(Name)
 
 	if not Name then
 		error("No section name")
@@ -1237,26 +1287,29 @@ function Pages:AddSection(Name : string)
 	})
 
 
-	return setmetatable({SectionPage = self.Page, Section = Section}, Sections)
+	local tbl = {SectionPage = self.Page, Section = Section}
+	table.insert(AllSections, tbl)
+
+	return setmetatable(tbl, Sections)
 end
 
 function Pages:ResizePage(DropdownCall)
 	local Size = self.SectionPage["Search Bar"].Visible and 50 or 0
 
-	for _, section in self.SectionPage:GetChildren() do
-		if section.ClassName == "ImageLabel" then
+	for _, section in pairs(self.SectionPage:GetChildren()) do
+		if section.ClassName == "ImageLabel" or section.Name == "Separator" then
 			Size += section.AbsoluteSize.Y + 10
 		end
 	end
 
 	self.SectionPage.CanvasSize = UDim2.fromOffset(0, Size)
-	
+
 	if DropdownCall and self.SectionPage.ScrollBarImageTransparency == 1 then
 		TS:Create(self.SectionPage, TweenInfo.new(0.3), {CanvasPosition = Vector2.new(0, self.SectionPage.CanvasPosition.Y + 60)}):Play()
 	end
-	
+
 	self.SectionPage.ScrollBarImageTransparency = Size > self.SectionPage.AbsoluteSize.Y and 0 or 1
-	
+
 	return Size
 end
 
@@ -1277,12 +1330,20 @@ function Pages:AddSearchBar()
 			end)
 		end
 
-		for _, v in self.Page:GetChildren() do
+		for _, v in pairs(self.Page:GetChildren()) do
 			if v.ClassName == "ImageLabel" then
-				for _, v2 in v.Frame:GetChildren() do
+				local Invisible = true
+
+				for _, v2 in pairs(v.Frame:GetChildren()) do
 					if Bar.TextBox.Text == "" and v2.ClassName ~= "UIListLayout" then
 						v2.Visible = true
+						v.Visible = true
+						Invisible = false
 						continue
+					end
+
+					if v2.ClassName ~= "UIListLayout" and v2.ClassName ~= "TextLabel" and v2.Visible then
+						Invisible = false
 					end
 
 					local Label = v2:FindFirstChildOfClass("TextLabel") or (v2.ClassName == "TextButton" and v2) or v2.Name == "Dropdown" and v2.Frame.TextLabel
@@ -1303,6 +1364,17 @@ function Pages:AddSearchBar()
 					end
 
 				end
+
+				if Invisible then
+					v.Visible = false
+					continue
+				end
+
+				local self = self:GetSectionEnv(v)
+
+				self:Resize()
+
+				self:ResizePage()
 			end
 		end
 	end)
@@ -1311,7 +1383,7 @@ function Pages:AddSearchBar()
 end
 
 
-function BoogaUI.New(Name : string)
+function BoogaUI.New(Name, CollapsableTab)
 
 	if not Name then
 		error("No Name argument")
@@ -1320,6 +1392,7 @@ function BoogaUI.New(Name : string)
 	BoogaUI.Toggled = false
 
 	BoogaUI.Toggling = false
+	
 
 	BoogaUI.Instances = {}
 
@@ -1327,6 +1400,10 @@ function BoogaUI.New(Name : string)
 
 	BoogaUI.Pages = {}
 
+	BoogaUI.LastPageButton = false
+
+	local isCollapsed = false
+	
 	local SG = Utility.Create("ScreenGui", {
 		["Parent"] = identifyexecutor and game.CoreGui or Player.PlayerGui,
 		["Name"] = Name,
@@ -1361,13 +1438,105 @@ function BoogaUI.New(Name : string)
 	local Pages = Utility.Create("ImageLabel", {
 		["Parent"] = MainLabel,
 		["Name"] = "Pages",
-		["Size"] = UDim2.fromScale(0.200, 0.871),
+		["Size"] = UDim2.fromScale(0.220, 0.871),
 		["Position"] = UDim2.new(0, 0, 0.128, 0),
 		["BorderSizePixel"] = 0,
 		["ImageColor3"] = Color3.fromRGB(27, 27, 27),
 		["Image"] = "rbxassetid://5012534273",
 
 	})
+	
+	if CollapsableTab then
+		local Collapse = Utility.Create("TextButton", {
+			Name = "colapse",
+			Parent = MainLabel,
+			BackgroundTransparency = 1,
+			BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+			BorderSizePixel = 0,
+			Size = UDim2.new(0.03, 0,1, 0),
+			Position = UDim2.new(0.19, 0,0.127, 0),
+			ZIndex = 3,
+			AutoButtonColor = false,
+			Text = "",
+		})
+	
+		--Collapse.MouseEnter:Connect(function()
+		--	TS:Create(Collapse, TweenInfo.new(0.090, Enum.EasingStyle.Linear, Enum.EasingDirection.In, 0, false, 0), {BackgroundTransparency = 0.1}):Play()
+		--	TS:Create(Collapse, TweenInfo.new(0.090, Enum.EasingStyle.Linear, Enum.EasingDirection.In, 0, false, 0), {BackgroundColor3 = Color3.fromRGB(220,220,220)}):Play()
+
+		--end)
+
+		--Collapse.MouseLeave:Connect(function()
+		--	TS:Create(Collapse, TweenInfo.new(0.090, Enum.EasingStyle.Linear, Enum.EasingDirection.In, 0, false, 0), {BackgroundTransparency = 0.5}):Play()
+		--	TS:Create(Collapse, TweenInfo.new(0.090, Enum.EasingStyle.Linear, Enum.EasingDirection.In, 0, false, 0), {BackgroundColor3 = Color3.fromRGB(220,220,220)}):Play()
+
+		--end)
+
+		--Collapse.MouseButton1Down:Connect(function()
+		--	TS:Create(Collapse, TweenInfo.new(0.090, Enum.EasingStyle.Linear, Enum.EasingDirection.In, 0, false, 0), {BackgroundTransparency = 0}):Play()
+		--	TS:Create(Collapse, TweenInfo.new(0.090, Enum.EasingStyle.Linear, Enum.EasingDirection.In, 0, false, 0), {BackgroundColor3 = Color3.fromRGB(255,255,255)}):Play()
+
+		--end)
+		
+		local pagesNormalSize = UDim2.new(0.22, 0,0.871, 0)
+		local pagesNormalCollapsed = UDim2.new(0, 0,0.871, 0)
+		
+		local buttonNormalPos = UDim2.new(0.19, 0,-0.127, 0)
+		local buttonCollapsedPos = UDim2.new(0, 0,0.127, 0)
+		
+		
+		local actualPageNormalPos = UDim2.new(0.252, 1.5, 0.14, 0)
+		local actualPageNormalSize =  UDim2.new(0.973, -142, 1, -56)
+		--
+		--["Position"] = UDim2.new(0.252, 1.5, 0.14, 0),
+		--["Size"] = UDim2.new(0.973, -142, 1, -56),
+		local actualPageCollapsedPos = UDim2.new(0.055, 1.5, 0.14, 0)
+		local actualPageCollapsedSize = UDim2.new(1.17, -142,1, -56)
+		
+		Collapse.MouseButton1Click:Connect(function() 
+			--TS:Create(Collapse, TweenInfo.new(0.090, Enum.EasingStyle.Linear, Enum.EasingDirection.In, 0, false, 0), {BackgroundTransparency = 0.1}):Play()
+			--TS:Create(Collapse, TweenInfo.new(0.090, Enum.EasingStyle.Linear, Enum.EasingDirection.In, 0, false, 0), {BackgroundColor3 = Color3.fromRGB(220,220,220)}):Play()
+			
+			isCollapsed = not isCollapsed		
+			
+			
+			if not isCollapsed then 
+				TS:Create(Pages, TweenInfo.new(0.190, Enum.EasingStyle.Linear, Enum.EasingDirection.In, 0, false, 0), {Size = pagesNormalSize}):Play()
+				TS:Create(Collapse, TweenInfo.new(0.190, Enum.EasingStyle.Linear, Enum.EasingDirection.In, 0, false, 0), {Position = buttonNormalPos}):Play()
+				
+				for _,v in Pages:GetChildren() do 
+					if v:IsA("ScrollingFrame") then 
+						v.Visible = true
+					end
+				end
+				
+				for _,v in MainLabel:GetChildren() do 
+					if v:IsA("ScrollingFrame") then 
+						TS:Create(v, TweenInfo.new(0.190, Enum.EasingStyle.Linear, Enum.EasingDirection.In, 0, false, 0), {Size = actualPageNormalSize}):Play()
+						TS:Create(v, TweenInfo.new(0.190, Enum.EasingStyle.Linear, Enum.EasingDirection.In, 0, false, 0), {Position = actualPageNormalPos}):Play()
+					end
+				end
+			
+			else
+				TS:Create(Pages, TweenInfo.new(0.190, Enum.EasingStyle.Linear, Enum.EasingDirection.In, 0, false, 0), {Size = pagesNormalCollapsed}):Play()
+				TS:Create(Collapse, TweenInfo.new(0.190, Enum.EasingStyle.Linear, Enum.EasingDirection.In, 0, false, 0), {Position = buttonCollapsedPos}):Play()
+				
+				for _,v in Pages:GetChildren() do 
+					if v:IsA("ScrollingFrame") then 
+						v.Visible = false
+					end
+				end
+				
+				for _,v in MainLabel:GetChildren() do 
+					if v:IsA("ScrollingFrame") then 
+						TS:Create(v, TweenInfo.new(0.190, Enum.EasingStyle.Linear, Enum.EasingDirection.In, 0, false, 0), {Size = actualPageCollapsedSize}):Play()
+						TS:Create(v, TweenInfo.new(0.190, Enum.EasingStyle.Linear, Enum.EasingDirection.In, 0, false, 0), {Position = actualPageCollapsedPos}):Play()
+					end
+				end
+				
+			end
+		end)
+	end
 
 	BoogaUI.Pages = Pages
 
@@ -1375,10 +1544,10 @@ function BoogaUI.New(Name : string)
 		["Parent"] = Pages,
 		["Name"] = "Pages Scrolling",
 		["BackgroundTransparency"] = 1,
-		["Size"] = UDim2.fromScale(0.996, 1),
+		["Size"] = UDim2.fromScale(0.994, 1),
 		["CanvasSize"] = UDim2.fromScale(0, 8),
 		["ScrollBarThickness"] = 6,
-		["ScrollBarImageColor3"] = Color3.fromRGB(0, 0, 0),
+		["ScrollBarImageColor3"] = Color3.fromRGB(255,255,255),
 		["BorderSizePixel"] = 0
 	})
 
@@ -1466,6 +1635,38 @@ function BoogaUI.New(Name : string)
 	return BoogaUI
 end
 
+function BoogaUI:UpdateTitle(title)
+	if self.MainLabel then 
+		if self.MainLabel.TitleHolder then 
+			if title then 
+				self.MainLabel.TitleHolder.Title.Text = title
+			else
+				print("No title")
+			end
+		end
+	end
+end
+
+function BoogaUI:AddTitleInfo()
+	if self.MainLabel then 
+		if self.MainLabel.TitleHolder then 
+			local PageTitle = Utility.Create("TextLabel", {
+				["Name"] = "Info",
+				["Parent"] = self.MainLabel.TitleHolder,
+				["BackgroundTransparency"] = 1,
+				["Text"] = "<b>" .. game.Players.LocalPlayer.Name .. "</b>" .. "\n" .. game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name,
+				["RichText"] = true,
+				["TextSize"] = 18,
+				["Font"] = Enum.Font.Arial,
+				["TextColor3"] = Color3.fromRGB(185, 185, 185),
+				["Size"] = UDim2.new(0.323, -46,0.679, 16),
+				["TextXAlignment"] = Enum.TextXAlignment.Center,
+				["Position"] = UDim2.new(0, 450,0, 0)
+			})
+		end
+	end
+end
+
 function BoogaUI:AddPage(Title, Icon)
 
 	local AnimatingClick = false
@@ -1485,7 +1686,7 @@ function BoogaUI:AddPage(Title, Icon)
 
 	local Size = 0
 
-	for _, section in self.PagesScrolling:GetChildren() do
+	for _, section in pairs(self.PagesScrolling:GetChildren()) do
 		if section.ClassName == "TextButton" then
 			Size += section.AbsoluteSize.Y + 10
 		end
@@ -1499,10 +1700,13 @@ function BoogaUI:AddPage(Title, Icon)
 		["Parent"] = Button,
 		["BackgroundTransparency"] = 1,
 		["Text"] = Title,
-		["TextSize"] = 22,
+		["RichText"] = true,
+		["TextSize"] = 17,
 		["Font"] = Enum.Font.Arial,
-		["TextColor3"] = Color3.fromRGB(220, 220, 220),
-		["Size"] = UDim2.fromScale(1, 1)
+		["TextColor3"] = Color3.fromRGB(185, 185, 185),
+		["Size"] = UDim2.new(1, -10, 1, 0),
+		["TextXAlignment"] = Enum.TextXAlignment.Left,
+		["Position"] = Icon and UDim2.fromScale(0.25, 0) or UDim2.fromScale(0.05, 0)
 	})
 
 	local Icon = Utility.Create("ImageLabel", {
@@ -1512,7 +1716,7 @@ function BoogaUI:AddPage(Title, Icon)
 		ImageTransparency = 0.5,
 		Image = tostring(Icon):find("rbx") and Icon or "rbxassetid://" .. tostring(Icon),
 		Size = UDim2.fromOffset(20, 20),
-		Position = UDim2.new(0, 4, 0.13, 0),
+		Position = UDim2.new(0, 7, 0.118, 0),
 	})
 
 	if not self.FocusedPage then
@@ -1523,8 +1727,8 @@ function BoogaUI:AddPage(Title, Icon)
 		["Parent"] = self.MainLabel,
 		["Name"] = Title,
 		["BackgroundTransparency"] = 1,
-		["Position"] = UDim2.new(0.225, 0, 0.14, 0),
-		["Size"] = UDim2.new(1, -142, 1, -56),
+		["Position"] = UDim2.new(0.252, 1.5, 0.14, 0),
+		["Size"] = UDim2.new(0.973, -142, 1, -56),
 		["ScrollBarThickness"] = 3,
 		["ScrollBarImageColor3"] = Color3.fromRGB(0, 0, 0),
 		["ScrollBarImageTransparency"] = 1,
@@ -1580,17 +1784,20 @@ function BoogaUI:AddPage(Title, Icon)
 			return
 		end
 
-		TS:Create(PageTitle, TweenInfo.new(0.1), {TextColor3 = Color3.fromRGB(170, 170, 170)}):Play()
+		PageTitle.Text = "<b>" .. PageTitle.Text .. "</b>"
+		TS:Create(PageTitle, TweenInfo.new(0.150), {TextColor3 = Color3.fromRGB(230, 230, 230)}):Play()
 
 	end)
 
 	Button.MouseLeave:Connect(function()
 		if AnimatingClick then
 			return
+		end 
+
+		if self.LastPageButton ~= PageTitle then
+			PageTitle.Text = PageTitle.Text:gsub("<b>", ""):gsub("</b>", "")
+			TS:Create(PageTitle, TweenInfo.new(0.2), {TextColor3 = Color3.fromRGB(185, 185, 185)}):Play()
 		end
-
-		TS:Create(PageTitle, TweenInfo.new(0.1), {TextColor3 = Color3.fromRGB(220, 220, 220)}):Play()
-
 	end)
 
 	Button.MouseButton1Down:Connect(function()
@@ -1598,25 +1805,25 @@ function BoogaUI:AddPage(Title, Icon)
 			return
 		end
 
-		TS:Create(PageTitle, TweenInfo.new(0.2), {TextSize = 20}):Play()
-
-		TS:Create(Icon, TweenInfo.new(0.1), {Size = UDim2.fromOffset(18, 18)}):Play()
+		PageTitle.Text = PageTitle.Text:gsub("<b>", ""):gsub("</b>", "")
+		TS:Create(PageTitle, TweenInfo.new(0.2), {TextColor3 = Color3.fromRGB(135, 135, 135)}):Play()
 	end)
 
 	Button.MouseButton1Click:Connect(function()
 
+
+		if self.LastPageButton then 
+			self.LastPageButton.Text = self.LastPageButton.Text:gsub("<b>", ""):gsub("</b>", "")
+			TS:Create(PageTitle, TweenInfo.new(0.2), {TextColor3 = Color3.fromRGB(230, 230, 230)}):Play()
+		end
+
+		self.LastPageButton = PageTitle
+
 		task.spawn(function()
 			AnimatingClick = true
 
-			TS:Create(PageTitle, TweenInfo.new(0.2), {TextSize = 27}):Play()
-
-			TS:Create(Icon, TweenInfo.new(0.1), {Size = UDim2.fromOffset(21, 22)}):Play()
-
-			task.wait(0.2)
-
-			TS:Create(PageTitle, TweenInfo.new(0.2), {TextSize = 22}):Play()
-
-			TS:Create(Icon, TweenInfo.new(0.1), {Size = UDim2.fromOffset(20, 20)}):Play()
+			PageTitle.Text = "<b>" .. PageTitle.Text .. "</b>"
+			TS:Create(PageTitle, TweenInfo.new(0.2), {TextColor3 = Color3.fromRGB(230, 230, 230)}):Play()
 
 			task.wait(0.2)
 
@@ -1631,7 +1838,7 @@ function BoogaUI:AddPage(Title, Icon)
 		local OldTextTransparency
 		local OldImageTransparency
 
-		for _,v in self.Instances do
+		for _,v in pairs(self.Instances) do
 			local instance = v.instance
 
 			if instance:IsDescendantOf(self.FocusedPage) then
@@ -1676,9 +1883,9 @@ function BoogaUI:AddPage(Title, Icon)
 						TS:Create(instance, TweenInfo.new(0.3), {Size = UDim2.new(instance.Size.X.Scale, instance.Size.X.Offset, instance.Size.Y.Scale - instance.Size.Y.Scale / 2, instance.Size.Y.Offset - instance.Size.Y.Offset / 1.1), ImageTransparency = 1}):Play()
 					end
 
-					for _,instance in instance:GetDescendants() do
+					for _,instance in pairs(instance:GetDescendants()) do
 
-						if instance.ClassName == "UICorner" or instance.ClassName == "ScrollingFrame" or instance.ClassName == "UIListLayout" or instance.ClassName == "BoolValue" or instance.Name == "Circle" or instance.Name == "ToggleBase" or instance.Name == "ToggleCircle" then
+						if instance.ClassName == "UICorner" or instance.ClassName == "ScrollingFrame" or instance.ClassName == "UIListLayout" or instance.ClassName == "BoolValue" or instance.Name == "Circle" or instance.Name == "ToggleBase" or instance.Name == "ToggleCircle" or instance.Name == "AddIndex" then
 							continue
 						end
 
@@ -1723,7 +1930,7 @@ function BoogaUI:AddPage(Title, Icon)
 
 		Old.Visible = false
 
-		for _,v in self.Instances do
+		for _,v in pairs(self.Instances) do
 			local instance = v.instance
 
 			if instance:IsDescendantOf(Page) then
@@ -1746,8 +1953,35 @@ function BoogaUI:AddPage(Title, Icon)
 	return setmetatable({Page = Page}, Pages)
 end
 
+function Pages:AddSeparator(YOffset)
+	local Separator = Utility.Create("Frame", {
+		Name = "Separator",
+		Parent = self.Page,
+		ZIndex = 2,
+		Size = UDim2.new(0.950, 0, 0, YOffset),
+		BackgroundTransparency = 1
+	})
+
+	self.SectionPage = self.Page
+	self:ResizePage()
+
+	return Separator
+end
+
+function BoogaUI:AddTabSeparator(YOffset)
+	local AnimatingClick = false
+
+	local Button = Utility.Create("Frame", {
+		Parent = self.PagesScrolling,
+		BackgroundTransparency = 1,
+		BorderSizePixel = 0,
+		Size = UDim2.new(1, 0, 0, YOffset),
+		ZIndex = 3
+	})
+end
+
 function BoogaUI:Notify(Title, Text, Position, Direction, Callback)
-	local Clicked = false
+	local Clicked
 
 	local Holder = Utility.Create("Frame", {
 		Parent = self.MainLabel.Parent,
@@ -1857,6 +2091,12 @@ function BoogaUI:Notify(Title, Text, Position, Direction, Callback)
 			Callback(true)
 		end)
 
+		task.spawn(function()
+			task.wait(0.5)
+
+			HandleOptions(Accept, Decline, Holder, Position or UDim2.fromScale(1, 0.890))
+		end)
+
 		TS:Create(Accept, TweenInfo.new(0.15), {Size = UDim2.fromScale(0.062, 0.2)}):Play()
 
 		task.wait(0.15)
@@ -1887,6 +2127,12 @@ function BoogaUI:Notify(Title, Text, Position, Direction, Callback)
 			Callback(false)
 		end)
 
+		task.spawn(function()
+			task.wait(0.5)
+
+			HandleOptions(Accept, Decline, Holder, Position or UDim2.fromScale(1, 0.890))
+		end)
+
 		TS:Create(Decline, TweenInfo.new(0.15), {Size = UDim2.fromScale(0.055, 0.153)}):Play()
 
 		task.wait(0.15)
@@ -1894,11 +2140,7 @@ function BoogaUI:Notify(Title, Text, Position, Direction, Callback)
 		TS:Create(Decline, TweenInfo.new(0.15), {Size = UDim2.fromScale(0.1, 0.21)}):Play()
 	end)
 
-	repeat task.wait() until Clicked
-
-	task.wait(0.5)
-
-	HandleOptions(Accept, Decline, Holder, Position or UDim2.fromScale(1, 0.890))
+	return Holder
 end
 
 function BoogaUI:Dialog(Title, Text, Callback)
@@ -2002,6 +2244,12 @@ function BoogaUI:Dialog(Title, Text, Callback)
 			Callback(true)
 		end)
 
+		task.spawn(function()
+			task.wait(0.5)
+
+			HandleOptions(Accept, Decline, Dialog, nil, UDim2.fromScale(0, 0))
+		end)
+
 		TS:Create(Accept, TweenInfo.new(0.15), {Size = UDim2.fromScale(0.068, 0.134)}):Play()
 
 		task.wait(0.15)
@@ -2033,6 +2281,12 @@ function BoogaUI:Dialog(Title, Text, Callback)
 			Callback(false)
 		end)
 
+		task.spawn(function()
+			task.wait(0.5)
+
+			HandleOptions(Accept, Decline, Dialog, nil, UDim2.fromScale(0, 0))
+		end)
+
 		TS:Create(Decline, TweenInfo.new(0.15), {Size = UDim2.fromScale(0.039, 0.115)}):Play()
 
 		task.wait(0.15)
@@ -2040,11 +2294,7 @@ function BoogaUI:Dialog(Title, Text, Callback)
 		TS:Create(Decline, TweenInfo.new(0.15), {Size = UDim2.fromScale(0.084, 0.172)}):Play()
 	end)
 
-	repeat task.wait() until Clicked
-
-	task.wait(0.5)
-
-	HandleOptions(Accept, Decline, Dialog, nil, UDim2.fromScale(0, 0))
+	return Dialog
 end
 
 function BoogaUI:Toggle()
@@ -2054,20 +2304,20 @@ function BoogaUI:Toggle()
 
 		self.MainLabel.TitleHolder.Title.ZIndex = 5
 
-		for _, PageTitle in self.MainLabel.Pages:GetDescendants() do
+		for _, PageTitle in pairs(self.MainLabel.Pages:GetDescendants()) do
 			if PageTitle.ClassName == "TextLabel" or PageTitle.Name == "Icon" then
 				PageTitle.ZIndex = 5
 			end
 		end
 
-		for _,v in self.Instances do
+		for _,v in pairs(self.Instances) do
 			v = v.instance
 
 			if v.ClassName == "TextLabel" then
 				TS:Create(v, TweenInfo.new(0.5), {TextTransparency = 1}):Play()
 			elseif v.ClassName == "TextBox" then
 				TS:Create(v, TweenInfo.new(0.5), {TextTransparency = 1}):Play()
-			elseif v.ClassName == "ImageLabel" or v.ClassName == "ImageButton" then
+			elseif (v.ClassName == "ImageLabel" or v.ClassName == "ImageButton") then
 				TS:Create(v, TweenInfo.new(0.5), {ImageTransparency = 1}):Play()
 			elseif v.ClassName == "Frame" then
 				TS:Create(v, TweenInfo.new(0.5), {BackgroundTransparency = 1}):Play()
@@ -2082,7 +2332,7 @@ function BoogaUI:Toggle()
 
 		TS:Create(self.MainLabel.TitleHolder.Title, TweenInfo.new(0.250), {TextTransparency = 1}):Play()
 
-		for _, PageTitle in self.MainLabel.Pages:GetDescendants() do
+		for _, PageTitle in pairs(self.MainLabel.Pages:GetDescendants()) do
 			if PageTitle.ClassName == "TextLabel" then
 				TS:Create(PageTitle, TweenInfo.new(0.250), {TextTransparency = 1, TextSize = 0}):Play()
 			elseif PageTitle.Name == "Icon" then
@@ -2119,8 +2369,7 @@ function BoogaUI:Toggle()
 		self.MainLabel.Size = UDim2.fromOffset(self.MainLabel.Size.X.Offset, 428)
 		TS:Create(self.MainLabel.TitleHolder, TweenInfo.new(0.5), {Size = UDim2.new(1, 0, 0.128, 0)}):Play()
 
-		for _,v in self.Instances do
-
+		for _,v in pairs(self.Instances) do
 			if v.instance.ClassName == "TextLabel" then
 				TS:Create(v.instance, TweenInfo.new(0.3), {TextTransparency = 0}):Play()
 			elseif v.instance.ClassName == "TextBox" then
@@ -2140,7 +2389,7 @@ function BoogaUI:Toggle()
 
 		TS:Create(self.MainLabel.TitleHolder.Title, TweenInfo.new(0.250), {TextTransparency = 0}):Play()
 
-		for _, PageTitle in self.MainLabel.Pages:GetDescendants() do
+		for _, PageTitle in pairs(self.MainLabel.Pages:GetDescendants()) do
 			if PageTitle.ClassName == "TextLabel" then
 				TS:Create(PageTitle, TweenInfo.new(0.250), {TextTransparency = 0}):Play()
 
@@ -2152,10 +2401,10 @@ function BoogaUI:Toggle()
 
 		self.MainLabel.Glow.Visible = true
 
-		self.MainLabel.TitleHolder.ZIndex = 1	
+		self.MainLabel.TitleHolder.ZIndex = 1
 		self.MainLabel.TitleHolder.Title.ZIndex = 1
 
-		for _, PageTitle in self.MainLabel.Pages:GetDescendants() do
+		for _, PageTitle in pairs(self.MainLabel.Pages:GetDescendants()) do
 			if PageTitle.ClassName == "TextLabel" or PageTitle.Name == "Icon" then
 				PageTitle.ZIndex = 1
 			end
@@ -2169,10 +2418,23 @@ end
 function BoogaUI:AddInstances(Arg)
 	if #Arg > 2 then
 		for idx = 1, #Arg, 2 do
-			table.insert(self.Instances, {instance = Arg[idx], Size = Arg[idx + 1]})
+			local tbl = {instance = Arg[idx], Size = Arg[idx + 1]}
+			table.insert(self.Instances, tbl)
+
+			if Arg[idx]:FindFirstChild("AddIndex") then
+				self.Instances[Arg[idx]] = tbl
+			end
 		end
 	else
 		table.insert(self.Instances, {instance = Arg[1], Size = Arg[2]})
+	end
+end
+
+function BoogaUI:Destroy(DestroyPrevious)
+	for _,v in pairs(identifyexecutor and game.CoreGui:GetChildren() or Player.PlayerGui:GetChildren()) do
+		if (DestroyPrevious and v ~= self.MainLabel.Parent and v:FindFirstChild("MainLabel")) or (not DestroyPrevious and v:FindFirstChild("MainLabel") and v.MainLabel:FindFirstChild("TitleHolder")) then
+			v:Destroy()
+		end
 	end
 end
 
